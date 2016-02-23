@@ -12,7 +12,7 @@ public class SpecialWall extends Wall {
 
 	public final Gate gate;
 
-	SpecialWall(Direction dir, Gate gate) {
+	public SpecialWall(Direction dir, Gate gate) {
 		super();
 		direction = dir;
 		this.gate = gate;

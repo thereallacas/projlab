@@ -25,7 +25,8 @@ public class Game {
 		player = new Player();
 		player.direction = UP;
 		player.position = START_POS;
-		labyrinth = new Labyrinth(HEIGHT, WIDTH, player);
+		labyrinth = new Labyrinth(HEIGHT, WIDTH);
+		labyrinth.setPlayer(player);
 		gate = new Gate();
 	}
 

@@ -8,7 +8,7 @@ public class Player {
 	public boolean isAlive;
 	public int ZPMsCarried;
 	
-	Player() {
+	public Player() {
 		isAlive = true;
 		ZPMsCarried = 0;
 	}

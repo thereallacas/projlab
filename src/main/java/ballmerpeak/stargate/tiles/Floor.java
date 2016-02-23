@@ -4,8 +4,8 @@ import ballmerpeak.stargate.Player;
 
 public class Floor extends Tile {
 	
-	boolean isOccupied;
-	boolean hasZPM;
+	public boolean isOccupied;
+	public boolean hasZPM;
 
 	@Override
 	public boolean dropCrateHere() {

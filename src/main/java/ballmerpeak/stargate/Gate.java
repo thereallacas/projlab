@@ -9,7 +9,7 @@ public class Gate {
 	public boolean active;
 	boolean blueActive, yellowActive;
 	
-	Gate() {
+	public Gate() {
 		yellowWall = blueWall = null;
 		active = false;
 		blueActive = yellowActive = false;

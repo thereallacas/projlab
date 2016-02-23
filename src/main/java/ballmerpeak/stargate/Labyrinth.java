@@ -8,9 +8,8 @@ public class Labyrinth {
 	
 	public Player player;
 	
-	Labyrinth(int height, int width, Player player) {
+	public Labyrinth(int height, int width) {
 		tiles = new Tile[height][width];
-		this.player = player;
 	}
 
 	Tile getTileFrontOfPlayer() {
@@ -23,4 +22,7 @@ public class Labyrinth {
 		return tiles[y][x];
 	}
 
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 }
