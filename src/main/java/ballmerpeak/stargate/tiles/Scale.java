@@ -2,7 +2,7 @@ package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.StepResult;
 
-public class Scale extends Tile {
+public class Scale extends Floor {
 
 	public Door door = null;
 
