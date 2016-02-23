@@ -1,39 +1,35 @@
 package ballmerpeak.stargate.tiles;
 
-import static ballmerpeak.stargate.StepResult.*;
-import ballmerpeak.stargate.StepResult;
 import ballmerpeak.stargate.Direction;
+import ballmerpeak.stargate.Gate;
+import ballmerpeak.stargate.Player;
+import ballmerpeak.stargate.Position;
 
 public class SpecialWall extends Wall {
 
 	public ShotColor color;
 	public final Direction direction;
-	
-	SpecialWall(Direction dir) {
+
+	public final Gate gate;
+
+	SpecialWall(Direction dir, Gate gate) {
 		super();
 		direction = dir;
+		this.gate = gate;
 	}
 
 	@Override
 	public boolean canPlayerMoveHere() {
-		return color != ShotColor.INACTIVE;
+		return color != ShotColor.INACTIVE && gate.active;
 	}
 
 	@Override
-	public StepResult stepOnTile() {
-		switch (direction) {
-		case UP:
-			return StepResult.TELEPORT_UP;
-		case DOWN:
-			return StepResult.TELEPORT_DOWN;
-		case LEFT:
-			return StepResult.TELEPORT_LEFT;
-		case RIGHT:
-			return StepResult.TELEPORT_RIGHT;
-		case NOT_A_DIRECTION:
-			return StepResult.OK;
-		}
-		return OK;
+	public void stepOnTile(Player player) {
+		SpecialWall distantWall = (color == ShotColor.BLUE) ? gate.yellowWall : gate.blueWall;
+		Position wallPos = distantWall.position;
+		Position newPos = wallPos.plusDir(distantWall.direction);
+		player.position = newPos;
+		player.direction = distantWall.direction;
 	}
 
 	@Override

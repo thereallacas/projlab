@@ -13,15 +13,8 @@ public class Labyrinth {
 		this.player = player;
 	}
 
-	Position getPositionFrontOfPlayer() {
-		Direction dir = player.direction;
-		Position pos = player.position;
-		Position newPos = pos.plusDir(dir);
-		return newPos;
-	}
-
 	Tile getTileFrontOfPlayer() {
-		Position newPos = getPositionFrontOfPlayer();
+		Position newPos = player.getPositionFrontOfPlayer();
 		Tile nextTile = tiles[newPos.y][newPos.x];
 		return nextTile;
 	}

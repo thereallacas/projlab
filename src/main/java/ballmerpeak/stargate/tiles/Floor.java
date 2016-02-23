@@ -1,6 +1,6 @@
 package ballmerpeak.stargate.tiles;
 
-import ballmerpeak.stargate.StepResult;
+import ballmerpeak.stargate.Player;
 
 public class Floor extends Tile {
 	
@@ -26,11 +26,11 @@ public class Floor extends Tile {
 	}
 
 	@Override
-	public StepResult stepOnTile() {
+	public void stepOnTile(Player player) {
+		player.stepForward();
 		if (hasZPM) {
+			player.ZPMsCarried++;
 			hasZPM = false;
-			return StepResult.ZPM;
 		}
-		return StepResult.OK;
 	}
 }

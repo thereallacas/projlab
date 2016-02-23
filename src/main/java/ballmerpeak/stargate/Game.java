@@ -21,16 +21,11 @@ public class Game {
 	Labyrinth labyrinth;
 	Gate gate;
 
-	int zpmsFound;
-	boolean alive;
-
 	Game() {
 		player = new Player();
 		player.direction = UP;
 		player.position = START_POS;
 		labyrinth = new Labyrinth(HEIGHT, WIDTH, player);
-		zpmsFound = 0;
-		alive = true;
 		gate = new Gate();
 	}
 
@@ -49,25 +44,9 @@ public class Game {
 		} else {
 			Tile nextTile = labyrinth.getTileFrontOfPlayer();
 			if (nextTile.canPlayerMoveHere()) {
-				StepResult sr = nextTile.stepOnTile();
-				if (sr == StepResult.FALL) {
-					alive = false;
-				} else if (sr.isTeleport()) {
-					if (gate.active) {
-						SpecialWall wall = (SpecialWall) nextTile;
-						SpecialWall distantWall = (wall.color == ShotColor.BLUE) ? gate.yellowWall : gate.blueWall;
-						Position wallPos = distantWall.position;
-						Position newPos = wallPos.plusDir(distantWall.direction);
-						player.position = newPos;
-					}
-				} else {
-					// regular move
-					Position newPos = labyrinth.getPositionFrontOfPlayer();
-					player.position = newPos;
-					if (sr == StepResult.ZPM) {
-						zpmsFound++;
-					}
-				}
+				Tile currentTile = labyrinth.getTile(player.position.y, player.position.x);
+				currentTile.leaveTile();
+				nextTile.stepOnTile(player);
 			}
 		}
 	}
@@ -119,11 +98,11 @@ public class Game {
 				break;
 			}
 			draw();
-		} while (running && alive);
+		} while (running && player.isAlive);
 
-		if (!alive) {
+		if (!player.isAlive) {
 			printGameOverMessage();
-		} else if (zpmsFound == MAX_ZPMS) {
+		} else if (player.ZPMsCarried == MAX_ZPMS) {
 			printWinMessage();
 		} else {
 			printEndMessage();
@@ -131,7 +110,7 @@ public class Game {
 	}
 
 	private void shoot(ShotColor color) {
-		Position pos = labyrinth.getPositionFrontOfPlayer();
+		Position pos = player.getPositionFrontOfPlayer();
 		Tile tile = labyrinth.getTileFrontOfPlayer();
 		Direction dir = player.direction;
 		

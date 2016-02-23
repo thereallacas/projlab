@@ -1,6 +1,6 @@
 package ballmerpeak.stargate.tiles;
 
-public class Door extends Tile {
+public class Door extends Floor {
 
 	public boolean isOpen = false;
 
@@ -16,5 +16,4 @@ public class Door extends Tile {
 	public void open() {
 		isOpen = true;
 	}
-	
 }

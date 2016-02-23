@@ -15,7 +15,7 @@ public class Position {
 		this.y = y;
 	}
 	
-	Position plusDir(Direction dir) {
+	public Position plusDir(Direction dir) {
 		int dy = (dir == UP) ? 1 : (dir == DOWN) ? -1 : 0;
 		int dx = (dir == RIGHT) ? 1 : (dir == LEFT) ? -1 : 0;
 		return new Position(y + dy, x + dx);

@@ -1,7 +1,7 @@
 package ballmerpeak.stargate.tiles;
 
+import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Position;
-import ballmerpeak.stargate.StepResult;
 
 public abstract class Tile {
 	
@@ -11,9 +11,7 @@ public abstract class Tile {
 		return false;
 	}
 	
-	public StepResult stepOnTile() {
-		return StepResult.OK;
-	}
+	public abstract void stepOnTile(Player player);
 	
 	public void leaveTile() {
 		

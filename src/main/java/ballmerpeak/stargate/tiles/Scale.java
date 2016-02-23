@@ -1,6 +1,6 @@
 package ballmerpeak.stargate.tiles;
 
-import ballmerpeak.stargate.StepResult;
+import ballmerpeak.stargate.Player;
 
 public class Scale extends Floor {
 
@@ -26,9 +26,9 @@ public class Scale extends Floor {
 	}
 
 	@Override
-	public StepResult stepOnTile() {
+	public void stepOnTile(Player player) {
 		door.open();
-		return super.stepOnTile();
+		super.stepOnTile(player);
 	}
 
 	@Override

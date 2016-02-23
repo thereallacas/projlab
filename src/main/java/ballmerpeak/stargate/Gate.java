@@ -4,8 +4,9 @@ import ballmerpeak.stargate.tiles.SpecialWall;
 
 public class Gate {
 
-	SpecialWall yellowWall, blueWall;
-	boolean active;
+	public SpecialWall yellowWall;
+	public SpecialWall blueWall;
+	public boolean active;
 	boolean blueActive, yellowActive;
 	
 	Gate() {
