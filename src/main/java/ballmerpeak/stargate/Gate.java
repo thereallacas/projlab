@@ -14,7 +14,7 @@ public class Gate {
 		blueActive = yellowActive = false;
 	}
 	
-	void setYellowTile(SpecialWall wall) {
+	void setYellowWall(SpecialWall wall) {
 		yellowWall = wall;
 		yellowActive = true;
 		if (blueActive) {
@@ -22,7 +22,7 @@ public class Gate {
 		}
 	}
 	
-	void setBlueTile(SpecialWall wall) {
+	void setBlueWall(SpecialWall wall) {
 		blueWall= wall;
 		blueActive = true;
 		if (yellowActive) {

@@ -65,12 +65,12 @@ public class Game {
 				StepResult sr = nextTile.stepOnTile();
 				if (sr == StepResult.FALL) {
 					alive = false;
-				} else if (sr == StepResult.TELEPORT) {
+				} else if (sr.isTeleport()) {
 					if (gate.active) {
 						SpecialWall wall = (SpecialWall) nextTile;
-						ShotColor color = wall.color;
-						Position wallPos = color == ShotColor.BLUE ? gate.yellowWall.position : gate.blueWall.position;
-						Position newPos = wallPos.plusDir(dir);
+						SpecialWall distantWall = (wall.color == ShotColor.BLUE) ? gate.yellowWall : gate.blueWall;
+						Position wallPos = distantWall.position;
+						Position newPos = wallPos.plusDir(distantWall.direction);
 						player.position = newPos;
 					}
 				} else {
@@ -161,10 +161,10 @@ public class Game {
 
 		if (color == ShotColor.BLUE) {
 			gate.blueWall.color = ShotColor.INACTIVE;
-			gate.setBlueTile((SpecialWall) tile);
+			gate.setBlueWall((SpecialWall) tile);
 		} else {
 			gate.yellowWall.color = ShotColor.INACTIVE;
-			gate.setYellowTile((SpecialWall) tile);
+			gate.setYellowWall((SpecialWall) tile);
 		}
 	}
 
