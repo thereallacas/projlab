@@ -25,13 +25,13 @@ public class Game {
 	boolean alive;
 
 	Game() {
-		labyrinth.tiles = new Tile[HEIGHT][WIDTH];
 		player = new Player();
 		player.direction = UP;
 		player.position = START_POS;
+		labyrinth = new Labyrinth(HEIGHT, WIDTH, player);
 		zpmsFound = 0;
 		alive = true;
-		gate = null;
+		gate = new Gate();
 	}
 
 	InputCommand readInput() {
@@ -43,24 +43,11 @@ public class Game {
 		game.run();
 	}
 
-	Position getPositionFrontOfPlayer() {
-		Direction dir = player.direction;
-		Position pos = player.position;
-		Position newPos = pos.plusDir(dir);
-		return newPos;
-	}
-
-	Tile getTileFrontOfPlayer() {
-		Position newPos = getPositionFrontOfPlayer();
-		Tile nextTile = labyrinth.tiles[newPos.y][newPos.x];
-		return nextTile;
-	}
-
 	void updatePos(Direction dir) {
 		if (player.direction != dir) {
 			player.direction = dir;
 		} else {
-			Tile nextTile = getTileFrontOfPlayer();
+			Tile nextTile = labyrinth.getTileFrontOfPlayer();
 			if (nextTile.canPlayerMoveHere()) {
 				StepResult sr = nextTile.stepOnTile();
 				if (sr == StepResult.FALL) {
@@ -75,7 +62,7 @@ public class Game {
 					}
 				} else {
 					// regular move
-					Position newPos = getPositionFrontOfPlayer();
+					Position newPos = labyrinth.getPositionFrontOfPlayer();
 					player.position = newPos;
 					if (sr == StepResult.ZPM) {
 						zpmsFound++;
@@ -86,7 +73,7 @@ public class Game {
 	}
 
 	void doPickup() {
-		Tile tile = getTileFrontOfPlayer();
+		Tile tile = labyrinth.getTileFrontOfPlayer();
 		if (player.isCarrying) {
 			if (tile.dropCrateHere()) {
 				player.isCarrying = false;
@@ -144,14 +131,14 @@ public class Game {
 	}
 
 	private void shoot(ShotColor color) {
-		Position pos = getPositionFrontOfPlayer();
-		Tile tile = getTileFrontOfPlayer();
+		Position pos = labyrinth.getPositionFrontOfPlayer();
+		Tile tile = labyrinth.getTileFrontOfPlayer();
 		Direction dir = player.direction;
 		
 		ShotResult result = tile.shootIt(color);
 		while (result == ShotResult.TILE_HIT) {
 			pos = pos.plusDir(dir);
-			tile = labyrinth.tiles[pos.y][pos.x];
+			tile = labyrinth.getTile(pos.y, pos.x);
 			result = tile.shootIt(color);
 		}
 		
