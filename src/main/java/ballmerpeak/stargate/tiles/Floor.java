@@ -1,24 +1,26 @@
 package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
+import ballmerpeak.stargate.Position;
 
 public class Floor extends Tile {
 	
 	private boolean occupied;
 	private boolean ZPM;
 
-	public Floor() {
+	public Floor(Position pos) {
+		super(pos);
 		occupied = ZPM = false;
 	}
 	
-	public static Floor floorWithZPM() {
-		Floor floor = new Floor();
+	public static Floor floorWithZPM(Position pos) {
+		Floor floor = new Floor(pos);
 		floor.ZPM = true;
 		return floor;
 	}
 	
-	public static Floor floorWithCrate() {
-		Floor floor = new Floor();
+	public static Floor floorWithCrate(Position pos) {
+		Floor floor = new Floor(pos);
 		floor.occupied = true;
 		return floor;
 	}

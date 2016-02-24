@@ -60,7 +60,7 @@ public class MapLoader {
 						player.direction = Direction.UP;
 					}
 					
-					Tile tile = readTile(line.charAt(j));
+					Tile tile = createTile(line.charAt(j), new Position(i, j));
 					labyrinth.setTile(i, j, tile);
 				}
 			}
@@ -78,41 +78,41 @@ public class MapLoader {
 		}
 	}
 
-	private Tile readTile(char c) {
+	private Tile createTile(char c, Position pos) {
 
 		switch (c) {
 
 		case '@':
 		case ' ':
-			return new Floor();
+			return new Floor(pos);
 		case '#':
-			return new Wall();
+			return new Wall(pos);
 		case '0':
-			return new Pit();
+			return new Pit(pos);
 		case '$':
 			zpms++;
-			return Floor.floorWithZPM();
+			return Floor.floorWithZPM(pos);
 		case '%':
-			return Floor.floorWithCrate();
+			return Floor.floorWithCrate(pos);
 
 		case '>':
-			return new SpecialWall(Direction.RIGHT, gate);
+			return new SpecialWall(pos, Direction.RIGHT, gate);
 		case '<':
-			return new SpecialWall(Direction.LEFT, gate);
+			return new SpecialWall(pos, Direction.LEFT, gate);
 		case '^':
-			return new SpecialWall(Direction.UP, gate);
+			return new SpecialWall(pos, Direction.UP, gate);
 		case '/':
-			return new SpecialWall(Direction.DOWN, gate);
+			return new SpecialWall(pos, Direction.DOWN, gate);
 
 		}
 
 		if (Character.isAlphabetic(c)) {
 			if (Character.isLowerCase(c)) {
-				Door door = new Door();
+				Door door = new Door(pos);
 				doors.put(c, door);
 				return door;
 			} else {
-				Scale scale = new Scale();
+				Scale scale = new Scale(pos);
 				scales.put(c,  scale);
 				return scale;
 			}

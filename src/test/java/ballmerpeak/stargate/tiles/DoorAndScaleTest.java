@@ -16,8 +16,10 @@ public class DoorAndScaleTest {
 	
 	@Before
 	public void setup() {
-		door = new Door();
-		scale = new Scale();
+		Position doorPos = new Position(20, 30);
+		Position scalePos = new Position(13, 23);
+		door = new Door(doorPos);
+		scale = new Scale(scalePos);
 		scale.setDoor(door);
 		
 		player = new Player();

@@ -1,6 +1,12 @@
 package ballmerpeak.stargate.tiles;
 
+import ballmerpeak.stargate.Position;
+
 public class Door extends Floor {
+
+	public Door(Position pos) {
+		super(pos);
+	}
 
 	private boolean open = false;
 

@@ -5,7 +5,11 @@ import ballmerpeak.stargate.Position;
 
 public abstract class Tile {
 	
-	private Position position;
+	private final Position position;
+	
+	public Tile(Position pos) {
+		position = pos;
+	}
 	
 	public abstract void stepOnTile(Player player);
 	
@@ -33,8 +37,5 @@ public abstract class Tile {
 		return position;
 	}
 
-	public void setPosition(Position position) {
-		this.position = position;
-	}
 
 }

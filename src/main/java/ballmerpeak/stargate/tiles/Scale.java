@@ -1,13 +1,14 @@
 package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
+import ballmerpeak.stargate.Position;
 
 public class Scale extends Floor {
 
 	private Door door;
 	
-	public Scale() {
-		super();
+	public Scale(Position pos) {
+		super(pos);
 	}
 
 	@Override

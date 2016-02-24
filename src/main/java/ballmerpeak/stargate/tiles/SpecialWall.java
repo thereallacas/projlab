@@ -12,8 +12,8 @@ public class SpecialWall extends Wall {
 
 	public final Gate gate;
 
-	public SpecialWall(Direction dir, Gate gate) {
-		super();
+	public SpecialWall(Position pos, Direction dir, Gate gate) {
+		super(pos);
 		direction = dir;
 		this.gate = gate;
 	}
