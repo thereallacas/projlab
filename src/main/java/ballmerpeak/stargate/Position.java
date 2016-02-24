@@ -20,4 +20,21 @@ public class Position {
 		int dx = (dir == RIGHT) ? 1 : (dir == LEFT) ? -1 : 0;
 		return new Position(y + dy, x + dx);
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null)
+			return false;
+		
+		if (! (o instanceof Position))
+			return false;
+		
+		Position p = (Position) o;
+		return p.x == x && p.y == y;
+	}
+	
+	@Override
+	public int hashCode() {
+		return 23*x + 47*y;
+	}
 }

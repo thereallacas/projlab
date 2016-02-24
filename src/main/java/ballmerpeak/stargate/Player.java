@@ -11,6 +11,7 @@ public class Player {
 	public Player() {
 		isAlive = true;
 		ZPMsCarried = 0;
+		direction = Direction.UP;
 	}
 	
 	public Position getPositionFrontOfPlayer() {

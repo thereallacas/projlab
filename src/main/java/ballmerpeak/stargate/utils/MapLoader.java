@@ -26,11 +26,14 @@ public class MapLoader {
 
 	Map<Character, Door> doors;
 	Map<Character, Scale> scales;
+	
+	int zpms;
 
 	public Labyrinth loadLabyrinth(String filename) throws FileNotFoundException, IOException {
 		gate = new Gate();
 		doors = new HashMap<>();
 		scales = new HashMap<>();
+		zpms = 0;
 		Labyrinth labyrinth = null;
 		try (FileReader fr = new FileReader(filename); BufferedReader br = new BufferedReader(fr)) {
 			String lineOne = br.readLine();
@@ -41,25 +44,36 @@ public class MapLoader {
 			Player player = new Player();
 			labyrinth = new Labyrinth(height, width);
 			labyrinth.setPlayer(player);
+			
+			// get empty line between header and body
+			br.readLine();
 			for (int i = 0; i < height; i++) {
 				String line = br.readLine();
 				for (int j = 0; j < width; j++) {
+					
+					if ((i == 0 || i == height - 1 || j == 0 || j == width - 1) && (line.charAt(j) != '#'))
+						throw new InvalidMapFileException("edge of map has to be walled");
+					
 					if (line.charAt(j) == '@') {
 						player.position = new Position(i, j);
 						player.direction = Direction.UP;
 					}
+					
 					Tile tile = readTile(line.charAt(j));
 					labyrinth.tiles[i][j] = tile;
 				}
 			}
 		}
 		setupDoors();
+		labyrinth.numberOfZPMs = zpms;
 		return labyrinth;
 	}
 	
 	private void setupDoors() {
-		for (Character c: doors.keySet()) {
-			scales.get(c).door = doors.get(c);
+		for (Character c: scales.keySet()) {
+			Scale scale = scales.get(c);
+			Door door = doors.get(Character.toLowerCase(c));
+			scale.door = door;
 		}
 	}
 
@@ -77,6 +91,7 @@ public class MapLoader {
 		case '$':
 			Floor floorWithZPM = new Floor();
 			floorWithZPM.hasZPM = true;
+			zpms++;
 			return floorWithZPM;
 		case '%':
 			Floor floorWithCrate = new Floor();

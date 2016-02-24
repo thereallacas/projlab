@@ -5,6 +5,10 @@ import ballmerpeak.stargate.Player;
 public class Scale extends Floor {
 
 	public Door door = null;
+	
+	public Scale() {
+		super();
+	}
 
 	@Override
 	public boolean pickupCrate() {

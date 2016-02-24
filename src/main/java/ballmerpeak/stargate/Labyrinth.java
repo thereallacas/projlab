@@ -7,9 +7,12 @@ public class Labyrinth {
 	public Tile[][] tiles;
 	
 	public Player player;
+
+	public int numberOfZPMs;
 	
 	public Labyrinth(int height, int width) {
 		tiles = new Tile[height][width];
+		numberOfZPMs = 0;
 	}
 
 	Tile getTileFrontOfPlayer() {
