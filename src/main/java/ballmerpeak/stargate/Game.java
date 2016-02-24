@@ -127,10 +127,10 @@ public class Game {
 		}
 
 		if (color == ShotColor.BLUE) {
-			gate.blueWall.color = ShotColor.INACTIVE;
+			gate.getBlueWall().setColor(ShotColor.INACTIVE);
 			gate.setBlueWall((SpecialWall) tile);
 		} else {
-			gate.yellowWall.color = ShotColor.INACTIVE;
+			gate.getYellowWall().setColor(ShotColor.INACTIVE);
 			gate.setYellowWall((SpecialWall) tile);
 		}
 	}

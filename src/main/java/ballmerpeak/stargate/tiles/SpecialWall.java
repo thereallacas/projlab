@@ -7,8 +7,8 @@ import ballmerpeak.stargate.Position;
 
 public class SpecialWall extends Wall {
 
-	public ShotColor color;
-	public final Direction direction;
+	private ShotColor color;
+	private final Direction direction;
 
 	public final Gate gate;
 
@@ -20,13 +20,13 @@ public class SpecialWall extends Wall {
 
 	@Override
 	public boolean canPlayerMoveHere() {
-		return color != ShotColor.INACTIVE && gate.active;
+		return getColor() != ShotColor.INACTIVE && gate.isActive();
 	}
 
 	@Override
 	public void stepOnTile(Player player) {
-		SpecialWall distantWall = (color == ShotColor.BLUE) ? gate.yellowWall : gate.blueWall;
-		Position wallPos = distantWall.position;
+		SpecialWall distantWall = (getColor() == ShotColor.BLUE) ? gate.getYellowWall() : gate.getBlueWall();
+		Position wallPos = distantWall.getPosition();
 		Position newPos = wallPos.plusDir(distantWall.direction);
 		player.position = newPos;
 		player.direction = distantWall.direction;
@@ -34,7 +34,15 @@ public class SpecialWall extends Wall {
 
 	@Override
 	public ShotResult shootIt(ShotColor color) {
-		this.color = color == ShotColor.BLUE ? ShotColor.BLUE : ShotColor.YELLOW;
+		this.setColor(color == ShotColor.BLUE ? ShotColor.BLUE : ShotColor.YELLOW);
 		return ShotResult.SPECIAL_WALL_HIT;
+	}
+
+	public ShotColor getColor() {
+		return color;
+	}
+
+	public void setColor(ShotColor color) {
+		this.color = color;
 	}
 }

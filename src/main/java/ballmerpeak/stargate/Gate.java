@@ -4,9 +4,9 @@ import ballmerpeak.stargate.tiles.SpecialWall;
 
 public class Gate {
 
-	public SpecialWall yellowWall;
-	public SpecialWall blueWall;
-	public boolean active;
+	private SpecialWall yellowWall;
+	private SpecialWall blueWall;
+	private boolean active;
 	boolean blueActive, yellowActive;
 	
 	public Gate() {
@@ -15,7 +15,15 @@ public class Gate {
 		blueActive = yellowActive = false;
 	}
 	
-	void setYellowWall(SpecialWall wall) {
+	public SpecialWall getYellowWall() {
+		return yellowWall;
+	}
+	
+	public SpecialWall getBlueWall() {
+		return blueWall;
+	}
+	
+	public void setYellowWall(SpecialWall wall) {
 		yellowWall = wall;
 		yellowActive = true;
 		if (blueActive) {
@@ -23,11 +31,15 @@ public class Gate {
 		}
 	}
 	
-	void setBlueWall(SpecialWall wall) {
+	public void setBlueWall(SpecialWall wall) {
 		blueWall= wall;
 		blueActive = true;
 		if (yellowActive) {
 			active = true;
 		}
+	}
+	
+	public boolean isActive() {
+		return active;
 	}
 }

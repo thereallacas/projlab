@@ -23,8 +23,11 @@ public class MapLoaderTest {
 	}
 
 	@Test
-	public void testNumberOfZPMs() {
-		assertEquals(3, labyrinth.numberOfZPMs);
+	public void testNumberLabyrinthAttribs() {
+		assertEquals(3, labyrinth.getNumberOfZPMs());
+		assertEquals(100, labyrinth.getHeight());
+		assertEquals(100, labyrinth.getWidth());
 	}
+	
 
 }

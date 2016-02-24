@@ -5,7 +5,7 @@ import ballmerpeak.stargate.Position;
 
 public abstract class Tile {
 	
-	public Position position;
+	private Position position;
 	
 	public abstract void stepOnTile(Player player);
 	
@@ -27,6 +27,14 @@ public abstract class Tile {
 
 	public ShotResult shootIt(ShotColor color) {
 		return ShotResult.TILE_HIT;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 
 }

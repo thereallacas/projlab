@@ -18,7 +18,7 @@ public class DoorAndScaleTest {
 	public void setup() {
 		door = new Door();
 		scale = new Scale();
-		scale.door = door;
+		scale.setDoor(door);
 		
 		player = new Player();
 		player.position = new Position(0, 0);
@@ -27,16 +27,16 @@ public class DoorAndScaleTest {
 	@Test
 	public void testStepOn() {
 		scale.stepOnTile(player);
-		assertTrue(door.isOpen);
+		assertTrue(door.isOpen());
 		scale.leaveTile();
-		assertFalse(door.isOpen);
+		assertFalse(door.isOpen());
 	}
 	
 	@Test
 	public void dropCrateTest() {
 		scale.dropCrateHere();
-		assertTrue(door.isOpen);
-		assertTrue(scale.isOccupied);
+		assertTrue(door.isOpen());
+		assertTrue(scale.isOccupied());
 	}
 
 }

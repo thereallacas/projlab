@@ -47,6 +47,7 @@ public class MapLoader {
 			
 			// get empty line between header and body
 			br.readLine();
+			
 			for (int i = 0; i < height; i++) {
 				String line = br.readLine();
 				for (int j = 0; j < width; j++) {
@@ -60,12 +61,12 @@ public class MapLoader {
 					}
 					
 					Tile tile = readTile(line.charAt(j));
-					labyrinth.tiles[i][j] = tile;
+					labyrinth.setTile(i, j, tile);
 				}
 			}
 		}
 		setupDoors();
-		labyrinth.numberOfZPMs = zpms;
+		labyrinth.setNumberOfZPMs(zpms);
 		return labyrinth;
 	}
 	
@@ -73,7 +74,7 @@ public class MapLoader {
 		for (Character c: scales.keySet()) {
 			Scale scale = scales.get(c);
 			Door door = doors.get(Character.toLowerCase(c));
-			scale.door = door;
+			scale.setDoor(door);
 		}
 	}
 
@@ -89,14 +90,10 @@ public class MapLoader {
 		case '0':
 			return new Pit();
 		case '$':
-			Floor floorWithZPM = new Floor();
-			floorWithZPM.hasZPM = true;
 			zpms++;
-			return floorWithZPM;
+			return Floor.floorWithZPM();
 		case '%':
-			Floor floorWithCrate = new Floor();
-			floorWithCrate.isOccupied = true;
-			return floorWithCrate;
+			return Floor.floorWithCrate();
 
 		case '>':
 			return new SpecialWall(Direction.RIGHT, gate);

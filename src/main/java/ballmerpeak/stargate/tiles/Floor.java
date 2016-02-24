@@ -4,18 +4,33 @@ import ballmerpeak.stargate.Player;
 
 public class Floor extends Tile {
 	
-	public boolean isOccupied;
-	public boolean hasZPM;
+	private boolean occupied;
+	private boolean ZPM;
 
 	public Floor() {
-		super();
-		isOccupied = hasZPM = false;
+		occupied = ZPM = false;
+	}
+	
+	public static Floor floorWithZPM() {
+		Floor floor = new Floor();
+		floor.ZPM = true;
+		return floor;
+	}
+	
+	public static Floor floorWithCrate() {
+		Floor floor = new Floor();
+		floor.occupied = true;
+		return floor;
+	}
+	
+	public boolean isOccupied() {
+		return occupied;
 	}
 	
 	@Override
 	public boolean dropCrateHere() {
-		if (!isOccupied) {
-			isOccupied = true;
+		if (!isOccupied()) {
+			occupied = true;
 			return true;
 		}
 		return false;
@@ -23,8 +38,8 @@ public class Floor extends Tile {
 
 	@Override
 	public boolean pickupCrate() {
-		if (isOccupied) {
-			isOccupied = false;
+		if (occupied) {
+			occupied = false;
 			return true;
 		}
 		return false;
@@ -33,9 +48,9 @@ public class Floor extends Tile {
 	@Override
 	public void stepOnTile(Player player) {
 		player.stepForward();
-		if (hasZPM) {
+		if (ZPM) {
 			player.ZPMsCarried++;
-			hasZPM = false;
+			ZPM = false;
 		}
 	}
 }

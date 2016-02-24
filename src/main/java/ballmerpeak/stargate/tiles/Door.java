@@ -2,18 +2,22 @@ package ballmerpeak.stargate.tiles;
 
 public class Door extends Floor {
 
-	public boolean isOpen = false;
+	private boolean open = false;
 
 	@Override
 	public boolean canPlayerMoveHere() {
-		return isOpen;
+		return isOpen();
+	}
+	
+	public boolean isOpen() {
+		return open;
 	}
 
 	public void close() {
-		isOpen = false;
+		open = false;
 	}
 
 	public void open() {
-		isOpen = true;
+		open = true;
 	}
 }

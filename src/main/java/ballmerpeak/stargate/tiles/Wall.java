@@ -8,7 +8,7 @@ public class Wall extends Tile {
 	public boolean canPlayerMoveHere() {
 		return false;
 	}
-	
+
 	@Override
 	public ShotResult shootIt(ShotColor color) {
 		return ShotResult.REGULAR_WALL_HIT;
@@ -16,8 +16,7 @@ public class Wall extends Tile {
 
 	@Override
 	public void stepOnTile(Player player) {
-		// TODO
-		throw new RuntimeException("player shouldn't be here...");
+		throw new PlayerInsideWallException();
 	}
 
 }
