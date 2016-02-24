@@ -1,14 +1,21 @@
 package ballmerpeak.stargate;
 
 import static ballmerpeak.stargate.Direction.*;
-import static ballmerpeak.stargate.InputCommand.*;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
+import javax.swing.JFrame;
+
+import ballmerpeak.stargate.gui.GameWindow;
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.ShotResult;
 import ballmerpeak.stargate.tiles.SpecialWall;
 import ballmerpeak.stargate.tiles.Tile;
+import ballmerpeak.stargate.utils.MapLoader;
 
 public class Game {
+	private List<InputCommand> receivedKeyCommands = new LinkedList<InputCommand>();
 
 	static final int WIDTH = 100;
 	static final int HEIGHT = 100;
@@ -20,6 +27,7 @@ public class Game {
 	Player player;
 	Labyrinth labyrinth;
 	Gate gate;
+	GameWindow window;
 
 	Game() {
 		player = new Player();
@@ -29,13 +37,39 @@ public class Game {
 		labyrinth.setPlayer(player);
 		gate = new Gate();
 	}
+	
+	public void setWindow(GameWindow window) {
+		this.window = window;
+	}
+	
+	public void receiveInput(InputCommand command) {
+		if(command == InputCommand.UNKNOWN_KEY) return;
+		receivedKeyCommands.add(command);
+	}
 
 	InputCommand readInput() {
-		return UP_KEY;
+		InputCommand returnedCommand = InputCommand.UNKNOWN_KEY;
+		if(receivedKeyCommands.size() > 0) {
+			returnedCommand = receivedKeyCommands.get(0);
+			receivedKeyCommands.remove(0);
+		}
+		return returnedCommand;
 	}
 
 	public static void main(String... args) {
 		Game game = new Game();
+		MapLoader loader = new MapLoader();
+		try {
+			game.labyrinth = loader.loadLabyrinth("/tmp/map.txt");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		GameWindow window = new GameWindow(game);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setSize(760, 760);
+		window.setVisible(true);
+		game.setWindow(window);
 		game.run();
 	}
 
@@ -63,6 +97,10 @@ public class Game {
 				player.isCarrying = true;
 			}
 		}
+	}
+	
+	public Labyrinth getLabyrinth() {
+		return this.labyrinth;
 	}
 
 	private void run() {
@@ -136,7 +174,7 @@ public class Game {
 	}
 
 	private void draw() {
-		// TODO Auto-generated method stub
+		window.redraw();
 	}
 
 	private void printEndMessage() {
