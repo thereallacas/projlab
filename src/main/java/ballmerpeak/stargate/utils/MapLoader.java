@@ -61,6 +61,7 @@ public class MapLoader {
 		}
 		setupDoors();
 		labyrinth.setNumberOfZPMs(zpms);
+		labyrinth.setPlayer(player);
 		return labyrinth;
 	}
 	
