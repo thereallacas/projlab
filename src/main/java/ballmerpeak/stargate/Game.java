@@ -19,13 +19,7 @@ import ballmerpeak.stargate.utils.MapLoader;
 import ballmerpeak.stargate.gui.ImageAssets;
 
 public class Game implements InputCommandHandler {
-
-	static final int WIDTH = 100;
-	static final int HEIGHT = 100;
-
 	static final int MAX_ZPMS = 10;
-
-	private static final Position START_POS = new Position(20, 20);
 
 	Player player;
 	Labyrinth labyrinth;
@@ -81,7 +75,7 @@ public class Game implements InputCommandHandler {
 		default:
 			break;
 		}
-		draw();
+		renderer.drawGame(this);
 	}
 
 	void updatePos(Direction dir) {
@@ -142,21 +136,5 @@ public class Game implements InputCommandHandler {
 			gate.getYellowWall().setColor(ShotColor.INACTIVE);
 			gate.setYellowWall((SpecialWall) tile);
 		}
-	}
-
-	public void draw() {
-		if(renderer != null) renderer.drawGame(this);
-	}
-
-	private void printEndMessage() {
-		System.out.println("ended");
-	}
-
-	private void printWinMessage() {
-		System.out.println("victory!");
-	}
-
-	private void printGameOverMessage() {
-		System.out.println("game over");
 	}
 }

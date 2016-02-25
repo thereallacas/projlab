@@ -29,7 +29,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		window.setVisible(true);
 		game.setRenderer(window);
 		window.setInputCommandHandler(game);
-		game.draw();
+		window.drawGame(game);
 	}
 	
 	public void setInputCommandHandler(InputCommandHandler handler) {
