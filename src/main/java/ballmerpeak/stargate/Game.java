@@ -18,7 +18,6 @@ import ballmerpeak.stargate.tiles.Tile;
 import ballmerpeak.stargate.utils.MapLoader;
 
 public class Game implements InputCommandHandler {
-	private List<InputCommand> receivedKeyCommands = new LinkedList<InputCommand>();
 
 	static final int WIDTH = 100;
 	static final int HEIGHT = 100;
@@ -45,18 +44,41 @@ public class Game implements InputCommandHandler {
 		this.renderer = renderer;
 	}
 	
-	public void receiveInput(InputCommand command) {
-		if(command == InputCommand.UNKNOWN_KEY) return;
-		receivedKeyCommands.add(command);
+	public void requestRedraw() {
+		draw();
 	}
-
-	InputCommand readInput() {
-		InputCommand returnedCommand = InputCommand.UNKNOWN_KEY;
-		if(receivedKeyCommands.size() > 0) {
-			returnedCommand = receivedKeyCommands.get(0);
-			receivedKeyCommands.remove(0);
+	
+	public void receiveInput(InputCommand command) {
+		switch (command) {
+		case UP_KEY:
+			updatePos(UP);
+			break;
+		case DOWN_KEY:
+			updatePos(DOWN);
+			break;
+		case LEFT_KEY:
+			updatePos(LEFT);
+			break;
+		case RIGHT_KEY:
+			updatePos(RIGHT);
+			break;
+		case SHOOT_BLUE_KEY:
+			shoot(ShotColor.BLUE);
+			break;
+		case SHOOT_YELLOW_KEY:
+			shoot(ShotColor.YELLOW);
+			break;
+		case PICKUP_KEY:
+			doPickup();
+			break;
+		case QUIT_KEY:
+			System.exit(0);
+			break;
+		case UNKNOWN_KEY:
+		default:
+			break;
 		}
-		return returnedCommand;
+		draw();
 	}
 
 	public static void main(String... args) {
@@ -75,7 +97,6 @@ public class Game implements InputCommandHandler {
 		window.setVisible(true);
 		game.setRenderer(window);
 		window.setInputCommandHandler(game);
-		game.run();
 	}
 
 	void updatePos(Direction dir) {
@@ -107,50 +128,10 @@ public class Game implements InputCommandHandler {
 	public Labyrinth getLabyrinth() {
 		return this.labyrinth;
 	}
-
-	private void run() {
-		boolean running = true;
-		do {
-			InputCommand command = readInput();
-			switch (command) {
-			case UP_KEY:
-				updatePos(UP);
-				break;
-			case DOWN_KEY:
-				updatePos(DOWN);
-				break;
-			case LEFT_KEY:
-				updatePos(LEFT);
-				break;
-			case RIGHT_KEY:
-				updatePos(RIGHT);
-				break;
-			case SHOOT_BLUE_KEY:
-				shoot(ShotColor.BLUE);
-				break;
-			case SHOOT_YELLOW_KEY:
-				shoot(ShotColor.YELLOW);
-				break;
-			case PICKUP_KEY:
-				doPickup();
-				break;
-			case QUIT_KEY:
-				running = false;
-				break;
-			case UNKNOWN_KEY:
-			default:
-				break;
-			}
-			draw();
-		} while (running && player.isAlive);
-
-		if (!player.isAlive) {
-			printGameOverMessage();
-		} else if (player.ZPMsCarried == MAX_ZPMS) {
-			printWinMessage();
-		} else {
-			printEndMessage();
-		}
+	
+	public void setLabyrinth(Labyrinth l) {
+		this.labyrinth = l;
+		this.player = l.getPlayer();
 	}
 
 	private void shoot(ShotColor color) {
