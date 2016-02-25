@@ -21,6 +21,17 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		this.addKeyListener(this);
 	}
 	
+	public static void main(String... args) {
+		Game game = new Game();
+		GameWindow window = new GameWindow();
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setSize(760, 760);
+		window.setVisible(true);
+		game.setRenderer(window);
+		window.setInputCommandHandler(game);
+		game.draw();
+	}
+	
 	public void setInputCommandHandler(InputCommandHandler handler) {
 		this.inputHandler = handler;
 	}

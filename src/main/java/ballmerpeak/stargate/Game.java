@@ -16,6 +16,7 @@ import ballmerpeak.stargate.tiles.ShotResult;
 import ballmerpeak.stargate.tiles.SpecialWall;
 import ballmerpeak.stargate.tiles.Tile;
 import ballmerpeak.stargate.utils.MapLoader;
+import ballmerpeak.stargate.gui.ImageAssets;
 
 public class Game implements InputCommandHandler {
 
@@ -31,12 +32,18 @@ public class Game implements InputCommandHandler {
 	Gate gate;
 	GameRenderer renderer = null;
 
-	Game() {
-		player = new Player();
-		player.direction = UP;
-		player.position = START_POS;
-		labyrinth = new Labyrinth(HEIGHT, WIDTH);
-		labyrinth.setPlayer(player);
+	public Game() {
+		MapLoader loader = new MapLoader();
+		try {
+			String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
+			String mapFile = dataDirectory + "/map1.txt";
+			labyrinth = loader.loadLabyrinth(mapFile);
+			ImageAssets.loadAssets(dataDirectory + "/images/");
+			this.player = labyrinth.getPlayer();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		gate = new Gate();
 	}
 	
@@ -44,17 +51,13 @@ public class Game implements InputCommandHandler {
 		this.renderer = renderer;
 	}
 	
-	public void requestRedraw() {
-		draw();
-	}
-	
 	public void receiveInput(InputCommand command) {
 		switch (command) {
 		case UP_KEY:
-			updatePos(UP);
+			updatePos(DOWN);
 			break;
 		case DOWN_KEY:
-			updatePos(DOWN);
+			updatePos(UP);
 			break;
 		case LEFT_KEY:
 			updatePos(LEFT);
@@ -79,24 +82,6 @@ public class Game implements InputCommandHandler {
 			break;
 		}
 		draw();
-	}
-
-	public static void main(String... args) {
-		Game game = new Game();
-		MapLoader loader = new MapLoader();
-		try {
-			String mapFile = "/tmp/map.txt";
-			game.labyrinth = loader.loadLabyrinth(mapFile);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		GameWindow window = new GameWindow();
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setSize(760, 760);
-		window.setVisible(true);
-		game.setRenderer(window);
-		window.setInputCommandHandler(game);
 	}
 
 	void updatePos(Direction dir) {
@@ -159,7 +144,7 @@ public class Game implements InputCommandHandler {
 		}
 	}
 
-	private void draw() {
+	public void draw() {
 		if(renderer != null) renderer.drawGame(this);
 	}
 
