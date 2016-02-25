@@ -2,6 +2,7 @@ package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Position;
+import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Scale extends Floor {
 
@@ -48,5 +49,12 @@ public class Scale extends Floor {
 	public void setDoor(Door door) {
 		this.door = door;
 	}
+
+	@Override
+	public DrawableIndex getDrawableIndex() {
+		return occupied ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE; 
+	}
+	
+	
 
 }

@@ -2,8 +2,9 @@ package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Position;
+import ballmerpeak.stargate.gui.Drawable;
 
-public abstract class Tile {
+public abstract class Tile implements Drawable {
 	
 	private final Position position;
 	

@@ -2,6 +2,7 @@ package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Position;
+import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Wall extends Tile {
 
@@ -24,5 +25,11 @@ public class Wall extends Tile {
 	public void stepOnTile(Player player) {
 		throw new PlayerInsideWallException();
 	}
+
+	@Override
+	public DrawableIndex getDrawableIndex() {
+		return DrawableIndex.WALL;
+	}
+	
 
 }
