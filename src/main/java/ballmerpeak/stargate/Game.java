@@ -7,14 +7,17 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import ballmerpeak.stargate.gui.GameRenderer;
 import ballmerpeak.stargate.gui.GameWindow;
+import ballmerpeak.stargate.gui.InputCommandHandler;
+import ballmerpeak.stargate.gui.InputCommandSource;
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.ShotResult;
 import ballmerpeak.stargate.tiles.SpecialWall;
 import ballmerpeak.stargate.tiles.Tile;
 import ballmerpeak.stargate.utils.MapLoader;
 
-public class Game {
+public class Game implements InputCommandHandler {
 	private List<InputCommand> receivedKeyCommands = new LinkedList<InputCommand>();
 
 	static final int WIDTH = 100;
@@ -27,7 +30,7 @@ public class Game {
 	Player player;
 	Labyrinth labyrinth;
 	Gate gate;
-	GameWindow window;
+	GameRenderer renderer = null;
 
 	Game() {
 		player = new Player();
@@ -38,8 +41,8 @@ public class Game {
 		gate = new Gate();
 	}
 	
-	public void setWindow(GameWindow window) {
-		this.window = window;
+	public void setRenderer(GameRenderer renderer) {
+		this.renderer = renderer;
 	}
 	
 	public void receiveInput(InputCommand command) {
@@ -60,16 +63,18 @@ public class Game {
 		Game game = new Game();
 		MapLoader loader = new MapLoader();
 		try {
-			game.labyrinth = loader.loadLabyrinth("/tmp/map.txt");
+			String mapFile = "/tmp/map.txt";
+			game.labyrinth = loader.loadLabyrinth(mapFile);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		GameWindow window = new GameWindow(game);
+		GameWindow window = new GameWindow();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setSize(760, 760);
 		window.setVisible(true);
-		game.setWindow(window);
+		game.setRenderer(window);
+		window.setInputCommandHandler(game);
 		game.run();
 	}
 
@@ -174,7 +179,7 @@ public class Game {
 	}
 
 	private void draw() {
-		window.redraw();
+		if(renderer != null) renderer.drawGame(this);
 	}
 
 	private void printEndMessage() {

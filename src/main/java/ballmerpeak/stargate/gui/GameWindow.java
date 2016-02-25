@@ -8,22 +8,25 @@ import javax.swing.JFrame;
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.InputCommand;
 
-public class GameWindow extends JFrame implements KeyListener {
-	private Game game;
+public class GameWindow extends JFrame implements KeyListener, InputCommandSource, GameRenderer {
 	private GameCanvas canvas;
+	private InputCommandHandler inputHandler;
 	
-	public GameWindow(Game g) {
-		this.game = g;
-		this.canvas = new GameCanvas(this.game);
+	public GameWindow() {
+		this.canvas = new GameCanvas();
 		this.canvas.setVisible(true);
 		this.add(canvas);
-		this.game.setWindow(this);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.inputHandler = null;
 		this.addKeyListener(this);
 	}
+	
+	public void setInputCommandHandler(InputCommandHandler handler) {
+		this.inputHandler = handler;
+	}
 
-	public void redraw() {
-		canvas.paintComponent(canvas.getGraphics());
+	public void drawGame(Game game) {
+		canvas.paintGame(game, canvas.getGraphics());
 	}
 
 	@Override
@@ -44,7 +47,7 @@ public class GameWindow extends JFrame implements KeyListener {
 		default:
 			break;
 		}
-		game.receiveInput(cmd);
+		if(inputHandler != null) inputHandler.receiveInput(cmd);
 	}
 
 	@Override

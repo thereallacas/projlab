@@ -9,18 +9,11 @@ import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Labyrinth;
 import ballmerpeak.stargate.tiles.Tile;
 
-public class GameCanvas extends JPanel {
-	private Game game;
+public class GameCanvas extends JPanel {	
+	public static int TILE_WIDTH = 16;
+	public static int TILE_HEIGHT = 16;
 	
-	public static int TILE_WIDTH = 8;
-	public static int TILE_HEIGHT = 8;
-	
-	public GameCanvas(Game g) {
-		this.game = g;
-	}
-	
-	@Override
-	protected void paintComponent(Graphics g) {
+	public void paintGame(Game game, Graphics g) {
 		Labyrinth lab = game.getLabyrinth();
 		// Rajzolás demó.
 		for(int y = 0; y < lab.getHeight(); y++) {
@@ -34,6 +27,11 @@ public class GameCanvas extends JPanel {
 				g.fillRect(TILE_WIDTH * x, TILE_HEIGHT * y, TILE_WIDTH, TILE_HEIGHT);
 			}
 		}
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+		
 	}
 
 }
