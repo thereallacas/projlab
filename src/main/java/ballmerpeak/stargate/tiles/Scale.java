@@ -2,6 +2,7 @@ package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Position;
+import ballmerpeak.stargate.gui.ImageAssets;
 
 public class Scale extends Floor {
 
@@ -49,4 +50,8 @@ public class Scale extends Floor {
 		this.door = door;
 	}
 
+	@Override
+	public ImageAssets getGraphicalAsset() {
+		return ImageAssets.TILE_SCALE;
+	}
 }

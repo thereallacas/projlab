@@ -1,6 +1,7 @@
 package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Position;
+import ballmerpeak.stargate.gui.ImageAssets;
 
 public class Door extends Floor {
 
@@ -25,5 +26,10 @@ public class Door extends Floor {
 
 	public void open() {
 		open = true;
+	}
+	
+	@Override
+	public ImageAssets getGraphicalAsset() {
+		return isOpen() ? ImageAssets.TILE_FLOOR : ImageAssets.TILE_DOOR;
 	}
 }

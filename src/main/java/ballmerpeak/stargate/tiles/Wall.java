@@ -2,6 +2,7 @@ package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Position;
+import ballmerpeak.stargate.gui.ImageAssets;
 
 public class Wall extends Tile {
 
@@ -23,6 +24,11 @@ public class Wall extends Tile {
 	@Override
 	public void stepOnTile(Player player) {
 		throw new PlayerInsideWallException();
+	}
+
+	@Override
+	public ImageAssets getGraphicalAsset() {
+		return ImageAssets.TILE_WALL;
 	}
 
 }

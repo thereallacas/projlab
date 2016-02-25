@@ -4,6 +4,7 @@ import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Gate;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Position;
+import ballmerpeak.stargate.gui.ImageAssets;
 
 public class SpecialWall extends Wall {
 
@@ -44,5 +45,10 @@ public class SpecialWall extends Wall {
 
 	public void setColor(ShotColor color) {
 		this.color = color;
+	}
+	
+	@Override
+	public ImageAssets getGraphicalAsset() {
+		return ImageAssets.TILE_SPECIALWALL;
 	}
 }

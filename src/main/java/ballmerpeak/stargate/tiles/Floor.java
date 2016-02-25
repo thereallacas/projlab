@@ -2,6 +2,7 @@ package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Position;
+import ballmerpeak.stargate.gui.ImageAssets;
 
 public class Floor extends Tile {
 	
@@ -54,5 +55,10 @@ public class Floor extends Tile {
 			player.ZPMsCarried++;
 			ZPM = false;
 		}
+	}
+
+	@Override
+	public ImageAssets getGraphicalAsset() {
+		return ImageAssets.TILE_FLOOR;
 	}
 }

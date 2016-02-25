@@ -2,12 +2,18 @@ package ballmerpeak.stargate.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.JPanel;
 
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Labyrinth;
+import ballmerpeak.stargate.tiles.Door;
+import ballmerpeak.stargate.tiles.Pit;
+import ballmerpeak.stargate.tiles.Scale;
+import ballmerpeak.stargate.tiles.SpecialWall;
 import ballmerpeak.stargate.tiles.Tile;
+import ballmerpeak.stargate.tiles.Wall;
 
 public class GameCanvas extends JPanel {	
 	public static int TILE_WIDTH = 16;
@@ -21,13 +27,15 @@ public class GameCanvas extends JPanel {
 		// Rajzolás demó.
 		for(int y = 0; y < lab.getHeight(); y++) {
 			for(int x = 0; x < lab.getWidth(); x++) {
+				int scrX = TILE_WIDTH * x;
+				int scrY = TILE_HEIGHT * y;
 				Tile t = lab.getTile(y, x);
-				int red = x*y % 256;
-				int green = y*y % 256;
-				int blue = x*y % 256;
-				Color fillColor = new Color(red, green, blue);
-				g.setColor(fillColor);
-				g.fillRect(TILE_WIDTH * x, TILE_HEIGHT * y, TILE_WIDTH, TILE_HEIGHT);
+				Image tileImage = ImageAssets.getAsset(t.getGraphicalAsset());
+				g.drawImage(tileImage, scrX, scrY, null);
+				if(t.getPosition().equals(game.getLabyrinth().getPlayer().position)) {
+					g.setColor(Color.cyan);
+					g.fillRect(scrX, scrY, TILE_WIDTH, TILE_HEIGHT);
+				}
 			}
 		}
 	}
