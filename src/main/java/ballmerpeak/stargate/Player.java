@@ -19,6 +19,7 @@ public class Player {
 	}
 	
 	public void stepForward() {
+		if(!isAlive) return;
 		position = getPositionFrontOfPlayer();
 	}
 }
