@@ -26,6 +26,7 @@ public class MapLoader {
 
 	Map<Character, Door> doors;
 	Map<Character, Scale> scales;
+	Player player;
 	
 	int zpms;
 
@@ -41,9 +42,7 @@ public class MapLoader {
 			int height = Integer.parseInt(lineOne);
 			int width = Integer.parseInt(lineTwo);
 
-			Player player = new Player();
 			labyrinth = new Labyrinth(height, width);
-			labyrinth.setPlayer(player);
 			
 			// get empty line between header and body
 			br.readLine();
@@ -55,11 +54,6 @@ public class MapLoader {
 					if ((i == 0 || i == height - 1 || j == 0 || j == width - 1) && (line.charAt(j) != '#'))
 						throw new InvalidMapFileException("edge of map has to be walled");
 					
-					if (line.charAt(j) == '@') {
-						player.position = new Position(i, j);
-						player.direction = Direction.UP;
-					}
-					
 					Tile tile = createTile(line.charAt(j), new Position(i, j));
 					labyrinth.setTile(i, j, tile);
 				}
@@ -67,6 +61,7 @@ public class MapLoader {
 		}
 		setupDoors();
 		labyrinth.setNumberOfZPMs(zpms);
+		labyrinth.setPlayer(player);
 		return labyrinth;
 	}
 	
@@ -83,6 +78,9 @@ public class MapLoader {
 		switch (c) {
 
 		case '@':
+			player = new Player();
+			player.position = pos;
+			player.direction = Direction.UP;
 		case ' ':
 			return new Floor(pos);
 		case '#':

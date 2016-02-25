@@ -45,6 +45,10 @@ public class Labyrinth {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
+	
+	public Player getPlayer() {
+		return this.player;
+	}
 
 	public int getWidth() {
 		return width;

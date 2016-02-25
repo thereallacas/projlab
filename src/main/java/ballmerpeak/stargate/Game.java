@@ -1,19 +1,84 @@
 package ballmerpeak.stargate;
 
+import static ballmerpeak.stargate.Direction.*;
+import java.io.IOException;
 
+import javax.swing.JFrame;
+
+import ballmerpeak.stargate.gui.GameRenderer;
+import ballmerpeak.stargate.gui.GameWindow;
+import ballmerpeak.stargate.gui.InputCommandHandler;
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.ShotResult;
 import ballmerpeak.stargate.tiles.SpecialWall;
 import ballmerpeak.stargate.tiles.Tile;
+import ballmerpeak.stargate.utils.MapLoader;
 
-public class Game {
+public class Game implements InputCommandHandler {
 
 	Player player;
 	Labyrinth labyrinth;
 	Gate gate;
+	GameRenderer renderer = null;
 
-	Game() {
-		
+	public void setRenderer(GameRenderer renderer) {
+		this.renderer = renderer;
+	}
+	
+	public void requestRedraw() {
+		draw();
+	}
+	
+	public void receiveInput(InputCommand command) {
+		switch (command) {
+		case UP_KEY:
+			updatePos(UP);
+			break;
+		case DOWN_KEY:
+			updatePos(DOWN);
+			break;
+		case LEFT_KEY:
+			updatePos(LEFT);
+			break;
+		case RIGHT_KEY:
+			updatePos(RIGHT);
+			break;
+		case SHOOT_BLUE_KEY:
+			shoot(ShotColor.BLUE);
+			break;
+		case SHOOT_YELLOW_KEY:
+			shoot(ShotColor.YELLOW);
+			break;
+		case PICKUP_KEY:
+			doPickup();
+			break;
+		case QUIT_KEY:
+			System.exit(0);
+			break;
+		case UNKNOWN_KEY:
+		default:
+			break;
+		}
+		draw();
+	}
+
+	public static void main(String... args) {
+		MapLoader loader = new MapLoader();
+		Labyrinth labyrinth = null;
+		try {
+			String mapFile = "/tmp/map.txt";
+			labyrinth = loader.loadLabyrinth(mapFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		GameWindow window = new GameWindow();
+		Game game = new Game();
+		game.player = labyrinth.getPlayer();
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setSize(760, 760);
+		window.setVisible(true);
+		game.setRenderer(window);
+		window.setInputCommandHandler(game);
 	}
 
 	void updatePos(Direction dir) {
@@ -41,6 +106,15 @@ public class Game {
 			}
 		}
 	}
+	
+	public Labyrinth getLabyrinth() {
+		return this.labyrinth;
+	}
+	
+	public void setLabyrinth(Labyrinth l) {
+		this.labyrinth = l;
+		this.player = l.getPlayer();
+	}
 
 	private void shoot(ShotColor color) {
 		Position pos = player.getPositionFrontOfPlayer();
@@ -67,4 +141,7 @@ public class Game {
 		}
 	}
 
+	private void draw() {
+		if(renderer != null) renderer.drawGame(this);
+	}
 }
