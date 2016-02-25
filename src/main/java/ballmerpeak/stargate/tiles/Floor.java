@@ -2,10 +2,11 @@ package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Position;
+import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Floor extends Tile {
 	
-	private boolean occupied;
+	protected boolean occupied;
 	private boolean ZPM;
 
 	public Floor(Position pos) {
@@ -54,5 +55,12 @@ public class Floor extends Tile {
 			player.ZPMsCarried++;
 			ZPM = false;
 		}
+	}
+
+	@Override
+	public DrawableIndex getDrawableIndex() {
+		return ZPM ? DrawableIndex.FLOOR_WITH_ZPM :
+			occupied ? DrawableIndex.FLOOR_WITH_CRATE :
+				DrawableIndex.FLOOR;
 	}
 }
