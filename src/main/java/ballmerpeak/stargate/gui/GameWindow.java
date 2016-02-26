@@ -31,7 +31,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		
 		// TODO use Path API
 		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
-		String mapFile = dataDirectory + "/map1.txt";
+		String mapFile = dataDirectory + "/map2.txt";
 		labyrinth = loader.loadLabyrinth(mapFile);
 		GameCanvas.loadAssets(dataDirectory + "/images/");
 

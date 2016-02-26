@@ -39,7 +39,8 @@ public class Scale extends Floor {
 
 	@Override
 	public void leaveTile() {
-		getDoor().close();
+		if (!occupied)
+			getDoor().close();
 	}
 
 	public Door getDoor() {

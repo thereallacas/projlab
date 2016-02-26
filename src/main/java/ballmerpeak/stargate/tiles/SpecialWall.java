@@ -15,6 +15,7 @@ public class SpecialWall extends Wall {
 
 	public SpecialWall(Position pos, Direction dir, Gate gate) {
 		super(pos);
+		color = ShotColor.INACTIVE;
 		direction = dir;
 		this.gate = gate;
 	}
@@ -35,11 +36,7 @@ public class SpecialWall extends Wall {
 
 	@Override
 	public ShotResult shootIt(ShotColor color) {
-		if (color == ShotColor.YELLOW) {
-			gate.setYellowWall(this);
-		} else {
-			gate.setBlueWall(this);
-		}
+		gate.setWallForColor(color, this);
 		return ShotResult.SPECIAL_WALL_HIT;
 	}
 
