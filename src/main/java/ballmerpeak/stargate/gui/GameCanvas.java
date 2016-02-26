@@ -32,6 +32,7 @@ public class GameCanvas extends JPanel {
 				Image tileImage = getAsset(t.getDrawableIndex());
 				g.drawImage(tileImage, scrX, scrY, TILE_WIDTH, TILE_HEIGHT, null);
 				if(t.getPosition().equals(game.getLabyrinth().getPlayer().position)) {
+					// TODO player is now Drawable, use that interface
 					g.setColor(Color.cyan);
 					g.fillRect(scrX, scrY, TILE_WIDTH, TILE_HEIGHT);
 				}
