@@ -1,48 +1,22 @@
 package ballmerpeak.stargate;
 
 import static ballmerpeak.stargate.Direction.*;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
-import javax.swing.JFrame;
-
-import ballmerpeak.stargate.gui.GameRenderer;
-import ballmerpeak.stargate.gui.GameWindow;
 import ballmerpeak.stargate.gui.InputCommandHandler;
-import ballmerpeak.stargate.gui.InputCommandSource;
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.ShotResult;
 import ballmerpeak.stargate.tiles.SpecialWall;
 import ballmerpeak.stargate.tiles.Tile;
-import ballmerpeak.stargate.utils.MapLoader;
-import ballmerpeak.stargate.gui.ImageAssets;
 
 public class Game implements InputCommandHandler {
-	static final int MAX_ZPMS = 10;
 
 	Player player;
 	Labyrinth labyrinth;
 	Gate gate;
-	GameRenderer renderer = null;
 
-	public Game() {
-		MapLoader loader = new MapLoader();
-		try {
-			String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
-			String mapFile = dataDirectory + "/map1.txt";
-			labyrinth = loader.loadLabyrinth(mapFile);
-			ImageAssets.loadAssets(dataDirectory + "/images/");
-			this.player = labyrinth.getPlayer();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		gate = new Gate();
-	}
-	
-	public void setRenderer(GameRenderer renderer) {
-		this.renderer = renderer;
+	public Game(Labyrinth l) {
+		this.player = l.getPlayer();
+		this.labyrinth = l;
+		this.gate = l.getGate();
 	}
 	
 	public void receiveInput(InputCommand command) {
@@ -75,7 +49,7 @@ public class Game implements InputCommandHandler {
 		default:
 			break;
 		}
-		renderer.drawGame(this);
+		
 	}
 
 	void updatePos(Direction dir) {

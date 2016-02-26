@@ -2,11 +2,14 @@ package ballmerpeak.stargate.gui;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.InputCommand;
+import ballmerpeak.stargate.Labyrinth;
+import ballmerpeak.stargate.utils.MapLoader;
 
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource, GameRenderer {
 	private GameCanvas canvas;
@@ -21,13 +24,20 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		this.addKeyListener(this);
 	}
 	
-	public static void main(String... args) {
-		Game game = new Game();
+	public static void main(String... args) throws IOException {
+		MapLoader loader = new MapLoader();
+		Labyrinth labyrinth = null;
+		
+		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
+		String mapFile = dataDirectory + "/map1.txt";
+		labyrinth = loader.loadLabyrinth(mapFile);
+		GameCanvas.loadAssets(dataDirectory + "/images/");
+
+		Game game = new Game(labyrinth);
 		GameWindow window = new GameWindow();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setSize(760, 760);
 		window.setVisible(true);
-		game.setRenderer(window);
 		window.setInputCommandHandler(game);
 		window.drawGame(game);
 	}

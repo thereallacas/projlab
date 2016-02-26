@@ -2,7 +2,7 @@ package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Position;
-import ballmerpeak.stargate.gui.ImageAssets;
+import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Pit extends Tile {
 
@@ -16,9 +16,7 @@ public class Pit extends Tile {
 		player.isAlive = false;
 	}
 
-	@Override
-	public ImageAssets getGraphicalAsset() {
-		return ImageAssets.TILE_PIT;
+	public DrawableIndex getDrawableIndex() {
+		return DrawableIndex.PIT;
 	}
-	
 }
