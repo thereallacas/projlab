@@ -54,7 +54,4 @@ public class Scale extends Floor {
 	public DrawableIndex getDrawableIndex() {
 		return occupied ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE; 
 	}
-	
-	
-
 }

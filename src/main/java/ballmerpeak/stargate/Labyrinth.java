@@ -13,6 +13,8 @@ public class Labyrinth {
 
 	private int numberOfZPMs;
 	
+	private final Gate gate = new Gate();
+	
 	public int getNumberOfZPMs() {
 		return numberOfZPMs;
 	}
@@ -56,5 +58,9 @@ public class Labyrinth {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public Gate getGate() {
+		return gate;
 	}
 }

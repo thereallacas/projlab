@@ -43,6 +43,7 @@ public class MapLoader {
 			int width = Integer.parseInt(lineTwo);
 
 			labyrinth = new Labyrinth(height, width);
+			this.gate = labyrinth.getGate();
 			
 			// get empty line between header and body
 			br.readLine();

@@ -1,32 +1,22 @@
 package ballmerpeak.stargate;
 
 import static ballmerpeak.stargate.Direction.*;
-import java.io.IOException;
-
-import javax.swing.JFrame;
-
-import ballmerpeak.stargate.gui.GameRenderer;
-import ballmerpeak.stargate.gui.GameWindow;
 import ballmerpeak.stargate.gui.InputCommandHandler;
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.ShotResult;
 import ballmerpeak.stargate.tiles.SpecialWall;
 import ballmerpeak.stargate.tiles.Tile;
-import ballmerpeak.stargate.utils.MapLoader;
 
 public class Game implements InputCommandHandler {
 
 	Player player;
 	Labyrinth labyrinth;
 	Gate gate;
-	GameRenderer renderer = null;
 
-	public void setRenderer(GameRenderer renderer) {
-		this.renderer = renderer;
-	}
-	
-	public void requestRedraw() {
-		draw();
+	public Game(Labyrinth l) {
+		this.player = l.getPlayer();
+		this.labyrinth = l;
+		this.gate = l.getGate();
 	}
 	
 	public void receiveInput(InputCommand command) {
@@ -59,26 +49,7 @@ public class Game implements InputCommandHandler {
 		default:
 			break;
 		}
-		draw();
-	}
-
-	public static void main(String... args) {
-		MapLoader loader = new MapLoader();
-		Labyrinth labyrinth = null;
-		try {
-			String mapFile = "/tmp/map.txt";
-			labyrinth = loader.loadLabyrinth(mapFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		GameWindow window = new GameWindow();
-		Game game = new Game();
-		game.player = labyrinth.getPlayer();
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setSize(760, 760);
-		window.setVisible(true);
-		game.setRenderer(window);
-		window.setInputCommandHandler(game);
+		
 	}
 
 	void updatePos(Direction dir) {
@@ -131,17 +102,7 @@ public class Game implements InputCommandHandler {
 		if (result == ShotResult.REGULAR_WALL_HIT) {
 			return;
 		}
-
-		if (color == ShotColor.BLUE) {
-			gate.getBlueWall().setColor(ShotColor.INACTIVE);
-			gate.setBlueWall((SpecialWall) tile);
-		} else {
-			gate.getYellowWall().setColor(ShotColor.INACTIVE);
-			gate.setYellowWall((SpecialWall) tile);
-		}
-	}
-
-	private void draw() {
-		if(renderer != null) renderer.drawGame(this);
+		if(ShotColor.BLUE == color) gate.setBlueWall((SpecialWall)tile);
+		else gate.setYellowWall((SpecialWall)tile);
 	}
 }

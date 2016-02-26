@@ -32,6 +32,4 @@ public class Door extends Floor {
 	public DrawableIndex getDrawableIndex() {
 		return open ? DrawableIndex.DOOR_OPEN : DrawableIndex.DOOR_CLOSED;
 	}
-	
-	
 }

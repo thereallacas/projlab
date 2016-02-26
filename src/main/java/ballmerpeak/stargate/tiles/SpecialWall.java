@@ -35,7 +35,7 @@ public class SpecialWall extends Wall {
 
 	@Override
 	public ShotResult shootIt(ShotColor color) {
-		this.setColor(color == ShotColor.BLUE ? ShotColor.BLUE : ShotColor.YELLOW);
+		this.setColor(color);
 		return ShotResult.SPECIAL_WALL_HIT;
 	}
 
@@ -53,6 +53,4 @@ public class SpecialWall extends Wall {
 			color == ShotColor.YELLOW ? DrawableIndex.SPECIAL_WALL_YELLOW :
 				DrawableIndex.SPECIAL_WALL_INACTIVE;
 	}
-	
-	
 }

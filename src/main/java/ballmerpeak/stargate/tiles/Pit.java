@@ -16,9 +16,7 @@ public class Pit extends Tile {
 		player.isAlive = false;
 	}
 
-	@Override
 	public DrawableIndex getDrawableIndex() {
 		return DrawableIndex.PIT;
 	}
-	
 }

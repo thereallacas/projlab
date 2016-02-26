@@ -57,7 +57,6 @@ public class Floor extends Tile {
 		}
 	}
 
-	@Override
 	public DrawableIndex getDrawableIndex() {
 		return ZPM ? DrawableIndex.FLOOR_WITH_ZPM :
 			occupied ? DrawableIndex.FLOOR_WITH_CRATE :

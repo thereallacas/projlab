@@ -2,13 +2,17 @@ package ballmerpeak.stargate.gui;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.InputCommand;
+import ballmerpeak.stargate.Labyrinth;
+import ballmerpeak.stargate.utils.MapLoader;
 
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource, GameRenderer {
+	private static Game game;
 	private GameCanvas canvas;
 	private InputCommandHandler inputHandler;
 	
@@ -19,6 +23,24 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.inputHandler = null;
 		this.addKeyListener(this);
+	}
+	
+	public static void main(String... args) throws IOException {
+		MapLoader loader = new MapLoader();
+		Labyrinth labyrinth = null;
+		
+		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
+		String mapFile = dataDirectory + "/map1.txt";
+		labyrinth = loader.loadLabyrinth(mapFile);
+		GameCanvas.loadAssets(dataDirectory + "/images/");
+
+		game = new Game(labyrinth);
+		GameWindow window = new GameWindow();
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setSize(760, 760);
+		window.setVisible(true);
+		window.setInputCommandHandler(game);
+		window.drawGame(game);
 	}
 	
 	public void setInputCommandHandler(InputCommandHandler handler) {
@@ -44,10 +66,24 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 			break;
 		case KeyEvent.VK_RIGHT:
 			cmd = InputCommand.RIGHT_KEY;
+			break;
+		case KeyEvent.VK_A:
+			cmd = InputCommand.SHOOT_BLUE_KEY;
+			break;
+		case KeyEvent.VK_S:
+			cmd = InputCommand.SHOOT_YELLOW_KEY;
+			break;
+		case KeyEvent.VK_D:
+			cmd = InputCommand.PICKUP_KEY;
+			break;
+		case KeyEvent.VK_Q:
+			cmd = InputCommand.QUIT_KEY;
+			break;
 		default:
 			break;
 		}
 		if(inputHandler != null) inputHandler.receiveInput(cmd);
+		this.drawGame(game);
 	}
 
 	@Override

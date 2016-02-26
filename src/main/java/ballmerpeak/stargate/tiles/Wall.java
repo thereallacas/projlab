@@ -25,11 +25,8 @@ public class Wall extends Tile {
 	public void stepOnTile(Player player) {
 		throw new PlayerInsideWallException();
 	}
-
-	@Override
+	
 	public DrawableIndex getDrawableIndex() {
 		return DrawableIndex.WALL;
 	}
-	
-
 }

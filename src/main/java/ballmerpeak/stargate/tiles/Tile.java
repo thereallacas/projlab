@@ -5,7 +5,6 @@ import ballmerpeak.stargate.Position;
 import ballmerpeak.stargate.gui.Drawable;
 
 public abstract class Tile implements Drawable {
-	
 	private final Position position;
 	
 	public Tile(Position pos) {
