@@ -12,6 +12,7 @@ import ballmerpeak.stargate.Labyrinth;
 import ballmerpeak.stargate.utils.MapLoader;
 
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource, GameRenderer {
+	private static Game game;
 	private GameCanvas canvas;
 	private InputCommandHandler inputHandler;
 	
@@ -33,7 +34,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		labyrinth = loader.loadLabyrinth(mapFile);
 		GameCanvas.loadAssets(dataDirectory + "/images/");
 
-		Game game = new Game(labyrinth);
+		game = new Game(labyrinth);
 		GameWindow window = new GameWindow();
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setSize(760, 760);
@@ -65,10 +66,24 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 			break;
 		case KeyEvent.VK_RIGHT:
 			cmd = InputCommand.RIGHT_KEY;
+			break;
+		case KeyEvent.VK_A:
+			cmd = InputCommand.SHOOT_BLUE_KEY;
+			break;
+		case KeyEvent.VK_S:
+			cmd = InputCommand.SHOOT_YELLOW_KEY;
+			break;
+		case KeyEvent.VK_D:
+			cmd = InputCommand.PICKUP_KEY;
+			break;
+		case KeyEvent.VK_Q:
+			cmd = InputCommand.QUIT_KEY;
+			break;
 		default:
 			break;
 		}
 		if(inputHandler != null) inputHandler.receiveInput(cmd);
+		this.drawGame(game);
 	}
 
 	@Override

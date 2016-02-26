@@ -49,7 +49,7 @@ public class GameCanvas extends JPanel {
 			if(asset == DrawableIndex.ASSETCOUNT) continue;
 			String assetFileName = path + asset.name() + "." + imageFormat;
 			File assetFile = new File(assetFileName);
-			if(!assetFile.exists()) throw new IOException("Can't open file " + assetFileName);
+			if(!assetFile.exists()) continue;
 			tileImages[asset.ordinal()] = ImageIO.read(assetFile);
 		}
 	}

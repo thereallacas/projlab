@@ -22,10 +22,10 @@ public class Game implements InputCommandHandler {
 	public void receiveInput(InputCommand command) {
 		switch (command) {
 		case UP_KEY:
-			updatePos(DOWN);
+			updatePos(UP);
 			break;
 		case DOWN_KEY:
-			updatePos(UP);
+			updatePos(DOWN);
 			break;
 		case LEFT_KEY:
 			updatePos(LEFT);
@@ -102,13 +102,7 @@ public class Game implements InputCommandHandler {
 		if (result == ShotResult.REGULAR_WALL_HIT) {
 			return;
 		}
-
-		if (color == ShotColor.BLUE) {
-			gate.getBlueWall().setColor(ShotColor.INACTIVE);
-			gate.setBlueWall((SpecialWall) tile);
-		} else {
-			gate.getYellowWall().setColor(ShotColor.INACTIVE);
-			gate.setYellowWall((SpecialWall) tile);
-		}
+		if(ShotColor.BLUE == color) gate.setBlueWall((SpecialWall)tile);
+		else gate.setYellowWall((SpecialWall)tile);
 	}
 }
