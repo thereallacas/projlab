@@ -98,11 +98,5 @@ public class Game implements InputCommandHandler {
 			tile = labyrinth.getTile(pos.y, pos.x);
 			result = tile.shootIt(color);
 		}
-		
-		if (result == ShotResult.REGULAR_WALL_HIT) {
-			return;
-		}
-		if(ShotColor.BLUE == color) gate.setBlueWall((SpecialWall)tile);
-		else gate.setYellowWall((SpecialWall)tile);
 	}
 }

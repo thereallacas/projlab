@@ -35,7 +35,11 @@ public class SpecialWall extends Wall {
 
 	@Override
 	public ShotResult shootIt(ShotColor color) {
-		this.setColor(color);
+		if (color == ShotColor.YELLOW) {
+			gate.setYellowWall(this);
+		} else {
+			gate.setBlueWall(this);
+		}
 		return ShotResult.SPECIAL_WALL_HIT;
 	}
 

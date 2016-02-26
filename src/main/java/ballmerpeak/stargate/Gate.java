@@ -1,5 +1,6 @@
 package ballmerpeak.stargate;
 
+import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.SpecialWall;
 
 public class Gate {
@@ -24,7 +25,11 @@ public class Gate {
 	}
 	
 	public void setYellowWall(SpecialWall wall) {
+		if (yellowWall != null) {
+			yellowWall.setColor(ShotColor.INACTIVE);
+		}
 		yellowWall = wall;
+		yellowWall.setColor(ShotColor.YELLOW);
 		yellowActive = true;
 		if (blueActive) {
 			active = true;
@@ -32,7 +37,11 @@ public class Gate {
 	}
 	
 	public void setBlueWall(SpecialWall wall) {
+		if (blueWall != null) {
+			blueWall.setColor(ShotColor.INACTIVE);
+		}
 		blueWall= wall;
+		blueWall.setColor(ShotColor.BLUE);
 		blueActive = true;
 		if (yellowActive) {
 			active = true;
@@ -41,5 +50,9 @@ public class Gate {
 	
 	public boolean isActive() {
 		return active;
+	}
+	
+	public SpecialWall getWallForColor(ShotColor color) {
+		return color == ShotColor.YELLOW ? getYellowWall() : getBlueWall();
 	}
 }
