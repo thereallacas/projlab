@@ -2,23 +2,23 @@
 
 ## File format
 
-first line: number of rows
-second line: number of columns
+- first line: number of rows
+- second line: number of columns
 
-edge of map has to be walled
+- edge of map has to be walled
 
 ### legend:
 
-'#' wall
-' ' floor
-'@' player start position
-'0' pit
-'$' zpm
-'%' crate
-'>' special wall facing right
-'<' special wall facing left
-'^' special wall facing up
-'/' special wall facing down
+- '#' wall
+- ' ' floor
+- '@' player start position
+- '0' pit
+- '$' zpm
+- '%' crate
+- '>' special wall facing right
+- '<' special wall facing left
+- '^' special wall facing up
+- '/' special wall facing down
 
 example in src/test/resources/map1.txt
 
