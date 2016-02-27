@@ -1,6 +1,5 @@
 package ballmerpeak.stargate.gui;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -9,7 +8,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Labyrinth;
 import ballmerpeak.stargate.tiles.Tile;
 
@@ -19,20 +17,18 @@ public class GameCanvas extends JPanel {
 	
 	private static String imageFormat = "png";
 	private static Image tileImages[] = new Image[DrawableIndex.values().length];
-	private Game lastRenderedGame = null;
+	private Labyrinth lastRenderedGame = null;
 	
-	public void paintGame(Game game, Graphics g) {
-		lastRenderedGame = game;
-		Labyrinth lab = game.getLabyrinth();
-		for(int y = 0; y < lab.getHeight(); y++) {
+	public void paintGame(Labyrinth lab, Graphics g) {
+			for(int y = 0; y < lab.getHeight(); y++) {
 			for(int x = 0; x < lab.getWidth(); x++) {
 				int scrX = TILE_WIDTH * x;
 				int scrY = TILE_HEIGHT * y;
 				Tile t = lab.getTile(y, x);
 				Image tileImage = getAsset(t.getDrawableIndex());
 				g.drawImage(tileImage, scrX, scrY, TILE_WIDTH, TILE_HEIGHT, null);
-				if(t.getPosition().equals(game.getLabyrinth().getPlayer().position)) {
-					tileImage = getAsset(game.getLabyrinth().getPlayer().getDrawableIndex());
+				if(t.getPosition().equals(lab.getPlayer().position)) {
+					tileImage = getAsset(lab.getPlayer().getDrawableIndex());
 					g.drawImage(tileImage, scrX, scrY, TILE_WIDTH, TILE_HEIGHT, null);
 				}
 			}

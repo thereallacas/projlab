@@ -1,8 +1,11 @@
 package ballmerpeak.stargate;
 
+import ballmerpeak.stargate.gui.InputCommandHandler;
+import ballmerpeak.stargate.tiles.ShotColor;
+import ballmerpeak.stargate.tiles.ShotResult;
 import ballmerpeak.stargate.tiles.Tile;
 
-public class Labyrinth {
+public class Labyrinth implements InputCommandHandler {
 
 	private final int height, width;
 	
@@ -62,5 +65,77 @@ public class Labyrinth {
 
 	public Gate getGate() {
 		return gate;
+	}
+
+	@Override
+	public void receiveInput(InputCommand command) {
+		switch (command) {
+		case UP_KEY:
+			movePlayer(Direction.UP);
+			break;
+		case DOWN_KEY:
+			movePlayer(Direction.DOWN);
+			break;
+		case LEFT_KEY:
+			movePlayer(Direction.LEFT);
+			break;
+		case RIGHT_KEY:
+			movePlayer(Direction.RIGHT);
+			break;
+		case SHOOT_BLUE_KEY:
+			shoot(ShotColor.BLUE);
+			break;
+		case SHOOT_YELLOW_KEY:
+			shoot(ShotColor.YELLOW);
+			break;
+		case PICKUP_KEY:
+			pickup();
+			break;
+		case QUIT_KEY:
+			System.exit(0);
+			break;
+		case UNKNOWN_KEY:
+		default:
+			break;
+		}
+	}
+
+	private void shoot(ShotColor color) {
+		Position pos = player.getPositionFrontOfPlayer();
+		Tile tile = getTileFrontOfPlayer();
+		Direction dir = player.direction;
+		
+		ShotResult result = tile.shootIt(color);
+		while (result == ShotResult.TILE_HIT) {
+			pos = pos.plusDir(dir);
+			tile = getTile(pos.y, pos.x);
+			result = tile.shootIt(color);
+		}
+	}
+
+	private void pickup() {
+		Tile tile = getTileFrontOfPlayer();
+		if (player.isCarrying) {
+			if (tile.dropCrateHere()) {
+				player.isCarrying = false;
+			}
+		} else {
+			if (tile.pickupCrate()) {
+				player.isCarrying = true;
+			}
+		}
+	}
+
+	private void movePlayer(Direction dir) {
+		if (player.direction != dir) {
+			player.direction = dir;
+		} else {
+			Tile nextTile = getTileFrontOfPlayer();
+			if (nextTile.canPlayerMoveHere()) {
+				Tile currentTile = getTile(player.position.y, player.position.x);
+				currentTile.leaveTile();
+				nextTile.stepOnTile(player);
+			}
+		}
 	}
 }
