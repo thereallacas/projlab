@@ -20,7 +20,7 @@
 - '^' special wall facing up
 - '/' special wall facing down
 
-example in src/test/resources/map1.txt
+example in src/test/resources/maps/map1.txt
 
 ## to try the new map
 

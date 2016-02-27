@@ -18,7 +18,7 @@ public class GameCanvas extends JPanel {
 	public static int TILE_HEIGHT = 16;
 	
 	private static String imageFormat = "png";
-	private static Image tileImages[] = new Image[DrawableIndex.ASSETCOUNT.ordinal()];
+	private static Image tileImages[] = new Image[DrawableIndex.values().length];
 	private Game lastRenderedGame = null;
 	
 	public void paintGame(Game game, Graphics g) {
@@ -46,7 +46,6 @@ public class GameCanvas extends JPanel {
 	
 	public static void loadAssets(String path) throws IOException {
 		for(DrawableIndex asset: DrawableIndex.values()) {
-			if(asset == DrawableIndex.ASSETCOUNT) continue;
 			String assetFileName = path + asset.name() + "." + imageFormat;
 			File assetFile = new File(assetFileName);
 			if(!assetFile.exists()) continue;
