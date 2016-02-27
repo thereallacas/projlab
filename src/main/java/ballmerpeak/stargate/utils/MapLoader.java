@@ -10,7 +10,6 @@ import java.util.Map;
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Gate;
 import ballmerpeak.stargate.Labyrinth;
-import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Position;
 import ballmerpeak.stargate.tiles.Door;
 import ballmerpeak.stargate.tiles.Floor;
