@@ -26,16 +26,15 @@ public class MapLoader {
 
 	Map<Character, Door> doors;
 	Map<Character, Scale> scales;
-	Player player;
 	
 	int zpms;
-
+	Labyrinth labyrinth = null;
+	
 	public Labyrinth loadLabyrinth(String filename) throws FileNotFoundException, IOException {
 		gate = new Gate();
 		doors = new HashMap<>();
 		scales = new HashMap<>();
 		zpms = 0;
-		Labyrinth labyrinth = null;
 		try (FileReader fr = new FileReader(filename); BufferedReader br = new BufferedReader(fr)) {
 			String lineOne = br.readLine();
 			String lineTwo = br.readLine();
@@ -62,7 +61,6 @@ public class MapLoader {
 		}
 		setupDoors();
 		labyrinth.setNumberOfZPMs(zpms);
-		labyrinth.setPlayer(player);
 		return labyrinth;
 	}
 	
@@ -79,9 +77,7 @@ public class MapLoader {
 		switch (c) {
 
 		case '@':
-			player = new Player();
-			player.position = pos;
-			player.direction = Direction.UP;
+			labyrinth.setPlayerPos(pos);
 		case ' ':
 			return new Floor(pos);
 		case '#':

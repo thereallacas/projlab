@@ -54,31 +54,31 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		InputCommand cmd = InputCommand.UNKNOWN_KEY;
+		InputCommand cmd = InputCommand.UNKNOWN_COMMAND;
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			cmd = InputCommand.UP_KEY;
+			cmd = InputCommand.UP_COMMAND;
 			break;
 		case KeyEvent.VK_DOWN:
-			cmd = InputCommand.DOWN_KEY;
+			cmd = InputCommand.DOWN_COMMAND;
 			break;
 		case KeyEvent.VK_LEFT:
-			cmd = InputCommand.LEFT_KEY;
+			cmd = InputCommand.LEFT_COMMAND;
 			break;
 		case KeyEvent.VK_RIGHT:
-			cmd = InputCommand.RIGHT_KEY;
+			cmd = InputCommand.RIGHT_COMMAND;
 			break;
 		case KeyEvent.VK_A:
-			cmd = InputCommand.SHOOT_BLUE_KEY;
+			cmd = InputCommand.SHOOT_BLUE_COMMAND;
 			break;
 		case KeyEvent.VK_S:
-			cmd = InputCommand.SHOOT_YELLOW_KEY;
+			cmd = InputCommand.SHOOT_YELLOW_COMMAND;
 			break;
 		case KeyEvent.VK_D:
-			cmd = InputCommand.PICKUP_KEY;
+			cmd = InputCommand.PICKUP_COMMAND;
 			break;
 		case KeyEvent.VK_Q:
-			cmd = InputCommand.QUIT_KEY;
+			cmd = InputCommand.QUIT_COMMAND;
 			break;
 		default:
 			break;

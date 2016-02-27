@@ -9,10 +9,9 @@ public class Labyrinth implements InputCommandHandler {
 
 	private final int height, width;
 	
-
-	private Tile[][] tiles;
+	private final Tile[][] tiles;
 	
-	private Player player;
+	private final Player player;
 
 	private int numberOfZPMs;
 	
@@ -31,6 +30,7 @@ public class Labyrinth implements InputCommandHandler {
 		this.width = width;
 		tiles = new Tile[height][width];
 		numberOfZPMs = 0;
+		player = new Player();
 	}
 
 	public Tile getTileFrontOfPlayer() {
@@ -47,12 +47,12 @@ public class Labyrinth implements InputCommandHandler {
 		tiles[y][x] = tile;
 	}
 
-	public void setPlayer(Player player) {
-		this.player = player;
-	}
-	
 	public Player getPlayer() {
 		return this.player;
+	}
+	
+	public void setPlayerPos(Position pos) {
+		player.position = pos;
 	}
 
 	public int getWidth() {
@@ -70,31 +70,31 @@ public class Labyrinth implements InputCommandHandler {
 	@Override
 	public void receiveInput(InputCommand command) {
 		switch (command) {
-		case UP_KEY:
+		case UP_COMMAND:
 			movePlayer(Direction.UP);
 			break;
-		case DOWN_KEY:
+		case DOWN_COMMAND:
 			movePlayer(Direction.DOWN);
 			break;
-		case LEFT_KEY:
+		case LEFT_COMMAND:
 			movePlayer(Direction.LEFT);
 			break;
-		case RIGHT_KEY:
+		case RIGHT_COMMAND:
 			movePlayer(Direction.RIGHT);
 			break;
-		case SHOOT_BLUE_KEY:
+		case SHOOT_BLUE_COMMAND:
 			shoot(ShotColor.BLUE);
 			break;
-		case SHOOT_YELLOW_KEY:
+		case SHOOT_YELLOW_COMMAND:
 			shoot(ShotColor.YELLOW);
 			break;
-		case PICKUP_KEY:
+		case PICKUP_COMMAND:
 			pickup();
 			break;
-		case QUIT_KEY:
+		case QUIT_COMMAND:
 			System.exit(0);
 			break;
-		case UNKNOWN_KEY:
+		case UNKNOWN_COMMAND:
 		default:
 			break;
 		}

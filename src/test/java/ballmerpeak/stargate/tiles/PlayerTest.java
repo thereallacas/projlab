@@ -23,12 +23,12 @@ public class PlayerTest {
 	@Test
 	public void testStepForward() {
 		player.stepForward();
-		assertEquals(new Position(51, 50), player.position);
+		assertEquals(new Position(49, 50), player.position);
 	}
 
 	@Test
 	public void testPositionFrontOfPlayer() {
 		Position pos = player.getPositionFrontOfPlayer();
-		assertEquals(new Position(51, 50), pos);
+		assertEquals(new Position(49, 50), pos);
 	}
 }
