@@ -1,22 +1,21 @@
 package ballmerpeak.stargate;
 
-import ballmerpeak.stargate.gui.InputCommandHandler;
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.ShotResult;
 import ballmerpeak.stargate.tiles.Tile;
 
-public class Labyrinth implements InputCommandHandler {
+public class Labyrinth {
 
 	private final int height, width;
-	
+
 	private final Tile[][] tiles;
-	
+
 	private final Player player;
 
 	private int numberOfZPMs;
-	
+
 	private final Gate gate = new Gate();
-	
+
 	public int getNumberOfZPMs() {
 		return numberOfZPMs;
 	}
@@ -38,11 +37,11 @@ public class Labyrinth implements InputCommandHandler {
 		Tile nextTile = tiles[newPos.y][newPos.x];
 		return nextTile;
 	}
-	
+
 	public Tile getTile(int y, int x) {
 		return tiles[y][x];
 	}
-	
+
 	public void setTile(int y, int x, Tile tile) {
 		tiles[y][x] = tile;
 	}
@@ -50,9 +49,13 @@ public class Labyrinth implements InputCommandHandler {
 	public Player getPlayer() {
 		return this.player;
 	}
-	
+
 	public void setPlayerPos(Position pos) {
 		player.position = pos;
+	}
+
+	public Position getPlayerPosition() {
+		return player.position;
 	}
 
 	public int getWidth() {
@@ -67,44 +70,11 @@ public class Labyrinth implements InputCommandHandler {
 		return gate;
 	}
 
-	@Override
-	public void receiveInput(InputCommand command) {
-		switch (command) {
-		case UP_COMMAND:
-			movePlayer(Direction.UP);
-			break;
-		case DOWN_COMMAND:
-			movePlayer(Direction.DOWN);
-			break;
-		case LEFT_COMMAND:
-			movePlayer(Direction.LEFT);
-			break;
-		case RIGHT_COMMAND:
-			movePlayer(Direction.RIGHT);
-			break;
-		case SHOOT_BLUE_COMMAND:
-			shoot(ShotColor.BLUE);
-			break;
-		case SHOOT_YELLOW_COMMAND:
-			shoot(ShotColor.YELLOW);
-			break;
-		case PICKUP_COMMAND:
-			pickup();
-			break;
-		case QUIT_COMMAND:
-			System.exit(0);
-			break;
-		case UNKNOWN_COMMAND:
-		default:
-			break;
-		}
-	}
-
-	private void shoot(ShotColor color) {
+	public void shoot(ShotColor color) {
 		Position pos = player.getPositionFrontOfPlayer();
 		Tile tile = getTileFrontOfPlayer();
 		Direction dir = player.direction;
-		
+
 		ShotResult result = tile.shootIt(color);
 		while (result == ShotResult.TILE_HIT) {
 			pos = pos.plusDir(dir);
@@ -113,7 +83,7 @@ public class Labyrinth implements InputCommandHandler {
 		}
 	}
 
-	private void pickup() {
+	public void pickup() {
 		Tile tile = getTileFrontOfPlayer();
 		if (player.isCarrying) {
 			if (tile.dropCrateHere()) {
@@ -126,7 +96,7 @@ public class Labyrinth implements InputCommandHandler {
 		}
 	}
 
-	private void movePlayer(Direction dir) {
+	public void movePlayer(Direction dir) {
 		if (player.direction != dir) {
 			player.direction = dir;
 		} else {

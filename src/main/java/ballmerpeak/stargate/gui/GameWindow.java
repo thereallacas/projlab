@@ -7,49 +7,47 @@ import java.io.IOException;
 
 import javax.swing.JFrame;
 
+import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.InputCommand;
-import ballmerpeak.stargate.Labyrinth;
 import ballmerpeak.stargate.utils.MapLoader;
 
-public class GameWindow extends JFrame implements KeyListener, InputCommandSource, GameRenderer {
+public class GameWindow extends JFrame implements KeyListener, InputCommandSource {
 	private GameCanvas canvas;
 	private InputCommandHandler inputHandler;
-	private Labyrinth labyrinth;
-	
-	public GameWindow() throws FileNotFoundException, IOException {
-		MapLoader loader = new MapLoader();
+	private DrawableSource drawableSource;
+	private Game game;
 
-		// TODO use Path API
-		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
-		String mapDirectory = dataDirectory + "/maps";
-		String mapFile = mapDirectory + "/map2.txt";
-		labyrinth = loader.loadLabyrinth(mapFile);
-		GameCanvas.loadAssets(dataDirectory + "/images/");
+	public GameWindow() throws FileNotFoundException, IOException {
+		game = new Game("map2.txt");
 		
+		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
+		GameCanvas.loadAssets(dataDirectory + "/images/");
+
 		canvas = new GameCanvas();
 		canvas.setVisible(true);
 		add(canvas);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addKeyListener(this);
-		
-		setInputCommandHandler(labyrinth);
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setInputCommandHandler(game);
+		setDrawableSource(game);
+		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(760, 760);
 		setVisible(true);
+		
 		drawGame();
 	}
-	
+
 	public static void main(String... args) throws IOException {
-		GameWindow window = new GameWindow();
+		new GameWindow();
 	}
-	
+
 	public void setInputCommandHandler(InputCommandHandler handler) {
 		this.inputHandler = handler;
 	}
 
-	public void drawGame() {
-		canvas.paintGame(labyrinth, canvas.getGraphics());
+	private void drawGame() {
+		canvas.drawGame(drawableSource);
 	}
 
 	@Override
@@ -83,20 +81,25 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		default:
 			break;
 		}
-		if(inputHandler != null) inputHandler.receiveInput(cmd);
+		if (inputHandler != null)
+			inputHandler.receiveInput(cmd);
 		this.drawGame();
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
+	}
+	
+	public void setDrawableSource(DrawableSource drawableSource) {
+		this.drawableSource = drawableSource;
 	}
 
 }
