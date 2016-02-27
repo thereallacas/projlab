@@ -18,7 +18,7 @@ public class MapLoaderTest {
 	@Before
 	public void setup() throws FileNotFoundException, IOException {
 		MapLoader loader = new MapLoader();
-		URL map1Path = this.getClass().getResource("/map1.txt");
+		URL map1Path = this.getClass().getResource("/maps/map1.txt");
 		labyrinth = loader.loadLabyrinth(map1Path.getPath());
 	}
 
