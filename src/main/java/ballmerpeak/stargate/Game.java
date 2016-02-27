@@ -1,24 +1,16 @@
 package ballmerpeak.stargate;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import ballmerpeak.stargate.gui.DrawableIndex;
 import ballmerpeak.stargate.gui.DrawableSource;
 import ballmerpeak.stargate.gui.InputCommandHandler;
 import ballmerpeak.stargate.tiles.ShotColor;
-import ballmerpeak.stargate.utils.MapLoader;
 
 public class Game implements InputCommandHandler, DrawableSource {
 	
 	private Labyrinth labyrinth;
 	
-	public Game(String map) throws FileNotFoundException, IOException {
-		MapLoader loader = new MapLoader();
-		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
-		String mapDirectory = dataDirectory + "/maps/";
-		String mapFile = mapDirectory + map;
-		labyrinth = loader.loadLabyrinth(mapFile);
+	public Game(Labyrinth labyrinth) {
+		this.labyrinth = labyrinth;
 	}
 	
 	@Override

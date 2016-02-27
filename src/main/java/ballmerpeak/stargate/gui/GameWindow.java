@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.InputCommand;
+import ballmerpeak.stargate.Labyrinth;
 import ballmerpeak.stargate.utils.MapLoader;
 
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource {
@@ -18,9 +19,14 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 	private Game game;
 
 	public GameWindow() throws FileNotFoundException, IOException {
-		game = new Game("map2.txt");
-		
+		MapLoader loader = new MapLoader();
 		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
+		String mapDirectory = dataDirectory + "/maps/";
+		String mapFile = mapDirectory + "map2.txt";
+		Labyrinth labyrinth = loader.loadLabyrinth(mapFile);
+		game = new Game(labyrinth);
+		
+		dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		GameCanvas.loadAssets(dataDirectory + "/images/");
 
 		canvas = new GameCanvas();
