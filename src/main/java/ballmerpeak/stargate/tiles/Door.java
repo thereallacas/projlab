@@ -16,6 +16,11 @@ public class Door extends Floor {
 		return isOpen();
 	}
 	
+	@Override
+	public ShotResult shootIt(ShotColor color) {
+		return isOpen() ? ShotResult.TILE_HIT : ShotResult.REGULAR_WALL_HIT;
+	}
+
 	public boolean isOpen() {
 		return open;
 	}
