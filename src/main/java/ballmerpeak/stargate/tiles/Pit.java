@@ -9,6 +9,12 @@ public class Pit extends Tile {
 	public Pit(Position pos) {
 		super(pos);
 	}
+	
+	@Override
+	public boolean dropCrateHere() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
 	@Override
 	public void stepOnTile(Player player) {
