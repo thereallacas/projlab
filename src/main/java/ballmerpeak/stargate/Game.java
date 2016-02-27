@@ -1,102 +1,71 @@
 package ballmerpeak.stargate;
 
-import static ballmerpeak.stargate.Direction.*;
+import ballmerpeak.stargate.gui.DrawableIndex;
+import ballmerpeak.stargate.gui.DrawableSource;
 import ballmerpeak.stargate.gui.InputCommandHandler;
 import ballmerpeak.stargate.tiles.ShotColor;
-import ballmerpeak.stargate.tiles.ShotResult;
-import ballmerpeak.stargate.tiles.SpecialWall;
-import ballmerpeak.stargate.tiles.Tile;
 
-public class Game implements InputCommandHandler {
-
-	Player player;
-	Labyrinth labyrinth;
-	Gate gate;
-
-	public Game(Labyrinth l) {
-		this.player = l.getPlayer();
-		this.labyrinth = l;
-		this.gate = l.getGate();
+public class Game implements InputCommandHandler, DrawableSource {
+	
+	private Labyrinth labyrinth;
+	
+	public Game(Labyrinth labyrinth) {
+		this.labyrinth = labyrinth;
 	}
 	
+	@Override
+	public int getHeight() {
+		return labyrinth.getHeight();
+	}
+	
+	@Override
+	public int getWidth() {
+		return labyrinth.getWidth();
+	}
+	
+	@Override
 	public void receiveInput(InputCommand command) {
 		switch (command) {
-		case UP_KEY:
-			updatePos(UP);
+		case UP_COMMAND:
+			labyrinth.movePlayer(Direction.UP);
 			break;
-		case DOWN_KEY:
-			updatePos(DOWN);
+		case DOWN_COMMAND:
+			labyrinth.movePlayer(Direction.DOWN);
 			break;
-		case LEFT_KEY:
-			updatePos(LEFT);
+		case LEFT_COMMAND:
+			labyrinth.movePlayer(Direction.LEFT);
 			break;
-		case RIGHT_KEY:
-			updatePos(RIGHT);
+		case RIGHT_COMMAND:
+			labyrinth.movePlayer(Direction.RIGHT);
 			break;
-		case SHOOT_BLUE_KEY:
-			shoot(ShotColor.BLUE);
+		case SHOOT_BLUE_COMMAND:
+			labyrinth.shoot(ShotColor.BLUE);
 			break;
-		case SHOOT_YELLOW_KEY:
-			shoot(ShotColor.YELLOW);
+		case SHOOT_YELLOW_COMMAND:
+			labyrinth.shoot(ShotColor.YELLOW);
 			break;
-		case PICKUP_KEY:
-			doPickup();
+		case PICKUP_COMMAND:
+			labyrinth.pickup();
 			break;
-		case QUIT_KEY:
+		case QUIT_COMMAND:
 			System.exit(0);
 			break;
-		case UNKNOWN_KEY:
+		case UNKNOWN_COMMAND:
 		default:
 			break;
 		}
-		
 	}
 
-	void updatePos(Direction dir) {
-		if (player.direction != dir) {
-			player.direction = dir;
-		} else {
-			Tile nextTile = labyrinth.getTileFrontOfPlayer();
-			if (nextTile.canPlayerMoveHere()) {
-				Tile currentTile = labyrinth.getTile(player.position.y, player.position.x);
-				currentTile.leaveTile();
-				nextTile.stepOnTile(player);
-			}
+	@Override
+	public DrawableIndex getDrawable(int y, int x) {
+		if (labyrinth.getPlayerPosition().equals(new Position(y, x))) {
+			return getPlayerDrawableIndex();
 		}
+		return labyrinth.getTile(y, x).getDrawableIndex();
 	}
 
-	void doPickup() {
-		Tile tile = labyrinth.getTileFrontOfPlayer();
-		if (player.isCarrying) {
-			if (tile.dropCrateHere()) {
-				player.isCarrying = false;
-			}
-		} else {
-			if (tile.pickupCrate()) {
-				player.isCarrying = true;
-			}
-		}
-	}
-	
-	public Labyrinth getLabyrinth() {
-		return this.labyrinth;
-	}
-	
-	public void setLabyrinth(Labyrinth l) {
-		this.labyrinth = l;
-		this.player = l.getPlayer();
+	private DrawableIndex getPlayerDrawableIndex() {
+		return labyrinth.getPlayer().getDrawableIndex();
 	}
 
-	private void shoot(ShotColor color) {
-		Position pos = player.getPositionFrontOfPlayer();
-		Tile tile = labyrinth.getTileFrontOfPlayer();
-		Direction dir = player.direction;
-		
-		ShotResult result = tile.shootIt(color);
-		while (result == ShotResult.TILE_HIT) {
-			pos = pos.plusDir(dir);
-			tile = labyrinth.getTile(pos.y, pos.x);
-			result = tile.shootIt(color);
-		}
-	}
 }
