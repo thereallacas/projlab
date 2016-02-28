@@ -31,18 +31,20 @@ public class Floor extends Tile {
 	}
 	
 	@Override
-	public boolean dropCrateHere() {
+	public boolean dropCrateHere(Player player) {
 		if (!isOccupied()) {
 			occupied = true;
+			player.isCarrying = false;
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public boolean pickupCrate() {
+	public boolean pickupCrate(Player player) {
 		if (occupied) {
 			occupied = false;
+			player.isCarrying = true;
 			return true;
 		}
 		return false;

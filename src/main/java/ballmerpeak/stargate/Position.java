@@ -37,4 +37,9 @@ public class Position {
 	public int hashCode() {
 		return 23*x + 47*y;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("y = %d, x = %d", y, x);
+	}
 }

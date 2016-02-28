@@ -86,13 +86,9 @@ public class Labyrinth {
 	public void pickup() {
 		Tile tile = getTileFrontOfPlayer();
 		if (player.isCarrying) {
-			if (tile.dropCrateHere()) {
-				player.isCarrying = false;
-			}
+			tile.dropCrateHere(player);
 		} else {
-			if (tile.pickupCrate()) {
-				player.isCarrying = true;
-			}
+			tile.pickupCrate(player);
 		}
 	}
 

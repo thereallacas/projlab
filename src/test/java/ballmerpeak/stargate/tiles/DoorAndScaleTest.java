@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Position;
 
@@ -36,9 +37,26 @@ public class DoorAndScaleTest {
 	
 	@Test
 	public void dropCrateTest() {
-		scale.dropCrateHere();
+		scale.dropCrateHere(player);
 		assertTrue(door.isOpen());
 		assertTrue(scale.isOccupied());
+	}
+	
+	@Test
+	public void testDoorCanKillPlayer() {
+		door = new Door(new Position(20, 31));
+		scale = new Scale (new Position(20, 30));
+		scale.setDoor(door);
+		player.position = new Position(20, 29);
+		player.direction = Direction.RIGHT;
+		scale.stepOnTile(player);
+		assertEquals(scale.getPosition(), player.position);
+		assertTrue(door.isOpen());
+		scale.leaveTile();
+		door.stepOnTile(player);
+		assertEquals(door.getPosition(), player.position);
+		assertFalse(player.isAlive);
+		assertFalse(door.isOpen());
 	}
 
 }

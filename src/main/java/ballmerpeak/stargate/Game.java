@@ -67,5 +67,9 @@ public class Game implements InputCommandHandler, DrawableSource {
 	private DrawableIndex getPlayerDrawableIndex() {
 		return labyrinth.getPlayer().getDrawableIndex();
 	}
+	
+	public boolean isPlayerAlive() {
+		return labyrinth.getPlayer().isAlive;
+	}
 
 }

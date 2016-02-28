@@ -17,11 +17,11 @@ public abstract class Tile implements Drawable {
 		
 	}
 	
-	public boolean dropCrateHere() {
+	public boolean dropCrateHere(Player player) {
 		return false;
 	}
 	
-	public boolean pickupCrate() {
+	public boolean pickupCrate(Player player) {
 		return false;
 	}
 	

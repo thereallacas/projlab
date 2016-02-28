@@ -13,18 +13,21 @@ public class Scale extends Floor {
 	}
 
 	@Override
-	public boolean pickupCrate() {
-		boolean didPickUpCrate = super.pickupCrate();
+	public boolean pickupCrate(Player player) {
+		boolean didPickUpCrate = super.pickupCrate(player);
 		if (didPickUpCrate) {
 			getDoor().close();
+			if (door.getPosition().equals(player.position)) {
+				player.isAlive = false;
+			}
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public boolean dropCrateHere() {
-		boolean didDropCrate = super.dropCrateHere();
+	public boolean dropCrateHere(Player player) {
+		boolean didDropCrate = super.dropCrateHere(player);
 		if (didDropCrate) {
 			getDoor().open();
 		}

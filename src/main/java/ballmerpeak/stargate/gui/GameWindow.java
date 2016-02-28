@@ -22,7 +22,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		MapLoader loader = new MapLoader();
 		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		String mapDirectory = dataDirectory + "/maps/";
-		String mapFile = mapDirectory + "map2.txt";
+		String mapFile = mapDirectory + "map3.txt";
 		Labyrinth labyrinth = loader.loadLabyrinth(mapFile);
 		game = new Game(labyrinth);
 		
