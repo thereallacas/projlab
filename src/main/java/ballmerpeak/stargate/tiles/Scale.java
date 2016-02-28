@@ -17,8 +17,8 @@ public class Scale extends Floor {
 		boolean didPickUpCrate = super.pickupCrate(player);
 		if (didPickUpCrate) {
 			getDoor().close();
-			if (door.getPosition().equals(player.position)) {
-				player.isAlive = false;
+			if (door.getPosition().equals(player.getPosition())) {
+				player.kill();
 			}
 			return true;
 		}

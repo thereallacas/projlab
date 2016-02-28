@@ -13,7 +13,7 @@ public class Pit extends Floor {
 	@Override
 	public void stepOnTile(Player player) {
 		super.stepOnTile(player);
-		player.isAlive = false;
+		player.kill();
 	}
 
 	public DrawableIndex getDrawableIndex() {

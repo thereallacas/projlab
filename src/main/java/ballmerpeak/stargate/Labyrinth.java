@@ -51,11 +51,11 @@ public class Labyrinth {
 	}
 
 	public void setPlayerPos(Position pos) {
-		player.position = pos;
+		player.setPosition(pos);
 	}
 
 	public Position getPlayerPosition() {
-		return player.position;
+		return player.getPosition();
 	}
 
 	public int getWidth() {
@@ -73,7 +73,7 @@ public class Labyrinth {
 	public void shoot(ShotColor color) {
 		Position pos = player.getPositionFrontOfPlayer();
 		Tile tile = getTileFrontOfPlayer();
-		Direction dir = player.direction;
+		Direction dir = player.getDirection();
 
 		ShotResult result = tile.shootIt(color);
 		while (result == ShotResult.TILE_HIT) {
@@ -85,7 +85,7 @@ public class Labyrinth {
 
 	public void pickup() {
 		Tile tile = getTileFrontOfPlayer();
-		if (player.isCarrying) {
+		if (player.isCarrying()) {
 			tile.dropCrateHere(player);
 		} else {
 			tile.pickupCrate(player);
@@ -93,12 +93,12 @@ public class Labyrinth {
 	}
 
 	public void movePlayer(Direction dir) {
-		if (player.direction != dir) {
-			player.direction = dir;
+		if (player.getDirection() != dir) {
+			player.setDirection(dir);
 		} else {
 			Tile nextTile = getTileFrontOfPlayer();
 			if (nextTile.canPlayerMoveHere()) {
-				Tile currentTile = getTile(player.position.y, player.position.x);
+				Tile currentTile = getTile(player.getPosition().y, player.getPosition().x);
 				currentTile.leaveTile();
 				nextTile.stepOnTile(player);
 			}

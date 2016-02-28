@@ -30,8 +30,8 @@ public class SpecialWall extends Wall {
 		SpecialWall distantWall = (getColor() == ShotColor.BLUE) ? gate.getYellowWall() : gate.getBlueWall();
 		Position wallPos = distantWall.getPosition();
 		Position newPos = wallPos.plusDir(distantWall.direction);
-		player.position = newPos;
-		player.direction = distantWall.direction;
+		player.setPosition(newPos);
+		player.setDirection(distantWall.direction);
 	}
 
 	@Override

@@ -16,14 +16,14 @@ public class PlayerTest {
 	@Before
 	public void setup() {
 		player = new Player();
-		player.position = new Position(50, 50);
-		player.direction = Direction.UP;
+		player.setPosition(new Position(50, 50));
+		player.setDirection(Direction.UP);
 	}
 
 	@Test
 	public void testStepForward() {
 		player.stepForward();
-		assertEquals(new Position(49, 50), player.position);
+		assertEquals(new Position(49, 50), player.getPosition());
 	}
 
 	@Test

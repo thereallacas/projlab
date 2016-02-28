@@ -5,36 +5,80 @@ import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Player implements Drawable {
 
-	public Direction direction;
-	public Position position;
-	public boolean isCarrying;
-	public boolean isAlive;
-	public int ZPMsCarried;
+	private Direction direction;
+	private Position position;
+	private boolean isCarrying;
+	private boolean isAlive;
+	private int ZPMsCarried;
 	
 	public Player() {
 		isAlive = true;
 		ZPMsCarried = 0;
-		direction = Direction.UP;
+		setDirection(Direction.UP);
 		isCarrying = false;
 	}
 	
+	public boolean isCarrying() {
+		return isCarrying;
+	}
+	
+	public void setCarrying() {
+		isCarrying = true;
+	}
+	
+	public void unsetCarrying() {
+		isCarrying = false;
+	}
+	
+	public boolean isAlive() {
+		return isAlive;
+	}
+	
+	public void kill() {
+		isAlive = false;
+	}
+	
 	public Position getPositionFrontOfPlayer() {
-		return position.plusDir(direction);
+		return getPosition().plusDir(getDirection());
 	}
 	
 	public void stepForward() {
 		if(!isAlive) return;
-		position = getPositionFrontOfPlayer();
+		setPosition(getPositionFrontOfPlayer());
 	}
 
 	@Override
 	public DrawableIndex getDrawableIndex() {
-		switch (direction) {
+		switch (getDirection()) {
 		case UP: return DrawableIndex.PLAYER_FACING_UP;
 		case DOWN: return DrawableIndex.PLAYER_FACING_DOWN;
 		case LEFT: return DrawableIndex.PLAYER_FACING_LEFT;
 		case RIGHT: return DrawableIndex.PLAYER_FACING_RIGHT;
 		default: throw new RuntimeException("shouldn't be here...");
 		}
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+	public Direction getDirection() {
+		return direction;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+
+	public int getZPMsCarried() {
+		return ZPMsCarried;
+	}
+
+	public void pickupZPM() {
+		ZPMsCarried++;
 	}
 }

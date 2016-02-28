@@ -21,7 +21,7 @@ public class Door extends Floor {
 	public void stepOnTile(Player player) {
 		super.stepOnTile(player);
 		if (!isOpen())
-			player.isAlive = false;
+			player.kill();
 	}
 
 	@Override

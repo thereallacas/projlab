@@ -29,7 +29,7 @@ public class MapLoaderTest {
 		assertEquals(100, labyrinth.getHeight());
 		assertEquals(100, labyrinth.getWidth());
 		
-		assertEquals(new Position(22, 59), labyrinth.getPlayer().position);
+		assertEquals(new Position(22, 59), labyrinth.getPlayer().getPosition());
 	}
 	
 

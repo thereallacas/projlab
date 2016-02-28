@@ -24,7 +24,7 @@ public class DoorAndScaleTest {
 		scale.setDoor(door);
 		
 		player = new Player();
-		player.position = new Position(0, 0);
+		player.setPosition(new Position(0, 0));
 	}
 
 	@Test
@@ -47,15 +47,15 @@ public class DoorAndScaleTest {
 		door = new Door(new Position(20, 31));
 		scale = new Scale (new Position(20, 30));
 		scale.setDoor(door);
-		player.position = new Position(20, 29);
-		player.direction = Direction.RIGHT;
+		player.setPosition(new Position(20, 29));
+		player.setDirection(Direction.RIGHT);
 		scale.stepOnTile(player);
-		assertEquals(scale.getPosition(), player.position);
+		assertEquals(scale.getPosition(), player.getPosition());
 		assertTrue(door.isOpen());
 		scale.leaveTile();
 		door.stepOnTile(player);
-		assertEquals(door.getPosition(), player.position);
-		assertFalse(player.isAlive);
+		assertEquals(door.getPosition(), player.getPosition());
+		assertFalse(player.isAlive());
 		assertFalse(door.isOpen());
 	}
 

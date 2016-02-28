@@ -34,7 +34,7 @@ public class Floor extends Tile {
 	public boolean dropCrateHere(Player player) {
 		if (!isOccupied()) {
 			occupied = true;
-			player.isCarrying = false;
+			player.unsetCarrying();
 			return true;
 		}
 		return false;
@@ -44,7 +44,7 @@ public class Floor extends Tile {
 	public boolean pickupCrate(Player player) {
 		if (occupied) {
 			occupied = false;
-			player.isCarrying = true;
+			player.setCarrying();
 			return true;
 		}
 		return false;
@@ -54,7 +54,7 @@ public class Floor extends Tile {
 	public void stepOnTile(Player player) {
 		player.stepForward();
 		if (ZPM) {
-			player.ZPMsCarried++;
+			player.pickupZPM();
 			ZPM = false;
 		}
 	}
