@@ -9,14 +9,14 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class GameCanvas extends JPanel implements GameRenderer {
-	public static int TILE_WIDTH = 16;
-	public static int TILE_HEIGHT = 16;
+	private static final int TILE_WIDTH = 16;
+	private static final int TILE_HEIGHT = 16;
 
-	private static String imageFormat = "png";
-	private static Image tileImages[] = new Image[DrawableIndex.values().length];
+	private static final String imageFormat = "png";
+	private static final Image tileImages[] = new Image[DrawableIndex.values().length];
 	private DrawableSource lastRenderedGame = null;
 
-	public void paintGame(DrawableSource source, Graphics g) {
+	private void paintGame(DrawableSource source, Graphics g) {
 		for (int y = 0; y < source.getHeight(); y++) {
 			for (int x = 0; x < source.getWidth(); x++) {
 				int scrX = TILE_WIDTH * x;
@@ -45,7 +45,7 @@ public class GameCanvas extends JPanel implements GameRenderer {
 		}
 	}
 
-	public static Image getAsset(DrawableIndex asset) {
+	private static Image getAsset(DrawableIndex asset) {
 		return tileImages[asset.ordinal()];
 	}
 
