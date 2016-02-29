@@ -49,10 +49,12 @@ public class DoorAndScaleTest {
 		scale.setDoor(door);
 		player.setPosition(new Position(20, 29));
 		player.setDirection(Direction.RIGHT);
+		player.stepForward();
 		scale.stepOnTile(player);
 		assertEquals(scale.getPosition(), player.getPosition());
 		assertTrue(door.isOpen());
 		scale.leaveTile();
+		player.stepForward();
 		door.stepOnTile(player);
 		assertEquals(door.getPosition(), player.getPosition());
 		assertFalse(player.isAlive());

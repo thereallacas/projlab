@@ -52,7 +52,6 @@ public class Floor extends Tile {
 
 	@Override
 	public void stepOnTile(Player player) {
-		player.stepForward();
 		if (ZPM) {
 			player.pickupZPM();
 			ZPM = false;

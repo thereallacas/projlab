@@ -100,6 +100,7 @@ public class Labyrinth {
 			if (nextTile.canPlayerMoveHere()) {
 				Tile currentTile = getTile(player.getPosition().y, player.getPosition().x);
 				currentTile.leaveTile();
+				player.stepForward();
 				nextTile.stepOnTile(player);
 			}
 		}

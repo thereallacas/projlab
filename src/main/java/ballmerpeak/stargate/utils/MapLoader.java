@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ballmerpeak.stargate.Direction;
@@ -28,11 +30,14 @@ public class MapLoader {
 	
 	int zpms;
 	Labyrinth labyrinth = null;
+
+	List<SpecialWall> specialWalls;
 	
 	public Labyrinth loadLabyrinth(String filename) throws FileNotFoundException, IOException {
 		gate = new Gate();
 		doors = new HashMap<>();
 		scales = new HashMap<>();
+		specialWalls = new ArrayList<>();
 		zpms = 0;
 		try (FileReader fr = new FileReader(filename); BufferedReader br = new BufferedReader(fr)) {
 			String lineOne = br.readLine();
@@ -59,6 +64,7 @@ public class MapLoader {
 			}
 		}
 		setupDoors();
+		setupSpecialWalls();
 		labyrinth.setNumberOfZPMs(zpms);
 		return labyrinth;
 	}
@@ -68,6 +74,16 @@ public class MapLoader {
 			Scale scale = scales.get(c);
 			Door door = doors.get(Character.toLowerCase(c));
 			scale.setDoor(door);
+		}
+	}
+	
+	private void setupSpecialWalls() {
+		for (SpecialWall wall : specialWalls) {
+			Direction dir = wall.getDirection();
+			Position pos = wall.getPosition();
+			Position nextPos = pos.plusDir(dir);
+			Tile nextTile = labyrinth.getTile(nextPos.y, nextPos.x);
+			wall.setNextTile(nextTile);
 		}
 	}
 
@@ -90,13 +106,21 @@ public class MapLoader {
 			return Floor.floorWithCrate(pos);
 
 		case '>':
-			return new SpecialWall(pos, Direction.RIGHT, gate);
+			SpecialWall rightWall = new SpecialWall(pos, Direction.RIGHT, gate);
+			specialWalls.add(rightWall);
+			return rightWall;
 		case '<':
-			return new SpecialWall(pos, Direction.LEFT, gate);
+			SpecialWall leftWall = new SpecialWall(pos, Direction.LEFT, gate);
+			specialWalls.add(leftWall);
+			return leftWall;
 		case '^':
-			return new SpecialWall(pos, Direction.UP, gate);
+			SpecialWall upWall = new SpecialWall(pos, Direction.UP, gate);
+			specialWalls.add(upWall);
+			return upWall;
 		case '/':
-			return new SpecialWall(pos, Direction.DOWN, gate);
+			SpecialWall downWall = new SpecialWall(pos, Direction.DOWN, gate);
+			specialWalls.add(downWall);
+			return downWall;
 
 		}
 
