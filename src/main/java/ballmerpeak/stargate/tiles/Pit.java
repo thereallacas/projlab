@@ -15,6 +15,12 @@ public class Pit extends Floor {
 		super.stepOnTile(player);
 		player.kill();
 	}
+	
+	@Override
+	public boolean dropCrateHere(Player player) {
+		player.unsetCarrying();
+		return true;
+	}
 
 	public DrawableIndex getDrawableIndex() {
 		return DrawableIndex.PIT;
