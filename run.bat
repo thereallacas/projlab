@@ -1,4 +1,2 @@
 @echo off 
-cd src/main/java
-java -verbose -cp . ballmerpeak.stargate.gui.GameWindow
-cd ../../..
+java -verbose -cp src/main/java ballmerpeak.stargate.gui.GameWindow
