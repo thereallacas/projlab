@@ -17,6 +17,7 @@ public class GameCanvas extends JPanel implements GameRenderer {
 	private DrawableSource lastRenderedGame = null;
 
 	private void paintGame(DrawableSource source, Graphics g) {
+		lastRenderedGame = source;
 		for (int y = 0; y < source.getHeight(); y++) {
 			for (int x = 0; x < source.getWidth(); x++) {
 				int scrX = TILE_WIDTH * x;
