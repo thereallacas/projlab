@@ -8,31 +8,22 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import ballmerpeak.stargate.Direction;
+import ballmerpeak.stargate.Game;
+import ballmerpeak.stargate.tiles.Tile;
+
 public class GameCanvas extends JPanel implements GameRenderer {
 	private static final int TILE_WIDTH = 16;
 	private static final int TILE_HEIGHT = 16;
 
 	private static final String imageFormat = "png";
 	private static final Image tileImages[] = new Image[DrawableIndex.values().length];
-	private DrawableSource lastRenderedGame = null;
 
-	private void paintGame(DrawableSource source, Graphics g) {
-		for (int y = 0; y < source.getHeight(); y++) {
-			for (int x = 0; x < source.getWidth(); x++) {
-				int scrX = TILE_WIDTH * x;
-				int scrY = TILE_HEIGHT * y;
-				DrawableIndex index = source.getDrawable(y, x);
-				Image tileImage = getAsset(index);
-				g.drawImage(tileImage, scrX, scrY, TILE_WIDTH, TILE_HEIGHT, null);
-
-			}
-		}
-	}
-
+	private Game lastRenderedGame = null;
+	
 	@Override
 	protected void paintComponent(Graphics g) {
-		if (lastRenderedGame != null)
-			paintGame(lastRenderedGame, g);
+		drawGame(lastRenderedGame);
 	}
 
 	public static void loadAssets(String path) throws IOException {
@@ -49,8 +40,30 @@ public class GameCanvas extends JPanel implements GameRenderer {
 		return tileImages[asset.ordinal()];
 	}
 
-	@Override
-	public void drawGame(DrawableSource src) {
-		paintGame(src, getGraphics());
+	public void drawGame(Game game) {
+		if (lastRenderedGame == null) {
+			lastRenderedGame = game;
+		}
+		Graphics g = getGraphics();
+		Tile rootTile = game.getRootTile();
+		Tile playerTile = game.getPlayerTile();
+		Tile rowIt = rootTile;
+		Tile columnIt = rootTile;
+		int y = 0;
+		int x = 0;
+		while (rowIt.getNeighborForDirection(Direction.DOWN) != null) {
+			while (columnIt.getNeighborForDirection(Direction.RIGHT) != null) {
+				int srcX = x * TILE_WIDTH;
+				int srcY = y * TILE_HEIGHT;
+				DrawableIndex index = columnIt == playerTile ? game.getPlayerDrawableIndex() : columnIt.getDrawableIndex(); 
+				Image image = getAsset(index);
+				g.drawImage(image, srcX, srcY, TILE_WIDTH, TILE_HEIGHT, null);
+				columnIt = columnIt.getNeighborForDirection(Direction.RIGHT);
+				x++;
+			}
+			columnIt = rowIt = rowIt.getNeighborForDirection(Direction.DOWN);
+			y++;
+			x = 0;
+		}
 	}
 }

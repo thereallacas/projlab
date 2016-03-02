@@ -1,27 +1,16 @@
 package ballmerpeak.stargate;
 
 import ballmerpeak.stargate.gui.DrawableIndex;
-import ballmerpeak.stargate.gui.DrawableSource;
 import ballmerpeak.stargate.gui.InputCommandHandler;
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.Tile;
 
-public class Game implements InputCommandHandler, DrawableSource {
+public class Game implements InputCommandHandler {
 	
 	private Labyrinth labyrinth;
 	
 	public Game(Labyrinth labyrinth) {
 		this.labyrinth = labyrinth;
-	}
-	
-	@Override
-	public int getHeight() {
-		return labyrinth.getHeight();
-	}
-	
-	@Override
-	public int getWidth() {
-		return labyrinth.getWidth();
 	}
 	
 	@Override
@@ -56,22 +45,20 @@ public class Game implements InputCommandHandler, DrawableSource {
 			break;
 		}
 	}
-
-	@Override
-	public DrawableIndex getDrawable(int y, int x) {
-		Tile tile = labyrinth.getTile(y, x);
-		if (labyrinth.getPlayerTile() == tile) { 
-			return getPlayerDrawableIndex();
-		}
-		return labyrinth.getTile(y, x).getDrawableIndex();
-	}
-
-	private DrawableIndex getPlayerDrawableIndex() {
-		return labyrinth.getPlayer().getDrawableIndex();
-	}
 	
 	public boolean isPlayerAlive() {
 		return labyrinth.getPlayer().isAlive();
 	}
 
+	public Tile getPlayerTile() {
+		return labyrinth.getPlayerTile();
+	}
+
+	public DrawableIndex getPlayerDrawableIndex() {
+		return labyrinth.getPlayer().getDrawableIndex();
+	}
+
+	public Tile getRootTile() {
+		return labyrinth.getTileAtOrigin();
+	}
 }

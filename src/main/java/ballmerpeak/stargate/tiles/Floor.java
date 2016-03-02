@@ -1,7 +1,6 @@
 package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
-import ballmerpeak.stargate.Position;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Floor extends Tile {
@@ -9,19 +8,18 @@ public class Floor extends Tile {
 	protected boolean occupied;
 	private boolean ZPM;
 
-	public Floor(Position pos) {
-		super(pos);
+	public Floor() {
 		occupied = ZPM = false;
 	}
 	
-	public static Floor floorWithZPM(Position pos) {
-		Floor floor = new Floor(pos);
+	public static Floor floorWithZPM() {
+		Floor floor = new Floor();
 		floor.ZPM = true;
 		return floor;
 	}
 	
-	public static Floor floorWithCrate(Position pos) {
-		Floor floor = new Floor(pos);
+	public static Floor floorWithCrate() {
+		Floor floor = new Floor();
 		floor.occupied = true;
 		return floor;
 	}

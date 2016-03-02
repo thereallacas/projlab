@@ -15,7 +15,6 @@ import ballmerpeak.stargate.utils.MapLoader;
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource {
 	private GameCanvas canvas;
 	private InputCommandHandler inputHandler;
-	private DrawableSource drawableSource;
 	private Game game;
 
 	public GameWindow() throws FileNotFoundException, IOException {
@@ -32,16 +31,14 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		canvas = new GameCanvas();
 		canvas.setVisible(true);
 		add(canvas);
-		addKeyListener(this);
-
+		
 		setInputCommandHandler(game);
-		setDrawableSource(game);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		addKeyListener(this);
 		setSize(760, 760);
 		setVisible(true);
-		
-		drawGame();
+		canvas.drawGame(game);
 	}
 
 	public static void main(String... args) throws IOException {
@@ -50,10 +47,6 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 
 	public void setInputCommandHandler(InputCommandHandler handler) {
 		this.inputHandler = handler;
-	}
-
-	private void drawGame() {
-		canvas.drawGame(drawableSource);
 	}
 
 	@Override
@@ -87,9 +80,11 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		default:
 			break;
 		}
-		if (inputHandler != null)
-			inputHandler.receiveInput(cmd);
-		this.drawGame();
+		inputHandler.receiveInput(cmd);
+		canvas.drawGame(game);
+		if (!game.isPlayerAlive()) {
+			System.exit(0);
+		}
 	}
 
 	@Override
@@ -102,10 +97,6 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
-	}
-	
-	private void setDrawableSource(DrawableSource drawableSource) {
-		this.drawableSource = drawableSource;
 	}
 
 }

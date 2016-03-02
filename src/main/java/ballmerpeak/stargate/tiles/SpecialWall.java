@@ -3,7 +3,6 @@ package ballmerpeak.stargate.tiles;
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Gate;
 import ballmerpeak.stargate.Player;
-import ballmerpeak.stargate.Position;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class SpecialWall extends Wall {
@@ -14,8 +13,7 @@ public class SpecialWall extends Wall {
 
 	public final Gate gate;
 
-	public SpecialWall(Position pos, Direction dir, Gate gate) {
-		super(pos);
+	public SpecialWall(Direction dir, Gate gate) {
 		color = ShotColor.INACTIVE;
 		direction = dir;
 		this.gate = gate;
@@ -31,8 +29,6 @@ public class SpecialWall extends Wall {
 		SpecialWall distantWall = (getColor() == ShotColor.BLUE) ? gate.getYellowWall() : gate.getBlueWall();
 		Tile nextTile = distantWall.getNextTile();
 		player.setDirection(distantWall.getDirection());
-		player.setPosition(distantWall.getPosition());
-		player.stepForward();
 		nextTile.stepOnTile(player);
 	}
 

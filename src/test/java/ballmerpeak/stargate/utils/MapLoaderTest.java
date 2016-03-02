@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ballmerpeak.stargate.Labyrinth;
-import ballmerpeak.stargate.Position;
 
 public class MapLoaderTest {
 
@@ -26,10 +25,7 @@ public class MapLoaderTest {
 	@Test
 	public void testLabyrinthAttribs() {
 		assertEquals(3, labyrinth.getNumberOfZPMs());
-		assertEquals(100, labyrinth.getHeight());
-		assertEquals(100, labyrinth.getWidth());
 		
-		assertEquals(new Position(22, 59), labyrinth.getPlayer().getPosition());
 	}
 	
 

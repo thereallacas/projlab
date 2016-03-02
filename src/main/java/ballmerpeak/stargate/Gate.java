@@ -58,8 +58,4 @@ public class Gate {
 	public boolean isActive() {
 		return blueActive && yellowActive;
 	}
-	
-	private SpecialWall getWallForColor(ShotColor color) {
-		return color == ShotColor.YELLOW ? getYellowWall() : getBlueWall();
-	}
 }

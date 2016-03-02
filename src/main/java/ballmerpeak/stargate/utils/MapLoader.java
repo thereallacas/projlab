@@ -12,7 +12,6 @@ import java.util.Map;
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Gate;
 import ballmerpeak.stargate.Labyrinth;
-import ballmerpeak.stargate.Position;
 import ballmerpeak.stargate.tiles.Door;
 import ballmerpeak.stargate.tiles.Floor;
 import ballmerpeak.stargate.tiles.Pit;
@@ -65,7 +64,7 @@ public class MapLoader {
 					if ((y == 0 || y == height - 1 || x == 0 || x == width - 1) && (line.charAt(x) != '#'))
 						throw new InvalidMapFileException("edge of map has to be walled");
 					
-					Tile tile = createTile(line.charAt(x), new Position(y, x));
+					Tile tile = createTile(line.charAt(x));
 					tiles[y][x] = tile; 
 				}
 			}
@@ -106,48 +105,44 @@ public class MapLoader {
 	private void setupSpecialWalls() {
 		for (SpecialWall wall : specialWalls) {
 			Direction dir = wall.getDirection();
-			Position pos = wall.getPosition();
-			Position nextPos = pos.plusDir(dir);
-			Tile nextTile = tiles[nextPos.y][nextPos.x];
+			Tile nextTile = wall.getNeighborForDirection(dir);
 			wall.setNextTile(nextTile);
 		}
 	}
 
-	private Tile createTile(char c, Position pos) {
-
+	private Tile createTile(char c) {
 		switch (c) {
 
 		case '@':
-			labyrinth.setPlayerPos(pos);
-			Tile tile = new Floor(pos);
+			Tile tile = new Floor();
 			labyrinth.setPlayerTile(tile);
 			return tile;
 		case ' ':
-			return new Floor(pos);
+			return new Floor();
 		case '#':
-			return new Wall(pos);
+			return new Wall();
 		case '0':
-			return new Pit(pos);
+			return new Pit();
 		case '$':
 			zpms++;
-			return Floor.floorWithZPM(pos);
+			return Floor.floorWithZPM();
 		case '%':
-			return Floor.floorWithCrate(pos);
+			return Floor.floorWithCrate();
 
 		case '>':
-			SpecialWall rightWall = new SpecialWall(pos, Direction.RIGHT, gate);
+			SpecialWall rightWall = new SpecialWall(Direction.RIGHT, gate);
 			specialWalls.add(rightWall);
 			return rightWall;
 		case '<':
-			SpecialWall leftWall = new SpecialWall(pos, Direction.LEFT, gate);
+			SpecialWall leftWall = new SpecialWall(Direction.LEFT, gate);
 			specialWalls.add(leftWall);
 			return leftWall;
 		case '^':
-			SpecialWall upWall = new SpecialWall(pos, Direction.UP, gate);
+			SpecialWall upWall = new SpecialWall(Direction.UP, gate);
 			specialWalls.add(upWall);
 			return upWall;
 		case '/':
-			SpecialWall downWall = new SpecialWall(pos, Direction.DOWN, gate);
+			SpecialWall downWall = new SpecialWall(Direction.DOWN, gate);
 			specialWalls.add(downWall);
 			return downWall;
 
@@ -155,11 +150,11 @@ public class MapLoader {
 
 		if (Character.isAlphabetic(c)) {
 			if (Character.isLowerCase(c)) {
-				Door door = new Door(pos);
+				Door door = new Door();
 				doors.put(c, door);
 				return door;
 			} else {
-				Scale scale = new Scale(pos);
+				Scale scale = new Scale();
 				scales.put(c,  scale);
 				return scale;
 			}

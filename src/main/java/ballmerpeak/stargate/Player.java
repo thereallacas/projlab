@@ -7,7 +7,6 @@ import ballmerpeak.stargate.tiles.Tile;
 public class Player implements Drawable {
 
 	private Direction direction;
-	private Position position;
 	private boolean isCarrying;
 	private boolean isAlive;
 	private int ZPMsCarried;
@@ -40,15 +39,6 @@ public class Player implements Drawable {
 		isAlive = false;
 	}
 	
-	public Position getPositionFrontOfPlayer() {
-		return getPosition().plusDir(getDirection());
-	}
-	
-	public void stepForward() {
-		if(!isAlive) return;
-		setPosition(getPositionFrontOfPlayer());
-	}
-
 	@Override
 	public DrawableIndex getDrawableIndex() {
 		switch (getDirection()) {
@@ -58,14 +48,6 @@ public class Player implements Drawable {
 		case RIGHT: return DrawableIndex.PLAYER_FACING_RIGHT;
 		default: throw new RuntimeException("shouldn't be here...");
 		}
-	}
-
-	public Position getPosition() {
-		return position;
-	}
-
-	public void setPosition(Position position) {
-		this.position = position;
 	}
 
 	public Direction getDirection() {

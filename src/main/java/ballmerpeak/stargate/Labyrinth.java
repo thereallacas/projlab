@@ -8,8 +8,6 @@ import ballmerpeak.stargate.tiles.ShotResult;
 import ballmerpeak.stargate.tiles.Tile;
 
 public class Labyrinth {
-
-	private final int height, width;
 	
 	private Tile tileAtOrigin;
 
@@ -38,8 +36,6 @@ public class Labyrinth {
 	}
 	
 	public Labyrinth(int height, int width) {
-		this.height = height;
-		this.width = width;
 		tiles = new ArrayList<Tile>();
 		numberOfZPMs = 0;
 		player = new Player();
@@ -54,22 +50,6 @@ public class Labyrinth {
 
 	public Player getPlayer() {
 		return this.player;
-	}
-
-	public void setPlayerPos(Position pos) {
-		player.setPosition(pos);
-	}
-
-	public Position getPlayerPosition() {
-		return player.getPosition();
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
 	}
 
 	public Gate getGate() {
@@ -107,15 +87,6 @@ public class Labyrinth {
 				nextTile.stepOnTile(player);
 			}
 		}
-	}
-	
-	public Tile getTile(int y, int x) {
-		Tile tile = tileAtOrigin;
-		for (int i = 0; i < y; i++)
-			tile = tile.getNeighborForDirection(Direction.DOWN);
-		for (int i = 0; i < x; i++)
-			tile = tile.getNeighborForDirection(Direction.RIGHT);
-		return tile;
 	}
 
 	public Tile getPlayerTile() {

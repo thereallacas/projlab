@@ -1,23 +1,18 @@
 package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
-import ballmerpeak.stargate.Position;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Scale extends Floor {
 
 	private Door door;
 	
-	public Scale(Position pos) {
-		super(pos);
-	}
-
 	@Override
 	public boolean pickupCrate(Player player) {
 		boolean didPickUpCrate = super.pickupCrate(player);
 		if (didPickUpCrate) {
 			getDoor().close();
-			if (door.getPosition().equals(player.getPosition())) {
+			if (player.getTile() == door) {
 				player.kill();
 			}
 			return true;
