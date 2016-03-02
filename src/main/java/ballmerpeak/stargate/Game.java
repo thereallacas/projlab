@@ -1,8 +1,10 @@
 package ballmerpeak.stargate;
 
+import java.util.List;
+
+import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.gui.DrawableIndex;
 import ballmerpeak.stargate.gui.InputCommandHandler;
-import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.Tile;
 
 public class Game implements InputCommandHandler {
@@ -15,35 +17,7 @@ public class Game implements InputCommandHandler {
 	
 	@Override
 	public void receiveInput(InputCommand command) {
-		switch (command) {
-		case UP_COMMAND:
-			labyrinth.movePlayer(Direction.UP);
-			break;
-		case DOWN_COMMAND:
-			labyrinth.movePlayer(Direction.DOWN);
-			break;
-		case LEFT_COMMAND:
-			labyrinth.movePlayer(Direction.LEFT);
-			break;
-		case RIGHT_COMMAND:
-			labyrinth.movePlayer(Direction.RIGHT);
-			break;
-		case SHOOT_BLUE_COMMAND:
-			labyrinth.shoot(ShotColor.BLUE);
-			break;
-		case SHOOT_YELLOW_COMMAND:
-			labyrinth.shoot(ShotColor.YELLOW);
-			break;
-		case PICKUP_COMMAND:
-			labyrinth.pickup();
-			break;
-		case QUIT_COMMAND:
-			System.exit(0);
-			break;
-		case UNKNOWN_COMMAND:
-		default:
-			break;
-		}
+		command.execute(this);
 	}
 	
 	public boolean isPlayerAlive() {
@@ -60,5 +34,34 @@ public class Game implements InputCommandHandler {
 
 	public Tile getRootTile() {
 		return labyrinth.getTileAtOrigin();
+	}
+	
+	public Player getPlayer() {
+		return labyrinth.getPlayer();
+	}
+
+	public Labyrinth getLabyrinth() {
+		// TODO Auto-generated method stub
+		return labyrinth;
+	}
+	
+	public Tile getTileFrontOfPlayer() {
+		return labyrinth.getTileFrontOfPlayer();
+	}
+	
+	public Direction getPlayerDirection() {
+		return labyrinth.getPlayer().getDirection();
+	}
+
+	public int getHeight() {
+		return labyrinth.getHeight();
+	}
+
+	public int getWidth() {
+		return labyrinth.getWidth();
+	}
+	
+	public List<Tile> getTiles() {
+		return labyrinth.getTiles();
 	}
 }

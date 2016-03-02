@@ -8,8 +8,8 @@ import java.io.IOException;
 import javax.swing.JFrame;
 
 import ballmerpeak.stargate.Game;
-import ballmerpeak.stargate.InputCommand;
 import ballmerpeak.stargate.Labyrinth;
+import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.utils.MapLoader;
 
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource {
@@ -51,35 +51,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		InputCommand cmd = InputCommand.UNKNOWN_COMMAND;
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_UP:
-			cmd = InputCommand.UP_COMMAND;
-			break;
-		case KeyEvent.VK_DOWN:
-			cmd = InputCommand.DOWN_COMMAND;
-			break;
-		case KeyEvent.VK_LEFT:
-			cmd = InputCommand.LEFT_COMMAND;
-			break;
-		case KeyEvent.VK_RIGHT:
-			cmd = InputCommand.RIGHT_COMMAND;
-			break;
-		case KeyEvent.VK_A:
-			cmd = InputCommand.SHOOT_BLUE_COMMAND;
-			break;
-		case KeyEvent.VK_S:
-			cmd = InputCommand.SHOOT_YELLOW_COMMAND;
-			break;
-		case KeyEvent.VK_D:
-			cmd = InputCommand.PICKUP_COMMAND;
-			break;
-		case KeyEvent.VK_Q:
-			cmd = InputCommand.QUIT_COMMAND;
-			break;
-		default:
-			break;
-		}
+		InputCommand cmd = InputCommandFactory.inputCommandFromEvent(e);
 		inputHandler.receiveInput(cmd);
 		canvas.drawGame(game);
 		if (!game.isPlayerAlive()) {
