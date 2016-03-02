@@ -1,5 +1,8 @@
 package ballmerpeak.stargate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.ShotResult;
 import ballmerpeak.stargate.tiles.Tile;
@@ -7,8 +10,10 @@ import ballmerpeak.stargate.tiles.Tile;
 public class Labyrinth {
 
 	private final int height, width;
+	
+	private Tile tileAtOrigin;
 
-	private final Tile[][] tiles;
+	private final List<Tile> tiles;
 
 	private final Player player;
 
@@ -24,26 +29,27 @@ public class Labyrinth {
 		this.numberOfZPMs = numberOfZPMs;
 	}
 
+	public void addTile(Tile tile) {
+		tiles.add(tile);
+	}
+	
+	public List<Tile> getTiles() {
+		return tiles;
+	}
+	
 	public Labyrinth(int height, int width) {
 		this.height = height;
 		this.width = width;
-		tiles = new Tile[height][width];
+		tiles = new ArrayList<Tile>();
 		numberOfZPMs = 0;
 		player = new Player();
 	}
 
 	public Tile getTileFrontOfPlayer() {
-		Position newPos = player.getPositionFrontOfPlayer();
-		Tile nextTile = tiles[newPos.y][newPos.x];
-		return nextTile;
-	}
-
-	public Tile getTile(int y, int x) {
-		return tiles[y][x];
-	}
-
-	public void setTile(int y, int x, Tile tile) {
-		tiles[y][x] = tile;
+		Direction dir = player.getDirection();
+		Tile playerTile = player.getTile();
+		
+		return playerTile.getNeighborForDirection(dir);
 	}
 
 	public Player getPlayer() {
@@ -71,14 +77,12 @@ public class Labyrinth {
 	}
 
 	public void shoot(ShotColor color) {
-		Position pos = player.getPositionFrontOfPlayer();
 		Tile tile = getTileFrontOfPlayer();
 		Direction dir = player.getDirection();
 
 		ShotResult result = tile.shootIt(color);
 		while (result == ShotResult.TILE_HIT) {
-			pos = pos.plusDir(dir);
-			tile = getTile(pos.y, pos.x);
+			tile = tile.getNeighborForDirection(dir);
 			result = tile.shootIt(color);
 		}
 	}
@@ -96,13 +100,37 @@ public class Labyrinth {
 		if (player.getDirection() != dir) {
 			player.setDirection(dir);
 		} else {
-			Tile nextTile = getTileFrontOfPlayer();
+			Tile currentTile = player.getTile();
+			Tile nextTile = currentTile.getNeighborForDirection(dir);
 			if (nextTile.canPlayerMoveHere()) {
-				Tile currentTile = getTile(player.getPosition().y, player.getPosition().x);
 				currentTile.leaveTile();
-				player.stepForward();
 				nextTile.stepOnTile(player);
 			}
 		}
+	}
+	
+	public Tile getTile(int y, int x) {
+		Tile tile = tileAtOrigin;
+		for (int i = 0; i < y; i++)
+			tile = tile.getNeighborForDirection(Direction.DOWN);
+		for (int i = 0; i < x; i++)
+			tile = tile.getNeighborForDirection(Direction.RIGHT);
+		return tile;
+	}
+
+	public Tile getPlayerTile() {
+		return player.getTile();
+	}
+	
+	public Tile getTileAtOrigin() {
+		return tileAtOrigin;
+	}
+
+	public void setTileAtOrigin(Tile tileAtOrigin) {
+		this.tileAtOrigin = tileAtOrigin;
+	}
+
+	public void setPlayerTile(Tile tile) {
+		player.setTile(tile);;
 	}
 }

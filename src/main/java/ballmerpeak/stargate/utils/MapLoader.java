@@ -28,10 +28,16 @@ public class MapLoader {
 	Map<Character, Door> doors;
 	Map<Character, Scale> scales;
 	
+	Tile tiles[][];
+	
 	int zpms;
 	Labyrinth labyrinth = null;
 
 	List<SpecialWall> specialWalls;
+
+	private int height;
+
+	private int width;
 	
 	public Labyrinth loadLabyrinth(String filename) throws FileNotFoundException, IOException {
 		gate = new Gate();
@@ -42,30 +48,33 @@ public class MapLoader {
 		try (FileReader fr = new FileReader(filename); BufferedReader br = new BufferedReader(fr)) {
 			String lineOne = br.readLine();
 			String lineTwo = br.readLine();
-			int height = Integer.parseInt(lineOne);
-			int width = Integer.parseInt(lineTwo);
-
+			height = Integer.parseInt(lineOne);
+			width = Integer.parseInt(lineTwo);
 			labyrinth = new Labyrinth(height, width);
 			this.gate = labyrinth.getGate();
+			
+			tiles = new Tile[height][width];
 			
 			// get empty line between header and body
 			br.readLine();
 			
-			for (int i = 0; i < height; i++) {
+			for (int y = 0; y < height; y++) {
 				String line = br.readLine();
-				for (int j = 0; j < width; j++) {
+				for (int x = 0; x < width; x++) {
 					
-					if ((i == 0 || i == height - 1 || j == 0 || j == width - 1) && (line.charAt(j) != '#'))
+					if ((y == 0 || y == height - 1 || x == 0 || x == width - 1) && (line.charAt(x) != '#'))
 						throw new InvalidMapFileException("edge of map has to be walled");
 					
-					Tile tile = createTile(line.charAt(j), new Position(i, j));
-					labyrinth.setTile(i, j, tile);
+					Tile tile = createTile(line.charAt(x), new Position(y, x));
+					tiles[y][x] = tile; 
 				}
 			}
 		}
+		labyrinth.setTileAtOrigin(tiles[0][0]);
 		setupDoors();
-		setupSpecialWalls();
 		labyrinth.setNumberOfZPMs(zpms);
+		setupNeighbors();
+		setupSpecialWalls();
 		return labyrinth;
 	}
 	
@@ -77,12 +86,29 @@ public class MapLoader {
 		}
 	}
 	
+	private void setupNeighbors() {
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				Tile tile = tiles[y][x];
+				if (y != 0)
+					tile.setNeightborForDirection(Direction.UP, tiles[y-1][x]);
+				if (x != 0)
+					tile.setNeightborForDirection(Direction.LEFT, tiles[y][x-1]);
+				if (y != height-1)
+					tile.setNeightborForDirection(Direction.DOWN, tiles[y+1][x]);
+				if (x != width-1)
+					tile.setNeightborForDirection(Direction.RIGHT, tiles[y][x+1]);
+				labyrinth.addTile(tile);
+			}
+		}
+	}
+	
 	private void setupSpecialWalls() {
 		for (SpecialWall wall : specialWalls) {
 			Direction dir = wall.getDirection();
 			Position pos = wall.getPosition();
 			Position nextPos = pos.plusDir(dir);
-			Tile nextTile = labyrinth.getTile(nextPos.y, nextPos.x);
+			Tile nextTile = tiles[nextPos.y][nextPos.x];
 			wall.setNextTile(nextTile);
 		}
 	}
@@ -93,6 +119,9 @@ public class MapLoader {
 
 		case '@':
 			labyrinth.setPlayerPos(pos);
+			Tile tile = new Floor(pos);
+			labyrinth.setPlayerTile(tile);
+			return tile;
 		case ' ':
 			return new Floor(pos);
 		case '#':

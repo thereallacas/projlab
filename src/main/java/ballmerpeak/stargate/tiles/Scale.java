@@ -36,8 +36,8 @@ public class Scale extends Floor {
 
 	@Override
 	public void stepOnTile(Player player) {
-		getDoor().open();
 		super.stepOnTile(player);
+		getDoor().open();
 	}
 
 	@Override

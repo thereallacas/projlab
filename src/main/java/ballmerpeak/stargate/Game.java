@@ -4,6 +4,7 @@ import ballmerpeak.stargate.gui.DrawableIndex;
 import ballmerpeak.stargate.gui.DrawableSource;
 import ballmerpeak.stargate.gui.InputCommandHandler;
 import ballmerpeak.stargate.tiles.ShotColor;
+import ballmerpeak.stargate.tiles.Tile;
 
 public class Game implements InputCommandHandler, DrawableSource {
 	
@@ -58,7 +59,8 @@ public class Game implements InputCommandHandler, DrawableSource {
 
 	@Override
 	public DrawableIndex getDrawable(int y, int x) {
-		if (labyrinth.getPlayerPosition().equals(new Position(y, x))) {
+		Tile tile = labyrinth.getTile(y, x);
+		if (labyrinth.getPlayerTile() == tile) { 
 			return getPlayerDrawableIndex();
 		}
 		return labyrinth.getTile(y, x).getDrawableIndex();

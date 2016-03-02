@@ -2,6 +2,7 @@ package ballmerpeak.stargate;
 
 import ballmerpeak.stargate.gui.Drawable;
 import ballmerpeak.stargate.gui.DrawableIndex;
+import ballmerpeak.stargate.tiles.Tile;
 
 public class Player implements Drawable {
 
@@ -10,6 +11,7 @@ public class Player implements Drawable {
 	private boolean isCarrying;
 	private boolean isAlive;
 	private int ZPMsCarried;
+	private Tile tile;
 	
 	public Player() {
 		isAlive = true;
@@ -80,5 +82,13 @@ public class Player implements Drawable {
 
 	public void pickupZPM() {
 		ZPMsCarried++;
+	}
+
+	public Tile getTile() {
+		return tile;
+	}
+
+	public void setTile(Tile tile) {
+		this.tile = tile;
 	}
 }

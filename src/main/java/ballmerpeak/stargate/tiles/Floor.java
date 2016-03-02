@@ -56,6 +56,7 @@ public class Floor extends Tile {
 			player.pickupZPM();
 			ZPM = false;
 		}
+		player.setTile(this);
 	}
 
 	public DrawableIndex getDrawableIndex() {
