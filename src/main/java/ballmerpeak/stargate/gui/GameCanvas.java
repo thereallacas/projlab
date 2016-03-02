@@ -2,6 +2,7 @@ package ballmerpeak.stargate.gui;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -21,13 +22,25 @@ public class GameCanvas extends JPanel implements GameRenderer {
 	private static final String imageFormat = "png";
 	private static final Image tileImages[] = new Image[DrawableIndex.values().length];
 
-	private Game lastRenderedGame = null;
+	private Game game = null;
+	
+	private Image backBuffer;
+	
+	public GameCanvas(Game game) {
+		this.game = game;
+		this.backBuffer = new BufferedImage(game.getWidth() * TILE_WIDTH, game.getHeight() * TILE_HEIGHT, BufferedImage.TYPE_INT_RGB);
+	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-		drawGame(lastRenderedGame);
+		g.drawImage(backBuffer, 0, 0, null);
 	}
-
+	
+	@Override
+	public boolean isDoubleBuffered() {
+		return true;
+	}
+	
 	public static void loadAssets(String path) throws IOException {
 		for (DrawableIndex asset : DrawableIndex.values()) {
 			String assetFileName = path + asset.name() + "." + imageFormat;
@@ -47,36 +60,9 @@ public class GameCanvas extends JPanel implements GameRenderer {
 	}
 
 	public void drawGame(Game game) {
-//		if (lastRenderedGame == null) {
-//			lastRenderedGame = game;
-//		}
-//		Graphics g = getGraphics();
-//		Tile rootTile = game.getRootTile();
-//		Tile playerTile = game.getPlayerTile();
-//		Tile rowIt = rootTile;
-//		Tile columnIt = rootTile;
-//		int y = 0;
-//		int x = 0;
-//		while (rowIt.getNeighborForDirection(Direction.DOWN) != null) {
-//			while (columnIt.getNeighborForDirection(Direction.RIGHT) != null) {
-//				int srcX = x * TILE_WIDTH;
-//				int srcY = y * TILE_HEIGHT;
-//				DrawableIndex index = columnIt == playerTile ? game.getPlayerDrawableIndex() : columnIt.getDrawableIndex(); 
-//				Image image = getAsset(index);
-//				g.drawImage(image, srcX, srcY, TILE_WIDTH, TILE_HEIGHT, null);
-//				columnIt = columnIt.getNeighborForDirection(Direction.RIGHT);
-//				x++;
-//			}
-//			columnIt = rowIt = rowIt.getNeighborForDirection(Direction.DOWN);
-//			y++;
-//			x = 0;
-//		}
-		if (lastRenderedGame == null) {
-			lastRenderedGame = game;
-		}
 		List<Tile> tiles = game.getTiles();
 		Tile playerTile = game.getPlayerTile();
-		Graphics g = getGraphics();
+		Graphics g = backBuffer.getGraphics();
 		for (int y = 0; y < game.getHeight(); y++) {
 			for (int x = 0; x < game.getWidth(); x++) {
 				int index = indexFromXY(y, x, game.getWidth(), game.getHeight());
@@ -86,8 +72,8 @@ public class GameCanvas extends JPanel implements GameRenderer {
 				int srcX = x * TILE_WIDTH;
 				int srcY = y * TILE_HEIGHT;
 				g.drawImage(image, srcX, srcY, TILE_WIDTH, TILE_HEIGHT, null);
-
 			}
 		}
+		getGraphics().drawImage(backBuffer, 0, 0, null);
 	}
 }

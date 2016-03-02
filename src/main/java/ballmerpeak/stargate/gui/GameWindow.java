@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Labyrinth;
@@ -28,10 +29,9 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		GameCanvas.loadAssets(dataDirectory + "/images/");
 
-		canvas = new GameCanvas();
-		canvas.setVisible(true);
+		canvas = new GameCanvas(game);
 		add(canvas);
-		
+
 		setInputCommandHandler(game);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -44,6 +44,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 	public static void main(String... args) throws IOException {
 		new GameWindow();
 	}
+	
 
 	public void setInputCommandHandler(InputCommandHandler handler) {
 		this.inputHandler = handler;
