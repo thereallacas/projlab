@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import ballmerpeak.stargate.Direction;
-import ballmerpeak.stargate.Gate;
+import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Labyrinth;
 import ballmerpeak.stargate.tiles.Door;
 import ballmerpeak.stargate.tiles.Floor;
@@ -22,7 +22,7 @@ import ballmerpeak.stargate.tiles.Wall;
 
 public class MapLoader {
 
-	Gate gate;
+	Game game;
 
 	Map<Character, Door> doors;
 	Map<Character, Scale> scales;
@@ -30,7 +30,6 @@ public class MapLoader {
 	Tile tiles[][];
 	
 	int zpms;
-	Labyrinth labyrinth = null;
 
 	List<SpecialWall> specialWalls;
 
@@ -38,8 +37,7 @@ public class MapLoader {
 
 	private int width;
 	
-	public Labyrinth loadLabyrinth(String filename) throws FileNotFoundException, IOException {
-		gate = new Gate();
+	public Game loadLabyrinth(String filename) throws FileNotFoundException, IOException {
 		doors = new HashMap<>();
 		scales = new HashMap<>();
 		specialWalls = new ArrayList<>();
@@ -49,9 +47,7 @@ public class MapLoader {
 			String lineTwo = br.readLine();
 			height = Integer.parseInt(lineOne);
 			width = Integer.parseInt(lineTwo);
-			labyrinth = new Labyrinth(height, width);
-			this.gate = labyrinth.getGate();
-			
+			game = new Game(height, width);
 			tiles = new Tile[height][width];
 			
 			// get empty line between header and body
@@ -69,12 +65,13 @@ public class MapLoader {
 				}
 			}
 		}
-		labyrinth.setTileAtOrigin(tiles[0][0]);
+		Labyrinth l = game.getLabyrinth();
+		l.setTileAtOrigin(tiles[0][0]);
 		setupDoors();
-		labyrinth.setNumberOfZPMs(zpms);
+		l.setNumberOfZPMs(zpms);
 		setupNeighbors();
 		setupSpecialWalls();
-		return labyrinth;
+		return game;
 	}
 	
 	private void setupDoors() {
@@ -86,6 +83,7 @@ public class MapLoader {
 	}
 	
 	private void setupNeighbors() {
+		Labyrinth labyrinth = game.getLabyrinth();
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				Tile tile = tiles[y][x];
@@ -114,9 +112,9 @@ public class MapLoader {
 		switch (c) {
 
 		case '@':
-			Tile tile = new Floor();
-			labyrinth.setPlayerTile(tile);
-			return tile;
+			Tile floorWithPlayer = new Floor();
+			game.setPlayerTile(floorWithPlayer);
+			return floorWithPlayer;
 		case ' ':
 			return new Floor();
 		case '#':
@@ -130,19 +128,19 @@ public class MapLoader {
 			return Floor.floorWithCrate();
 
 		case '>':
-			SpecialWall rightWall = new SpecialWall(Direction.RIGHT, gate);
+			SpecialWall rightWall = new SpecialWall(Direction.RIGHT, game.getGate());
 			specialWalls.add(rightWall);
 			return rightWall;
 		case '<':
-			SpecialWall leftWall = new SpecialWall(Direction.LEFT, gate);
+			SpecialWall leftWall = new SpecialWall(Direction.LEFT, game.getGate());
 			specialWalls.add(leftWall);
 			return leftWall;
 		case '^':
-			SpecialWall upWall = new SpecialWall(Direction.UP, gate);
+			SpecialWall upWall = new SpecialWall(Direction.UP, game.getGate());
 			specialWalls.add(upWall);
 			return upWall;
 		case '/':
-			SpecialWall downWall = new SpecialWall(Direction.DOWN, gate);
+			SpecialWall downWall = new SpecialWall(Direction.DOWN, game.getGate());
 			specialWalls.add(downWall);
 			return downWall;
 

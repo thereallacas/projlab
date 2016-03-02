@@ -8,49 +8,48 @@ import ballmerpeak.stargate.gui.InputCommandHandler;
 import ballmerpeak.stargate.tiles.Tile;
 
 public class Game implements InputCommandHandler {
-	
+
 	private Labyrinth labyrinth;
-	
-	public Game(Labyrinth labyrinth) {
-		this.labyrinth = labyrinth;
+	private Player player;
+	private Gate gate;
+
+	public Game(int height, int width) {
+		this.labyrinth = new Labyrinth(height, width);
+		this.player = new Player();
+		this.gate = new Gate();
 	}
-	
+
 	@Override
 	public void receiveInput(InputCommand command) {
 		command.execute(this);
 	}
-	
-	public boolean isPlayerAlive() {
-		return labyrinth.getPlayer().isAlive();
-	}
 
-	public Tile getPlayerTile() {
-		return labyrinth.getPlayerTile();
+	public boolean isPlayerAlive() {
+		return player.isAlive();
 	}
 
 	public DrawableIndex getPlayerDrawableIndex() {
-		return labyrinth.getPlayer().getDrawableIndex();
+		return player.getDrawableIndex();
 	}
 
 	public Tile getRootTile() {
 		return labyrinth.getTileAtOrigin();
 	}
-	
+
 	public Player getPlayer() {
-		return labyrinth.getPlayer();
+		return player;
 	}
 
 	public Labyrinth getLabyrinth() {
-		// TODO Auto-generated method stub
 		return labyrinth;
 	}
-	
-	public Tile getTileFrontOfPlayer() {
-		return labyrinth.getTileFrontOfPlayer();
-	}
-	
+
 	public Direction getPlayerDirection() {
-		return labyrinth.getPlayer().getDirection();
+		return player.getDirection();
+	}
+
+	public Tile getPlayerTile() {
+		return player.getTile();
 	}
 
 	public int getHeight() {
@@ -60,8 +59,27 @@ public class Game implements InputCommandHandler {
 	public int getWidth() {
 		return labyrinth.getWidth();
 	}
-	
+
 	public List<Tile> getTiles() {
 		return labyrinth.getTiles();
 	}
+
+	public Tile getTileFrontOfPlayer() {
+		Direction dir = player.getDirection();
+		Tile playerTile = player.getTile();
+		return playerTile.getNeighborForDirection(dir);
+	}
+
+	public void setPlayerTile(Tile tile) {
+		player.setTile(tile);;
+	}
+	
+	public Gate getGate() {
+		return gate;
+	}
+
+	public int getNumberOfZPMs() {
+		return labyrinth.getNumberOfZPMs();
+	}
+
 }

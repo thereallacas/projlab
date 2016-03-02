@@ -6,10 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 import ballmerpeak.stargate.Game;
-import ballmerpeak.stargate.Labyrinth;
 import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.utils.MapLoader;
 
@@ -23,8 +21,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		String mapDirectory = dataDirectory + "/maps/";
 		String mapFile = mapDirectory + "map4.txt";
-		Labyrinth labyrinth = loader.loadLabyrinth(mapFile);
-		game = new Game(labyrinth);
+		game = loader.loadLabyrinth(mapFile);
 		
 		dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		GameCanvas.loadAssets(dataDirectory + "/images/");

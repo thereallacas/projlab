@@ -10,9 +10,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Game;
-import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.tiles.Tile;
 
 public class GameCanvas extends JPanel implements GameRenderer {
@@ -22,12 +20,9 @@ public class GameCanvas extends JPanel implements GameRenderer {
 	private static final String imageFormat = "png";
 	private static final Image tileImages[] = new Image[DrawableIndex.values().length];
 
-	private Game game = null;
-	
 	private Image backBuffer;
 	
 	public GameCanvas(Game game) {
-		this.game = game;
 		this.backBuffer = new BufferedImage(game.getWidth() * TILE_WIDTH, game.getHeight() * TILE_HEIGHT, BufferedImage.TYPE_INT_RGB);
 	}
 	
