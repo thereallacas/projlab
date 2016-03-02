@@ -33,7 +33,11 @@ public class GameCanvas extends JPanel implements GameRenderer {
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-		g.drawImage(backBuffer, 0, 0, null);
+		redraw(g);
+	}
+	
+	public void redraw(Graphics g) {
+		g.drawImage(backBuffer, 0, 0, super.getWidth(), super.getHeight(), null);
 	}
 	
 	@Override
@@ -45,8 +49,10 @@ public class GameCanvas extends JPanel implements GameRenderer {
 		for (DrawableIndex asset : DrawableIndex.values()) {
 			String assetFileName = path + asset.name() + "." + imageFormat;
 			File assetFile = new File(assetFileName);
-			if (!assetFile.exists())
+			if (!assetFile.exists()) {
+				System.err.println("[WARNING] Asset not found: " + assetFileName);
 				continue;
+			}
 			tileImages[asset.ordinal()] = ImageIO.read(assetFile);
 		}
 	}
@@ -74,6 +80,6 @@ public class GameCanvas extends JPanel implements GameRenderer {
 				g.drawImage(image, srcX, srcY, TILE_WIDTH, TILE_HEIGHT, null);
 			}
 		}
-		getGraphics().drawImage(backBuffer, 0, 0, null);
+		redraw(getGraphics());
 	}
 }
