@@ -11,12 +11,10 @@ public class Game implements InputCommandHandler {
 
 	private Labyrinth labyrinth;
 	private Player player;
-	private Gate gate;
 
-	public Game(int height, int width) {
-		this.labyrinth = new Labyrinth(height, width);
-		this.player = new Player();
-		this.gate = new Gate();
+	public Game(Labyrinth labyrinth, Player player) {
+		this.labyrinth = labyrinth;
+		this.player = player;
 	}
 
 	@Override
@@ -30,10 +28,6 @@ public class Game implements InputCommandHandler {
 
 	public DrawableIndex getPlayerDrawableIndex() {
 		return player.getDrawableIndex();
-	}
-
-	public Labyrinth getLabyrinth() {
-		return labyrinth;
 	}
 
 	public Tile getPlayerTile() {
@@ -51,15 +45,7 @@ public class Game implements InputCommandHandler {
 	public List<Tile> getTiles() {
 		return labyrinth.getTiles();
 	}
-
-	public void setPlayerTile(Tile tile) {
-		player.setTile(tile);;
-	}
 	
-	public Gate getGate() {
-		return gate;
-	}
-
 	public int getNumberOfZPMs() {
 		return labyrinth.getNumberOfZPMs();
 	}

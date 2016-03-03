@@ -11,7 +11,9 @@ import java.util.Map;
 
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Game;
+import ballmerpeak.stargate.Gate;
 import ballmerpeak.stargate.Labyrinth;
+import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.tiles.Door;
 import ballmerpeak.stargate.tiles.Floor;
 import ballmerpeak.stargate.tiles.Pit;
@@ -23,6 +25,10 @@ import ballmerpeak.stargate.tiles.Wall;
 public class MapLoader {
 
 	Game game;
+	
+	Player player;
+	Labyrinth labyrinth;
+	Gate gate;
 
 	Map<Character, Door> doors;
 	Map<Character, Scale> scales;
@@ -42,12 +48,13 @@ public class MapLoader {
 		scales = new HashMap<>();
 		specialWalls = new ArrayList<>();
 		zpms = 0;
+		player = new Player();
+		gate = new Gate();
 		try (FileReader fr = new FileReader(filename); BufferedReader br = new BufferedReader(fr)) {
 			String lineOne = br.readLine();
 			String lineTwo = br.readLine();
 			height = Integer.parseInt(lineOne);
 			width = Integer.parseInt(lineTwo);
-			game = new Game(height, width);
 			tiles = new Tile[height][width];
 			
 			// get empty line between header and body
@@ -65,11 +72,12 @@ public class MapLoader {
 				}
 			}
 		}
-		Labyrinth l = game.getLabyrinth();
+		labyrinth = new Labyrinth(height, width);
 		setupDoors();
-		l.setNumberOfZPMs(zpms);
+		labyrinth.setNumberOfZPMs(zpms);
 		setupNeighbors();
 		setupSpecialWalls();
+		game = new Game(labyrinth, player);
 		return game;
 	}
 	
@@ -82,7 +90,6 @@ public class MapLoader {
 	}
 	
 	private void setupNeighbors() {
-		Labyrinth labyrinth = game.getLabyrinth();
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				Tile tile = tiles[y][x];
@@ -112,7 +119,7 @@ public class MapLoader {
 
 		case '@':
 			Tile floorWithPlayer = new Floor();
-			game.setPlayerTile(floorWithPlayer);
+			player.setTile(floorWithPlayer);
 			return floorWithPlayer;
 		case ' ':
 			return new Floor();
@@ -127,19 +134,19 @@ public class MapLoader {
 			return Floor.floorWithCrate();
 
 		case '>':
-			SpecialWall rightWall = new SpecialWall(Direction.RIGHT, game.getGate());
+			SpecialWall rightWall = new SpecialWall(Direction.RIGHT, gate);
 			specialWalls.add(rightWall);
 			return rightWall;
 		case '<':
-			SpecialWall leftWall = new SpecialWall(Direction.LEFT, game.getGate());
+			SpecialWall leftWall = new SpecialWall(Direction.LEFT, gate);
 			specialWalls.add(leftWall);
 			return leftWall;
 		case '^':
-			SpecialWall upWall = new SpecialWall(Direction.UP, game.getGate());
+			SpecialWall upWall = new SpecialWall(Direction.UP, gate);
 			specialWalls.add(upWall);
 			return upWall;
 		case '/':
-			SpecialWall downWall = new SpecialWall(Direction.DOWN, game.getGate());
+			SpecialWall downWall = new SpecialWall(Direction.DOWN, gate);
 			specialWalls.add(downWall);
 			return downWall;
 
