@@ -33,9 +33,8 @@ public class SpecialWall extends Wall {
 	}
 
 	@Override
-	public ShotResult shootIt(ShotColor color) {
+	public void shootIt(ShotColor color, Direction dir) {
 		gate.setWallForColor(color, this);
-		return ShotResult.SPECIAL_WALL_HIT;
 	}
 
 	public ShotColor getColor() {

@@ -18,12 +18,7 @@ public class ShootCommand extends InputCommand {
 	public void execute(Game game) {
 		Tile tile = game.getTileFrontOfPlayer();
 		Direction dir = game.getPlayerDirection();
-
-		ShotResult result = tile.shootIt(color);
-		while (result == ShotResult.TILE_HIT) {
-			tile = tile.getNeighborForDirection(dir);
-			result = tile.shootIt(color);
-		}
+		tile.shootIt(color, dir);
 	}
 
 }

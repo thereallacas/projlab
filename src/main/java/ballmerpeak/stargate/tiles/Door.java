@@ -1,5 +1,6 @@
 package ballmerpeak.stargate.tiles;
 
+import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
@@ -20,8 +21,8 @@ public class Door extends Floor {
 	}
 
 	@Override
-	public ShotResult shootIt(ShotColor color) {
-		return isOpen() ? ShotResult.TILE_HIT : ShotResult.REGULAR_WALL_HIT;
+	public void shootIt(ShotColor color, Direction dir) {
+		if(isOpen()) super.shootIt(color, dir);
 	}
 
 	public boolean isOpen() {

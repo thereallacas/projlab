@@ -1,5 +1,6 @@
 package ballmerpeak.stargate.tiles;
 
+import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
@@ -11,8 +12,8 @@ public class Wall extends Tile {
 	}
 
 	@Override
-	public ShotResult shootIt(ShotColor color) {
-		return ShotResult.REGULAR_WALL_HIT;
+	public void shootIt(ShotColor color, Direction dir) {
+		
 	}
 
 	@Override

@@ -40,8 +40,8 @@ public abstract class Tile implements Drawable {
 		return true;
 	}
 
-	public ShotResult shootIt(ShotColor color) {
-		return ShotResult.TILE_HIT;
+	public void shootIt(ShotColor color, Direction dir) {
+		getNeighborForDirection(dir).shootIt(color, dir);
 	}
 
 	public boolean isDirty() {
