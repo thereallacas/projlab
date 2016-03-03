@@ -4,7 +4,7 @@ import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.tiles.Tile;
 
-public class PicupCommand extends InputCommand {
+public class PickupCommand extends InputCommand {
 
 	@Override
 	public void execute(Game game) {

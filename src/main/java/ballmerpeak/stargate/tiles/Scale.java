@@ -38,7 +38,7 @@ public class Scale extends Floor {
 	@Override
 	public void leaveTile() {
 		super.leaveTile();
-		if (!occupied)
+		if (!hasCrate)
 			getDoor().close();
 	}
 
@@ -52,6 +52,6 @@ public class Scale extends Floor {
 
 	@Override
 	public DrawableIndex getDrawableIndex() {
-		return occupied ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE; 
+		return hasCrate ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE; 
 	}
 }

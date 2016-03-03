@@ -5,11 +5,11 @@ import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Floor extends Tile {
 	
-	protected boolean occupied;
+	protected boolean hasCrate;
 	private boolean ZPM;
 
 	public Floor() {
-		occupied = ZPM = false;
+		hasCrate = ZPM = false;
 	}
 	
 	public static Floor floorWithZPM() {
@@ -20,18 +20,18 @@ public class Floor extends Tile {
 	
 	public static Floor floorWithCrate() {
 		Floor floor = new Floor();
-		floor.occupied = true;
+		floor.hasCrate = true;
 		return floor;
 	}
 	
-	public boolean isOccupied() {
-		return occupied;
+	public boolean hasCrate() {
+		return hasCrate;
 	}
 	
 	@Override
 	public boolean dropCrateHere(Player player) {
-		if (!isOccupied()) {
-			occupied = true;
+		if (!hasCrate()) {
+			hasCrate = true;
 			player.unsetCarrying();
 			return true;
 		}
@@ -40,8 +40,8 @@ public class Floor extends Tile {
 
 	@Override
 	public boolean pickupCrate(Player player) {
-		if (occupied) {
-			occupied = false;
+		if (hasCrate) {
+			hasCrate = false;
 			player.setCarrying();
 			return true;
 		}
@@ -60,7 +60,7 @@ public class Floor extends Tile {
 
 	public DrawableIndex getDrawableIndex() {
 		return ZPM ? DrawableIndex.FLOOR_WITH_ZPM :
-			occupied ? DrawableIndex.FLOOR_WITH_CRATE :
+			hasCrate ? DrawableIndex.FLOOR_WITH_CRATE :
 				DrawableIndex.FLOOR;
 	}
 }

@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.commands.MoveCommand;
-import ballmerpeak.stargate.commands.PicupCommand;
+import ballmerpeak.stargate.commands.PickupCommand;
 import ballmerpeak.stargate.commands.QuitCommand;
 import ballmerpeak.stargate.commands.ShootCommand;
 import ballmerpeak.stargate.commands.UnknownCommand;
@@ -28,7 +28,7 @@ public class InputCommandFactory {
 		case KeyEvent.VK_S:
 			return new ShootCommand(ShotColor.YELLOW);
 		case KeyEvent.VK_D:
-			return new PicupCommand();
+			return new PickupCommand();
 		case KeyEvent.VK_Q:
 			return new QuitCommand();
 		default:

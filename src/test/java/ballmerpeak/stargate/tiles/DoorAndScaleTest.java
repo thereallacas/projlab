@@ -35,7 +35,7 @@ public class DoorAndScaleTest {
 	public void dropCrateTest() {
 		scale.dropCrateHere(player);
 		assertTrue(door.isOpen());
-		assertTrue(scale.isOccupied());
+		assertTrue(scale.hasCrate());
 	}
 	
 	@Test
