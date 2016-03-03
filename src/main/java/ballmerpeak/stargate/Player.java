@@ -73,4 +73,12 @@ public class Player implements Drawable {
 	public void setTile(Tile tile) {
 		this.tile = tile;
 	}
+
+	public Tile getTileFrontOfPlayer() {
+		return tile.getNeighborForDirection(direction);
+	}
+	
+	public void setTileDirty() {
+		tile.setDirty(true);
+	}
 }

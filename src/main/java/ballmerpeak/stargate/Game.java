@@ -21,7 +21,7 @@ public class Game implements InputCommandHandler {
 
 	@Override
 	public void receiveInput(InputCommand command) {
-		command.execute(this);
+		command.execute(player);
 	}
 
 	public boolean isPlayerAlive() {

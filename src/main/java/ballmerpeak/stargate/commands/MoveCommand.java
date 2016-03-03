@@ -1,7 +1,6 @@
 package ballmerpeak.stargate.commands;
 
 import ballmerpeak.stargate.Direction;
-import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.tiles.Tile;
 
@@ -14,9 +13,7 @@ public class MoveCommand extends InputCommand {
 	}
 	
 	@Override
-	public void execute(Game game) {
-		Player player = game.getPlayer();
-		
+	public void execute(Player player) {
 		if (player.getDirection() != dir) {
 			player.setDirection(dir);
 		} else {
