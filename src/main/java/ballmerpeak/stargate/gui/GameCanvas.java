@@ -28,7 +28,9 @@ public class GameCanvas extends JPanel implements GameRenderer {
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-		redraw(g);
+		synchronized (backBuffer) {
+			redraw(g);
+		}
 	}
 	
 	public void redraw(Graphics g) {
@@ -61,20 +63,22 @@ public class GameCanvas extends JPanel implements GameRenderer {
 	}
 
 	public void drawGame(Game game) {
-		List<Tile> tiles = game.getTiles();
-		Tile playerTile = game.getPlayerTile();
-		Graphics g = backBuffer.getGraphics();
-		for (int y = 0; y < game.getHeight(); y++) {
-			for (int x = 0; x < game.getWidth(); x++) {
-				int index = indexFromXY(y, x, game.getWidth(), game.getHeight());
-				Tile tile = tiles.get(index);
-				DrawableIndex drawableIndex = tile == playerTile ? game.getPlayerDrawableIndex() : tile.getDrawableIndex(); 
-				Image image = getAsset(drawableIndex);
-				int srcX = x * TILE_WIDTH;
-				int srcY = y * TILE_HEIGHT;
-				g.drawImage(image, srcX, srcY, TILE_WIDTH, TILE_HEIGHT, null);
+		synchronized(this.backBuffer) {
+			List<Tile> tiles = game.getTiles();
+			Tile playerTile = game.getPlayerTile();
+			Graphics g = backBuffer.getGraphics();
+			for (int y = 0; y < game.getHeight(); y++) {
+				for (int x = 0; x < game.getWidth(); x++) {
+					int index = indexFromXY(y, x, game.getWidth(), game.getHeight());
+					Tile tile = tiles.get(index);
+					DrawableIndex drawableIndex = tile == playerTile ? game.getPlayerDrawableIndex() : tile.getDrawableIndex(); 
+					Image image = getAsset(drawableIndex);
+					int srcX = x * TILE_WIDTH;
+					int srcY = y * TILE_HEIGHT;
+					g.drawImage(image, srcX, srcY, TILE_WIDTH, TILE_HEIGHT, null);
+				}
 			}
+			redraw(getGraphics());
 		}
-		redraw(getGraphics());
 	}
 }
