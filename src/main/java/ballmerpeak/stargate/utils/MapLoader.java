@@ -14,6 +14,8 @@ import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Gate;
 import ballmerpeak.stargate.Labyrinth;
 import ballmerpeak.stargate.Player;
+import ballmerpeak.stargate.gui.DrawableSource;
+import ballmerpeak.stargate.gui.GameGraphicsModel;
 import ballmerpeak.stargate.tiles.Door;
 import ballmerpeak.stargate.tiles.Floor;
 import ballmerpeak.stargate.tiles.Pit;
@@ -29,6 +31,8 @@ public class MapLoader {
 	Player player;
 	Labyrinth labyrinth;
 	Gate gate;
+	
+	DrawableSource gfxModel;
 
 	Map<Character, Door> doors;
 	Map<Character, Scale> scales;
@@ -43,7 +47,7 @@ public class MapLoader {
 
 	private int width;
 	
-	public Game loadLabyrinth(String filename) throws FileNotFoundException, IOException {
+	public MapLoader(String filename) throws FileNotFoundException, IOException {
 		doors = new HashMap<>();
 		scales = new HashMap<>();
 		specialWalls = new ArrayList<>();
@@ -74,11 +78,18 @@ public class MapLoader {
 		}
 		labyrinth = new Labyrinth(height, width);
 		setupDoors();
-		labyrinth.setNumberOfZPMs(zpms);
 		setupNeighbors();
 		setupSpecialWalls();
-		game = new Game(labyrinth, player);
+		game = new Game(player, zpms);
+		gfxModel = new GameGraphicsModel(tiles, player);
+	}
+
+	public Game getGame() {
 		return game;
+	}
+	
+	public DrawableSource getGraphicsModel() {
+		return gfxModel;
 	}
 	
 	private void setupDoors() {

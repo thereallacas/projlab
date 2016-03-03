@@ -12,12 +12,6 @@ public class Labyrinth {
 
 	private final List<Tile> tiles;
 
-	private int numberOfZPMs;
-
-	public void setNumberOfZPMs(int numberOfZPMs) {
-		this.numberOfZPMs = numberOfZPMs;
-	}
-
 	public void addTile(Tile tile) {
 		tiles.add(tile);
 	}
@@ -28,7 +22,6 @@ public class Labyrinth {
 	
 	public Labyrinth(int height, int width) {
 		tiles = new ArrayList<Tile>();
-		numberOfZPMs = 0;
 		this.height = height;
 		this.width = width;
 	}
@@ -39,9 +32,5 @@ public class Labyrinth {
 
 	public int getHeight() {
 		return height;
-	}
-
-	public int getNumberOfZPMs() {
-		return numberOfZPMs;
 	}
 }

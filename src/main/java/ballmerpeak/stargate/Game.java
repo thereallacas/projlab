@@ -1,34 +1,16 @@
 package ballmerpeak.stargate;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ballmerpeak.stargate.commands.InputCommand;
-import ballmerpeak.stargate.gui.Drawable;
-import ballmerpeak.stargate.gui.DrawableIndex;
-import ballmerpeak.stargate.gui.DrawableSource;
 import ballmerpeak.stargate.gui.InputCommandHandler;
-import ballmerpeak.stargate.tiles.Tile;
 
-public class Game implements InputCommandHandler, DrawableSource {
+public class Game implements InputCommandHandler {
 
-	private Labyrinth labyrinth;
 	private Player player;
+	private int numberOfZPMs;
 	
-	/* TODO
-	 * List<Drawable> is not covariant
-	 * need better way to solve this
-	 * maybe subclass ArrayList?
-	 */
-	private List<Drawable> drawables;
-
-	public Game(Labyrinth labyrinth, Player player) {
-		this.labyrinth = labyrinth;
+	public Game(Player player, int numberOfZPMs) {
 		this.player = player;
-		this.drawables = new ArrayList<Drawable>();
-		for (Tile t : labyrinth.getTiles()) {
-			drawables.add(t);
-		}
+		this.numberOfZPMs = numberOfZPMs;
 	}
 
 	@Override
@@ -36,33 +18,8 @@ public class Game implements InputCommandHandler, DrawableSource {
 		command.execute(player);
 	}
 
-	@Override
-	public DrawableIndex getPlayerDrawableIndex() {
-		return player.getDrawableIndex();
-	}
-
-	@Override
-	public Drawable getPlayerTile() {
-		return player.getTile();
-	}
-
-	@Override
-	public int getHeight() {
-		return labyrinth.getHeight();
-	}
-
-	@Override
-	public int getWidth() {
-		return labyrinth.getWidth();
-	}
-
-	@Override
-	public List<Drawable> getTiles() {
-		return drawables;
-	}
-	
 	public boolean didPlayerWin() {
-		return player.getZPMsCarried() == labyrinth.getNumberOfZPMs();
+		return player.getZPMsCarried() == numberOfZPMs;
 	}
 	
 	public boolean isPlayerAlive() {

@@ -16,18 +16,21 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 	private GameRenderer canvas;
 	private InputCommandHandler inputHandler;
 	private Game game;
+	private DrawableSource gfxModel;
 
 	public GameWindow() throws FileNotFoundException, IOException {
-		MapLoader loader = new MapLoader();
 		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		String mapDirectory = dataDirectory + "/maps/";
 		String mapFile = mapDirectory + "map4.txt";
-		game = loader.loadLabyrinth(mapFile);
+		MapLoader loader = new MapLoader(mapFile);
+
+		game = loader.getGame();
 		
 		dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		GameCanvas.loadAssets(dataDirectory + "/images/");
 
-		canvas = new GameCanvas(game);
+		gfxModel = loader.getGraphicsModel();
+		canvas = new GameCanvas(gfxModel.getHeight(), gfxModel.getWidth());
 		add((JPanel) canvas);
 
 		setInputCommandHandler(game);
@@ -36,7 +39,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		addKeyListener(this);
 		setSize(760, 760);
 		setVisible(true);
-		canvas.drawGame(game);
+		canvas.drawGame(gfxModel);
 	}
 
 	public static void main(String... args) throws IOException {
@@ -52,8 +55,11 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 	public void keyPressed(KeyEvent e) {
 		InputCommand cmd = InputCommandFactory.inputCommandFromEvent(e);
 		inputHandler.receiveInput(cmd);
-		canvas.drawGame(game);
+		canvas.drawGame(gfxModel);
 		if (!game.isPlayerAlive()) {
+			System.exit(0);
+		}
+		if (game.didPlayerWin()) {
 			System.exit(0);
 		}
 	}
