@@ -1,7 +1,5 @@
 package ballmerpeak.stargate.utils;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +22,6 @@ public class MapLoaderTest {
 
 	@Test
 	public void testLabyrinthAttribs() {
-		assertEquals(3, game.getNumberOfZPMs());
 		
 	}
 	

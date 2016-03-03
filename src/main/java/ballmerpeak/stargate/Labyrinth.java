@@ -14,10 +14,6 @@ public class Labyrinth {
 
 	private int numberOfZPMs;
 
-	public int getNumberOfZPMs() {
-		return numberOfZPMs;
-	}
-
 	public void setNumberOfZPMs(int numberOfZPMs) {
 		this.numberOfZPMs = numberOfZPMs;
 	}
@@ -43,5 +39,9 @@ public class Labyrinth {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public int getNumberOfZPMs() {
+		return numberOfZPMs;
 	}
 }

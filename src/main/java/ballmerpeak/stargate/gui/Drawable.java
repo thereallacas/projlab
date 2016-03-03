@@ -9,4 +9,6 @@ package ballmerpeak.stargate.gui;
 public interface Drawable {
 
 	DrawableIndex getDrawableIndex();
+	boolean isDirty();
+	void setDirty(boolean b);
 }

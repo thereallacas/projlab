@@ -55,7 +55,7 @@ public class Player implements Drawable {
 
 	public void setDirection(Direction direction) {
 		this.direction = direction;
-		getTile().setDirty(true);
+		setDirty(true);
 	}
 
 	public int getZPMsCarried() {
@@ -78,7 +78,13 @@ public class Player implements Drawable {
 		return tile.getNeighborForDirection(direction);
 	}
 	
-	public void setTileDirty() {
-		tile.setDirty(true);
+	@Override
+	public boolean isDirty() {
+		return tile.isDirty();
+	}
+
+	@Override
+	public void setDirty(boolean b) {
+		tile.setDirty(b);
 	}
 }

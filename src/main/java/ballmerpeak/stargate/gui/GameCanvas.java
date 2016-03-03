@@ -19,7 +19,7 @@ public class GameCanvas extends JPanel implements GameRenderer {
 
 	private static final String imageFormat = "png";
 	private static final Image tileImages[] = new Image[DrawableIndex.values().length];
-	private Tile[][] graphicsModel;
+	private Drawable[][] graphicsModel;
 
 	private Image backBuffer;
 	
@@ -36,14 +36,14 @@ public class GameCanvas extends JPanel implements GameRenderer {
 	}
 	
 	private void buildGraphicsModel(Game game) {
-		List<Tile> tiles = game.getTiles();
+		List<Drawable> tiles = game.getTiles();
 		int modelWidth = game.getWidth();
 		int modelHeight = game.getHeight();
 		graphicsModel = new Tile[modelHeight][modelWidth];
 		for (int y = 0; y < modelHeight; y++) {
 			for (int x = 0; x < modelWidth; x++) {
 				int index = indexFromXY(y, x, modelWidth, modelHeight);
-				Tile tile = tiles.get(index);
+				Drawable tile = tiles.get(index);
 				graphicsModel[y][x] = tile;
 			}
 		}
@@ -80,11 +80,11 @@ public class GameCanvas extends JPanel implements GameRenderer {
 
 	public void drawGame(Game game) {
 		synchronized(this.backBuffer) {
-			Tile playerTile = game.getPlayerTile();
+			Drawable playerTile = game.getPlayerTile();
 			Graphics g = backBuffer.getGraphics();
 			for (int y = 0; y < game.getHeight(); y++) {
 				for (int x = 0; x < game.getWidth(); x++) {
-					Tile tile = graphicsModel[y][x];
+					Drawable tile = graphicsModel[y][x];
 					if(!tile.isDirty()) continue;
 					DrawableIndex drawableIndex = tile == playerTile ? game.getPlayerDrawableIndex() : tile.getDrawableIndex(); 
 					Image image = getAsset(drawableIndex);

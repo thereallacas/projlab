@@ -10,12 +10,14 @@ import ballmerpeak.stargate.Player;
 
 public class DoorAndScaleTest {
 	
+	Floor floor;
 	Door door;
 	Scale scale;
 	Player player;
 	
 	@Before
 	public void setup() {
+		floor = new Floor();
 		door = new Door();
 		scale = new Scale();
 		scale.setDoor(door);
@@ -43,7 +45,9 @@ public class DoorAndScaleTest {
 		door = new Door();
 		scale = new Scale();
 		scale.setDoor(door);
+		player.setTile(floor);
 		player.setDirection(Direction.RIGHT);
+		floor.leaveTile();
 		scale.stepOnTile(player);
 		assertTrue(door.isOpen());
 		scale.leaveTile();

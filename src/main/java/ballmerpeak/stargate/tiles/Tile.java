@@ -19,7 +19,11 @@ public abstract class Tile implements Drawable {
 	public void setNeightborForDirection(Direction dir, Tile tile) {
 		neighbors[dir.ordinal()] = tile;
 	}
-	
+
+	public boolean canPlayerMoveHere() {
+		return true;
+	}
+
 	public void stepOnTile(Player player) {
 		setDirty(true);
 	}
@@ -36,18 +40,16 @@ public abstract class Tile implements Drawable {
 		return false;
 	}
 	
-	public boolean canPlayerMoveHere() {
-		return true;
-	}
-
 	public void shootIt(ShotColor color, Direction dir) {
 		getNeighborForDirection(dir).shootIt(color, dir);
 	}
 
+	@Override
 	public boolean isDirty() {
 		return isDirty;
 	}
 
+	@Override
 	public void setDirty(boolean isDirty) {
 		this.isDirty = isDirty;
 	}

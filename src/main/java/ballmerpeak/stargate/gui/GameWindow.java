@@ -6,13 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.utils.MapLoader;
 
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource {
-	private GameCanvas canvas;
+	private GameRenderer canvas;
 	private InputCommandHandler inputHandler;
 	private Game game;
 
@@ -27,7 +28,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		GameCanvas.loadAssets(dataDirectory + "/images/");
 
 		canvas = new GameCanvas(game);
-		add(canvas);
+		add((JPanel) canvas);
 
 		setInputCommandHandler(game);
 		
