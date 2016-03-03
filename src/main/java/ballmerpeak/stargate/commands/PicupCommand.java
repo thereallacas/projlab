@@ -16,6 +16,8 @@ public class PicupCommand extends InputCommand {
 		} else {
 			tile.pickupCrate(player);
 		}
+		tile.setDirty(true);
+		player.getTile().setDirty(true);
 	}
 
 }

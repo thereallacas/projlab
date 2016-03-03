@@ -19,6 +19,7 @@ public class GameCanvas extends JPanel implements GameRenderer {
 
 	private static final String imageFormat = "png";
 	private static final Image tileImages[] = new Image[DrawableIndex.values().length];
+	private Tile[] drawnTiles;
 
 	private Image backBuffer;
 	
@@ -71,11 +72,13 @@ public class GameCanvas extends JPanel implements GameRenderer {
 				for (int x = 0; x < game.getWidth(); x++) {
 					int index = indexFromXY(y, x, game.getWidth(), game.getHeight());
 					Tile tile = tiles.get(index);
+					if(!tile.isDirty()) continue;
 					DrawableIndex drawableIndex = tile == playerTile ? game.getPlayerDrawableIndex() : tile.getDrawableIndex(); 
 					Image image = getAsset(drawableIndex);
 					int srcX = x * TILE_WIDTH;
 					int srcY = y * TILE_HEIGHT;
 					g.drawImage(image, srcX, srcY, TILE_WIDTH, TILE_HEIGHT, null);
+					tile.setDirty(false);
 				}
 			}
 			redraw(getGraphics());

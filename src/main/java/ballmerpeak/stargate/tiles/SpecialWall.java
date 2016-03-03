@@ -44,6 +44,7 @@ public class SpecialWall extends Wall {
 
 	public void setColor(ShotColor color) {
 		this.color = color;
+		setDirty(true);
 	}
 
 	@Override

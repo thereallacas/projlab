@@ -30,10 +30,12 @@ public class Door extends Floor {
 
 	public void close() {
 		open = false;
+		setDirty(true);
 	}
 
 	public void open() {
 		open = true;
+		setDirty(true);
 	}
 
 	@Override

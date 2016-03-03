@@ -6,10 +6,10 @@ import ballmerpeak.stargate.gui.Drawable;
 
 public abstract class Tile implements Drawable {
 	private Tile neighbors[];
+	private boolean isDirty = true;
 	
 	public Tile() {
 		neighbors = new Tile[Direction.values().length];
-		
 	}
 	
 	public Tile getNeighborForDirection(Direction dir) {
@@ -20,10 +20,12 @@ public abstract class Tile implements Drawable {
 		neighbors[dir.ordinal()] = tile;
 	}
 	
-	public abstract void stepOnTile(Player player);
+	public void stepOnTile(Player player) {
+		setDirty(true);
+	}
 	
 	public void leaveTile() {
-		
+		setDirty(true);
 	}
 	
 	public boolean dropCrateHere(Player player) {
@@ -40,5 +42,13 @@ public abstract class Tile implements Drawable {
 
 	public ShotResult shootIt(ShotColor color) {
 		return ShotResult.TILE_HIT;
+	}
+
+	public boolean isDirty() {
+		return isDirty;
+	}
+
+	public void setDirty(boolean isDirty) {
+		this.isDirty = isDirty;
 	}
 }

@@ -6,7 +6,7 @@ import ballmerpeak.stargate.tiles.Tile;
 
 public class Player implements Drawable {
 
-	private Direction direction;
+	private Direction direction = Direction.UP;
 	private boolean isCarrying;
 	private boolean isAlive;
 	private int ZPMsCarried;
@@ -15,7 +15,6 @@ public class Player implements Drawable {
 	public Player() {
 		isAlive = true;
 		ZPMsCarried = 0;
-		setDirection(Direction.UP);
 		isCarrying = false;
 	}
 	
@@ -56,6 +55,7 @@ public class Player implements Drawable {
 
 	public void setDirection(Direction direction) {
 		this.direction = direction;
+		getTile().setDirty(true);
 	}
 
 	public int getZPMsCarried() {
