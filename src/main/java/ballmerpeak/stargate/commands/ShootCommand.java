@@ -3,7 +3,6 @@ package ballmerpeak.stargate.commands;
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.tiles.ShotColor;
-import ballmerpeak.stargate.tiles.ShotResult;
 import ballmerpeak.stargate.tiles.Tile;
 
 public class ShootCommand extends InputCommand {
