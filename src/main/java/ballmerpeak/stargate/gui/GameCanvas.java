@@ -19,18 +19,33 @@ public class GameCanvas extends JPanel implements GameRenderer {
 
 	private static final String imageFormat = "png";
 	private static final Image tileImages[] = new Image[DrawableIndex.values().length];
-	private Tile[] drawnTiles;
+	private Tile[][] graphicsModel;
 
 	private Image backBuffer;
 	
 	public GameCanvas(Game game) {
 		this.backBuffer = new BufferedImage(game.getWidth() * TILE_WIDTH, game.getHeight() * TILE_HEIGHT, BufferedImage.TYPE_INT_RGB);
+		buildGraphicsModel(game);
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) {
 		synchronized (backBuffer) {
 			redraw(g);
+		}
+	}
+	
+	private void buildGraphicsModel(Game game) {
+		List<Tile> tiles = game.getTiles();
+		int modelWidth = game.getWidth();
+		int modelHeight = game.getHeight();
+		graphicsModel = new Tile[modelHeight][modelWidth];
+		for (int y = 0; y < modelHeight; y++) {
+			for (int x = 0; x < modelWidth; x++) {
+				int index = indexFromXY(y, x, modelWidth, modelHeight);
+				Tile tile = tiles.get(index);
+				graphicsModel[y][x] = tile;
+			}
 		}
 	}
 	
@@ -65,19 +80,17 @@ public class GameCanvas extends JPanel implements GameRenderer {
 
 	public void drawGame(Game game) {
 		synchronized(this.backBuffer) {
-			List<Tile> tiles = game.getTiles();
 			Tile playerTile = game.getPlayerTile();
 			Graphics g = backBuffer.getGraphics();
 			for (int y = 0; y < game.getHeight(); y++) {
 				for (int x = 0; x < game.getWidth(); x++) {
-					int index = indexFromXY(y, x, game.getWidth(), game.getHeight());
-					Tile tile = tiles.get(index);
+					Tile tile = graphicsModel[y][x];
 					if(!tile.isDirty()) continue;
 					DrawableIndex drawableIndex = tile == playerTile ? game.getPlayerDrawableIndex() : tile.getDrawableIndex(); 
 					Image image = getAsset(drawableIndex);
-					int srcX = x * TILE_WIDTH;
-					int srcY = y * TILE_HEIGHT;
-					g.drawImage(image, srcX, srcY, TILE_WIDTH, TILE_HEIGHT, null);
+					int scrX = x * TILE_WIDTH;
+					int scrY = y * TILE_HEIGHT;
+					g.drawImage(image, scrX, scrY, TILE_WIDTH, TILE_HEIGHT, null);
 					tile.setDirty(false);
 				}
 			}
