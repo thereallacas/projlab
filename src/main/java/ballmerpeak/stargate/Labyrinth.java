@@ -8,10 +8,7 @@ import ballmerpeak.stargate.tiles.Tile;
 public class Labyrinth {
 	
 	private int height;
-
 	private int width;
-	
-	private Tile tileAtOrigin;
 
 	private final List<Tile> tiles;
 
@@ -38,14 +35,6 @@ public class Labyrinth {
 		numberOfZPMs = 0;
 		this.height = height;
 		this.width = width;
-	}
-
-	public Tile getTileAtOrigin() {
-		return tileAtOrigin;
-	}
-
-	public void setTileAtOrigin(Tile tileAtOrigin) {
-		this.tileAtOrigin = tileAtOrigin;
 	}
 
 	public int getWidth() {

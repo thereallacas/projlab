@@ -66,7 +66,6 @@ public class MapLoader {
 			}
 		}
 		Labyrinth l = game.getLabyrinth();
-		l.setTileAtOrigin(tiles[0][0]);
 		setupDoors();
 		l.setNumberOfZPMs(zpms);
 		setupNeighbors();

@@ -32,20 +32,8 @@ public class Game implements InputCommandHandler {
 		return player.getDrawableIndex();
 	}
 
-	public Tile getRootTile() {
-		return labyrinth.getTileAtOrigin();
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
 	public Labyrinth getLabyrinth() {
 		return labyrinth;
-	}
-
-	public Direction getPlayerDirection() {
-		return player.getDirection();
 	}
 
 	public Tile getPlayerTile() {
@@ -62,12 +50,6 @@ public class Game implements InputCommandHandler {
 
 	public List<Tile> getTiles() {
 		return labyrinth.getTiles();
-	}
-
-	public Tile getTileFrontOfPlayer() {
-		Direction dir = player.getDirection();
-		Tile playerTile = player.getTile();
-		return playerTile.getNeighborForDirection(dir);
 	}
 
 	public void setPlayerTile(Tile tile) {
