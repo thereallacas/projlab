@@ -15,7 +15,7 @@ public class PickupCommand implements InputCommand {
 			tile.pickupCrate(player);
 		}
 		tile.setDirty(true);
-		player.getTile().setDirty(true);
+		player.setDirty(true);
 	}
 
 }

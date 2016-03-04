@@ -7,7 +7,8 @@ public class Gate {
 
 	private SpecialWall yellowWall;
 	private SpecialWall blueWall;
-	private boolean blueActive, yellowActive;
+	private boolean blueActive; 
+	private boolean yellowActive;
 	
 	public Gate() {
 		yellowWall = blueWall = null;
