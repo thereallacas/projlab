@@ -5,7 +5,7 @@ import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.Tile;
 
-public class ShootCommand extends InputCommand {
+public class ShootCommand implements InputCommand {
 	
 	private ShotColor color;
 

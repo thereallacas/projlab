@@ -2,7 +2,7 @@ package ballmerpeak.stargate.commands;
 
 import ballmerpeak.stargate.Player;
 
-public class QuitCommand extends InputCommand {
+public class QuitCommand implements InputCommand {
 	
 	@Override
 	public void execute(Player player) {

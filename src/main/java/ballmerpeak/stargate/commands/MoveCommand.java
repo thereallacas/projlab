@@ -4,7 +4,7 @@ import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.tiles.Tile;
 
-public class MoveCommand extends InputCommand {
+public class MoveCommand implements InputCommand {
 	
 	private Direction dir;
 	
