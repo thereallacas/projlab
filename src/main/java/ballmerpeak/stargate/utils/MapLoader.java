@@ -12,7 +12,6 @@ import java.util.Map;
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Gate;
-import ballmerpeak.stargate.Labyrinth;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.gui.DrawableSource;
 import ballmerpeak.stargate.gui.GameGraphicsModel;
@@ -29,7 +28,6 @@ public class MapLoader {
 	Game game;
 	
 	Player player;
-	Labyrinth labyrinth;
 	Gate gate;
 	
 	DrawableSource gfxModel;
@@ -76,7 +74,6 @@ public class MapLoader {
 				}
 			}
 		}
-		labyrinth = new Labyrinth(height, width);
 		setupDoors();
 		setupNeighbors();
 		setupSpecialWalls();
@@ -112,7 +109,6 @@ public class MapLoader {
 					tile.setNeightborForDirection(Direction.DOWN, tiles[y+1][x]);
 				if (x != width-1)
 					tile.setNeightborForDirection(Direction.RIGHT, tiles[y][x+1]);
-				labyrinth.addTile(tile);
 			}
 		}
 	}
