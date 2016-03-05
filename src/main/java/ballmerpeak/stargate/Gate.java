@@ -33,25 +33,27 @@ public class Gate {
 	
 	private void setYellowWall(SpecialWall wall) {
 		if (yellowWall != null) {
-			yellowWall.turnInactive();
+			yellowWall.setColor(ShotColor.INACTIVE);
 		}
 		if (wall == blueWall) {
 			blueWall = null;
 			blueActive = false;
 		}
 		yellowWall = wall;
+		yellowWall.setColor(ShotColor.YELLOW);
 		yellowActive = true;
 	}
 	
 	private void setBlueWall(SpecialWall wall) {
 		if (blueWall != null) {
-			blueWall.turnInactive();
+			blueWall.setColor(ShotColor.INACTIVE);
 		}
 		if (wall == yellowWall) {
 			yellowWall = null;
 			yellowActive = false;
 		}
 		blueWall= wall;
+		blueWall.setColor(ShotColor.BLUE);
 		blueActive = true;
 	}
 	

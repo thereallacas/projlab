@@ -20,7 +20,7 @@ public class SpecialWall extends Wall {
 
 	@Override
 	public boolean canPlayerMoveHere() {
-		return color != ShotColor.INACTIVE && gate.isActive();
+		return (color != ShotColor.INACTIVE) && gate.isActive();
 	}
 
 	@Override
@@ -30,12 +30,11 @@ public class SpecialWall extends Wall {
 
 	@Override
 	public void shootIt(ShotColor color, Direction dir) {
-		setColor(color);
 		gate.wallShot(this, color);
 	}
 	
-	public void turnInactive() {
-		this.color = ShotColor.INACTIVE;
+	public void setColor(ShotColor color) {
+		this.color = color;
 		setDirty(true);
 	}
 
@@ -52,10 +51,5 @@ public class SpecialWall extends Wall {
 
 	public Direction getDirection() {
 		return direction;
-	}
-	
-	private void setColor(ShotColor color) {
-		this.color = color;
-		setDirty(true);
 	}
 }
