@@ -9,7 +9,6 @@ public class SpecialWall extends Wall {
 
 	private ShotColor color;
 	private final Direction direction;
-	private Tile nextTile;
 
 	public final Gate gate;
 
@@ -21,12 +20,12 @@ public class SpecialWall extends Wall {
 
 	@Override
 	public boolean canPlayerMoveHere() {
-		return getColor() != ShotColor.INACTIVE && gate.isActive();
+		return color != ShotColor.INACTIVE && gate.isActive();
 	}
 
 	@Override
 	public void stepOnTile(Player player) {
-		SpecialWall distantWall = (getColor() == ShotColor.BLUE) ? gate.getYellowWall() : gate.getBlueWall();
+		SpecialWall distantWall = (color == ShotColor.BLUE) ? gate.getYellowWall() : gate.getBlueWall();
 		Tile nextTile = distantWall.getNextTile();
 		player.setDirection(distantWall.getDirection());
 		nextTile.stepOnTile(player);
@@ -36,7 +35,7 @@ public class SpecialWall extends Wall {
 	public void shootIt(ShotColor color, Direction dir) {
 		gate.setWallForColor(color, this);
 	}
-
+	
 	public ShotColor getColor() {
 		return color;
 	}
@@ -53,12 +52,8 @@ public class SpecialWall extends Wall {
 				DrawableIndex.SPECIAL_WALL_INACTIVE;
 	}
 
-	public Tile getNextTile() {
-		return nextTile;
-	}
-
-	public void setNextTile(Tile nextTile) {
-		this.nextTile = nextTile;
+	private Tile getNextTile() {
+		return getNeighborForDirection(direction);
 	}
 
 	public Direction getDirection() {

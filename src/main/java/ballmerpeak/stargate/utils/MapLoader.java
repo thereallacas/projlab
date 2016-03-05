@@ -39,16 +39,12 @@ public class MapLoader {
 	
 	int zpms;
 
-	List<SpecialWall> specialWalls;
-
 	private int height;
-
 	private int width;
 	
 	public MapLoader(String filename) throws FileNotFoundException, IOException {
 		doors = new HashMap<>();
 		scales = new HashMap<>();
-		specialWalls = new ArrayList<>();
 		zpms = 0;
 		player = new Player();
 		gate = new Gate();
@@ -76,7 +72,6 @@ public class MapLoader {
 		}
 		setupDoors();
 		setupNeighbors();
-		setupSpecialWalls();
 		game = new Game(player, zpms);
 		gfxModel = new GameGraphicsModel(tiles, player);
 	}
@@ -113,14 +108,6 @@ public class MapLoader {
 		}
 	}
 	
-	private void setupSpecialWalls() {
-		for (SpecialWall wall : specialWalls) {
-			Direction dir = wall.getDirection();
-			Tile nextTile = wall.getNeighborForDirection(dir);
-			wall.setNextTile(nextTile);
-		}
-	}
-
 	private Tile createTile(char c) {
 		switch (c) {
 
@@ -142,19 +129,15 @@ public class MapLoader {
 
 		case '>':
 			SpecialWall rightWall = new SpecialWall(Direction.RIGHT, gate);
-			specialWalls.add(rightWall);
 			return rightWall;
 		case '<':
 			SpecialWall leftWall = new SpecialWall(Direction.LEFT, gate);
-			specialWalls.add(leftWall);
 			return leftWall;
 		case '^':
 			SpecialWall upWall = new SpecialWall(Direction.UP, gate);
-			specialWalls.add(upWall);
 			return upWall;
 		case '/':
 			SpecialWall downWall = new SpecialWall(Direction.DOWN, gate);
-			specialWalls.add(downWall);
 			return downWall;
 
 		}
