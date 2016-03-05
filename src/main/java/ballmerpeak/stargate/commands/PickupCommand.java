@@ -7,7 +7,6 @@ public class PickupCommand implements InputCommand {
 
 	@Override
 	public void execute(Player player) {
-		// TODO Auto-generated method stub
 		Tile tile = player.getTileFrontOfPlayer();
 		if (player.isCarrying()) {
 			tile.dropCrateHere(player);

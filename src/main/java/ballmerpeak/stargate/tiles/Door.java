@@ -4,7 +4,7 @@ import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
-public class Door extends Floor {
+public class Door extends Tile {
 
 	private boolean open = false;
 
@@ -16,6 +16,7 @@ public class Door extends Floor {
 	@Override
 	public void stepOnTile(Player player) {
 		super.stepOnTile(player);
+		player.setTile(this);
 		if (!isOpen())
 			player.kill();
 	}

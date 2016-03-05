@@ -11,7 +11,7 @@ public class Scale extends Floor {
 	public boolean pickupCrate(Player player) {
 		boolean didPickUpCrate = super.pickupCrate(player);
 		if (didPickUpCrate) {
-			getDoor().close();
+			door.close();
 			if (player.getTile() == door) {
 				player.kill();
 			}
@@ -24,7 +24,7 @@ public class Scale extends Floor {
 	public boolean dropCrateHere(Player player) {
 		boolean didDropCrate = super.dropCrateHere(player);
 		if (didDropCrate) {
-			getDoor().open();
+			door.open();
 		}
 		return didDropCrate;
 	}
@@ -32,18 +32,14 @@ public class Scale extends Floor {
 	@Override
 	public void stepOnTile(Player player) {
 		super.stepOnTile(player);
-		getDoor().open();
+		door.open();
 	}
 
 	@Override
 	public void leaveTile() {
 		super.leaveTile();
 		if (!hasCrate)
-			getDoor().close();
-	}
-
-	public Door getDoor() {
-		return door;
+			door.close();
 	}
 
 	public void setDoor(Door door) {

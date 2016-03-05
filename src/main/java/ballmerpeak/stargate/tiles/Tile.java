@@ -41,7 +41,8 @@ public abstract class Tile implements Drawable {
 	}
 	
 	public void shootIt(ShotColor color, Direction dir) {
-		getNeighborForDirection(dir).shootIt(color, dir);
+		Tile nextTile = getNeighborForDirection(dir);
+		nextTile.shootIt(color, dir);
 	}
 
 	@Override
