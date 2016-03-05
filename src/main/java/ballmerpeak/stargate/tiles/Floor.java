@@ -32,7 +32,7 @@ public class Floor extends Tile {
 	public boolean dropCrateHere(Player player) {
 		if (!hasCrate()) {
 			hasCrate = true;
-			player.unsetCarrying();
+			player.setCarrying(false);
 			return true;
 		}
 		return false;
@@ -42,7 +42,7 @@ public class Floor extends Tile {
 	public boolean pickupCrate(Player player) {
 		if (hasCrate) {
 			hasCrate = false;
-			player.setCarrying();
+			player.setCarrying(true);
 			return true;
 		}
 		return false;

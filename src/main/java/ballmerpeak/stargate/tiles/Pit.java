@@ -13,7 +13,7 @@ public class Pit extends Floor {
 	
 	@Override
 	public boolean dropCrateHere(Player player) {
-		player.unsetCarrying();
+		player.setCarrying(false);
 		return true;
 	}
 

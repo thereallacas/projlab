@@ -22,12 +22,8 @@ public class Player implements Drawable {
 		return isCarrying;
 	}
 	
-	public void setCarrying() {
-		isCarrying = true;
-	}
-	
-	public void unsetCarrying() {
-		isCarrying = false;
+	public void setCarrying(boolean b) {
+		isCarrying = b;
 	}
 	
 	public boolean isAlive() {
