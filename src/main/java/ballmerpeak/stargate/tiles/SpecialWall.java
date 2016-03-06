@@ -19,16 +19,17 @@ public class SpecialWall extends Wall {
 	}
 
 	@Override
-	public boolean stepOnTile(Player player) {
-		if ((color != ShotColor.INACTIVE) && gate.isActive()) {
-			SpecialWall distantWall = (color == ShotColor.BLUE) ? gate.getYellowWall() : gate.getBlueWall();
-			Tile nextTile = distantWall.getNextTile();
-			player.setDirection(distantWall.getDirection());
-			nextTile.stepOnTile(player);
-			return super.stepOnTile(player);
-		} else {
-			return false;
-		}
+	public boolean canPlayerMoveHere() {
+		return (color != ShotColor.INACTIVE) && gate.isActive();
+	}
+
+	@Override
+	public void stepOnTile(Player player) {
+		SpecialWall distantWall = (color == ShotColor.BLUE) ? gate.getYellowWall() : gate.getBlueWall();
+		Tile nextTile = distantWall.getNextTile();
+		player.setDirection(distantWall.getDirection());
+		nextTile.stepOnTile(player);
+		super.stepOnTile(player);
 	}
 
 	@Override

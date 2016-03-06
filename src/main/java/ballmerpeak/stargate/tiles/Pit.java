@@ -6,9 +6,9 @@ import ballmerpeak.stargate.gui.DrawableIndex;
 public class Pit extends Floor {
 
 	@Override
-	public boolean stepOnTile(Player player) {
+	public void stepOnTile(Player player) {
 		player.kill();
-		return super.stepOnTile(player);
+		super.stepOnTile(player);
 	}
 	
 	@Override

@@ -30,9 +30,9 @@ public class Scale extends Floor {
 	}
 
 	@Override
-	public boolean stepOnTile(Player player) {
+	public void stepOnTile(Player player) {
 		door.open();
-		return super.stepOnTile(player);
+		super.stepOnTile(player);
 	}
 
 	@Override

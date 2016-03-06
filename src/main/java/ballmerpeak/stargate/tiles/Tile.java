@@ -26,9 +26,12 @@ public abstract class Tile implements Drawable {
 		neighbors.set(dir.ordinal(), tile);
 	}
 
-	public boolean stepOnTile(Player player) {
-		setDirty(true);
+	public boolean canPlayerMoveHere() {
 		return true;
+	}
+	
+	public void stepOnTile(Player player) {
+		setDirty(true);
 	}
 	
 	public void leaveTile(Player player) {

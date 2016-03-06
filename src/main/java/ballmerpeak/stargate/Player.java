@@ -9,22 +9,22 @@ public class Player implements Drawable {
 
 	private Direction direction = Direction.UP;
 	private boolean carrying;
-	private boolean isAlive;
+	private boolean alive;
 	private int ZPMsCarried;
 	private Tile tile;
 
 	public Player() {
-		isAlive = true;
+		alive = true;
 		ZPMsCarried = 0;
 		carrying = false;
 	}
 
 	public boolean isAlive() {
-		return isAlive;
+		return alive;
 	}
 
 	public void kill() {
-		isAlive = false;
+		alive = false;
 	}
 
 	public void setDirection(Direction direction) {
@@ -54,8 +54,9 @@ public class Player implements Drawable {
 		} else {
 			Tile currentTile = tile;
 			Tile nextTile = currentTile.getNeighborForDirection(direction);
-			if (nextTile.stepOnTile(this)) {
+			if (nextTile.canPlayerMoveHere()) {
 				currentTile.leaveTile(this);
+				nextTile.stepOnTile(this);
 			}
 		}
 		setDirty(true);

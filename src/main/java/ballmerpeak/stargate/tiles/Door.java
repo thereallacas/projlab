@@ -9,14 +9,16 @@ public class Door extends Tile {
 	private boolean open = false;
 
 	@Override
-	public boolean stepOnTile(Player player) {
-		if (isOpen()) {
-			player.setTile(this);
-			if (!isOpen())
-				player.kill();
-			return super.stepOnTile(player);
-		}
-		return false;
+	public boolean canPlayerMoveHere() {
+		return isOpen();
+	}
+
+	@Override
+	public void stepOnTile(Player player) {
+		player.setTile(this);
+		if (!isOpen())
+			player.kill();
+		super.stepOnTile(player);
 	}
 
 	@Override

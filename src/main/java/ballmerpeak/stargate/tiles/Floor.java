@@ -47,13 +47,13 @@ public class Floor extends Tile {
 	}
 
 	@Override
-	public boolean stepOnTile(Player player) {
+	public void stepOnTile(Player player) {
 		if (ZPM) {
 			player.pickupZPM();
 			ZPM = false;
 		}
 		player.setTile(this);
-		return super.stepOnTile(player);
+		super.stepOnTile(player);
 	}
 
 	public DrawableIndex getDrawableIndex() {
