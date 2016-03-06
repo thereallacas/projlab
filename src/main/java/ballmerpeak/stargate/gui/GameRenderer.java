@@ -1,5 +1,6 @@
 package ballmerpeak.stargate.gui;
 
 public interface GameRenderer {
-	void drawGame(DrawableSource game);
+	public void setDrawableSource(DrawableSource src);
+	public void drawGame();
 }

@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="ballmerpeak.stargate.tiles.Wall" x="489" y="49">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="ballmerpeak.stargate.tiles.Tile"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.skeleton.Main" x="352" y="-326">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="true"
+            accessors-accepted="false" constructors-accepted="true"/>
+        <Association destinationClassName="ballmerpeak.stargate.Game"
+            endpointName="game" kind="Simple"/>
+        <Association
+            destinationClassName="ballmerpeak.stargate.utils.MapLoader"
+            endpointName="loader" kind="Simple"/>
+        <Association
+            destinationClassName="ballmerpeak.stargate.gui.InputCommandFactory"
+            endpointName="ifc" kind="Simple"/>
+        <Communication destinationClassName="ballmerpeak.stargate.Game"/>
+        <Communication destinationClassName="ballmerpeak.stargate.utils.MapLoader"/>
+        <Communication destinationClassName="ballmerpeak.stargate.gui.InputCommandFactory"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.tiles.ShotColor" x="368" y="157">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.tiles.Scale" x="735" y="-93">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="ballmerpeak.stargate.tiles.Floor"/>
+        <Association
+            destinationClassName="ballmerpeak.stargate.tiles.Door"
+            endpointName="door" kind="Simple"/>
+        <Communication destinationClassName="ballmerpeak.stargate.Player"/>
+        <Communication destinationClassName="ballmerpeak.stargate.tiles.Door"/>
+        <Communication destinationClassName="ballmerpeak.stargate.tiles.Floor"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.gui.InputCommandFactory" x="111" y="-323">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="true"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="true"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.Player" x="163" y="-95">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="ballmerpeak.stargate.tiles.Tile"
+            endpointName="tile" kind="Simple"/>
+        <Association
+            destinationClassName="ballmerpeak.stargate.Direction"
+            endpointName="direction" kind="Simple"/>
+        <Communication destinationClassName="ballmerpeak.stargate.tiles.Tile"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.Gate" x="484" y="269">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="ballmerpeak.stargate.tiles.SpecialWall"
+            endpointName="blueWall" kind="Simple"/>
+        <Association
+            destinationClassName="ballmerpeak.stargate.tiles.SpecialWall"
+            endpointName="yellowWall" kind="Simple"/>
+        <Communication destinationClassName="ballmerpeak.stargate.tiles.SpecialWall"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.Direction" x="368" y="42">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.tiles.SpecialWall" x="489" y="152">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="ballmerpeak.stargate.tiles.Wall"/>
+        <Association
+            destinationClassName="ballmerpeak.stargate.tiles.ShotColor"
+            endpointName="color" kind="Simple"/>
+        <Association destinationClassName="ballmerpeak.stargate.Gate"
+            endpointName="gate" kind="Simple"/>
+        <Association
+            destinationClassName="ballmerpeak.stargate.Direction"
+            endpointName="direction" kind="Simple"/>
+        <Communication destinationClassName="ballmerpeak.stargate.Player"/>
+        <Communication destinationClassName="ballmerpeak.stargate.Gate"/>
+        <Communication destinationClassName="ballmerpeak.stargate.tiles.Tile"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.Game" x="134" y="-223">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="true" constructors-accepted="false"/>
+        <Association destinationClassName="ballmerpeak.stargate.Player"
+            endpointName="player" kind="Simple"/>
+        <Communication destinationClassName="ballmerpeak.stargate.Player"/>
+        <Communication destinationClassName="ballmerpeak.stargate.commands.InputCommand"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.commands.PickupCommand" x="32" y="206">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="ballmerpeak.stargate.commands.InputCommand"/>
+        <Communication destinationClassName="ballmerpeak.stargate.Player"/>
+        <Communication destinationClassName="ballmerpeak.stargate.tiles.Tile"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.commands.InputCommand" x="32" y="111">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.tiles.Pit" x="733" y="182">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="ballmerpeak.stargate.tiles.Floor"/>
+        <Communication destinationClassName="ballmerpeak.stargate.Player"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.utils.MapLoader" x="455" y="-209">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"
+            accessors-accepted="true" constructors-accepted="false"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.commands.ShootCommand" x="190" y="170">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="ballmerpeak.stargate.commands.InputCommand"/>
+        <Association
+            destinationClassName="ballmerpeak.stargate.tiles.ShotColor"
+            endpointName="color" kind="Simple"/>
+        <Communication destinationClassName="ballmerpeak.stargate.Player"/>
+        <Communication destinationClassName="ballmerpeak.stargate.tiles.Tile"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.tiles.Tile" x="457" y="-104">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="ballmerpeak.stargate.tiles.Tile"
+            endpointName="neighbors" kind="Simple">
+            <Point x="709" y="-29"/>
+            <Point x="707" y="-42"/>
+        </Association>
+        <Communication destinationClassName="ballmerpeak.stargate.Direction"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.tiles.Door" x="727" y="-251">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="true" constructors-accepted="false"/>
+        <Extension destinationClassName="ballmerpeak.stargate.tiles.Tile"/>
+        <Communication destinationClassName="ballmerpeak.stargate.Player"/>
+        <Communication destinationClassName="ballmerpeak.stargate.tiles.Tile"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.commands.MoveCommand" x="191" y="100">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="ballmerpeak.stargate.commands.InputCommand"/>
+        <Association
+            destinationClassName="ballmerpeak.stargate.Direction"
+            endpointName="dir" kind="Simple"/>
+        <Communication destinationClassName="ballmerpeak.stargate.Player"/>
+        <Communication destinationClassName="ballmerpeak.stargate.tiles.Tile"/>
+    </Class>
+    <Class name="ballmerpeak.stargate.tiles.Floor" x="733" y="44">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="ballmerpeak.stargate.tiles.Tile"/>
+        <Communication destinationClassName="ballmerpeak.stargate.Player"/>
+    </Class>
+</ClassDiagram>

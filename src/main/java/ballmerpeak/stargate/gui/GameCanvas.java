@@ -15,6 +15,7 @@ public class GameCanvas extends JPanel implements GameRenderer {
 	private static final String imageFormat = "png";
 	private static final Image tileImages[] = new Image[DrawableIndex.values().length];
 
+	private DrawableSource gfxModel;
 	private Image backBuffer;
 	
 	public GameCanvas(int height, int width) {
@@ -53,7 +54,8 @@ public class GameCanvas extends JPanel implements GameRenderer {
 		return tileImages[asset.ordinal()];
 	}
 
-	public void drawGame(DrawableSource gfxModel) {
+	@Override
+	public void drawGame() {
 		synchronized(this.backBuffer) {
 			Drawable playerTile = gfxModel.getPlayerTile();
 			Graphics g = backBuffer.getGraphics();
@@ -71,5 +73,10 @@ public class GameCanvas extends JPanel implements GameRenderer {
 			}
 			redraw(getGraphics());
 		}
+	}
+
+	@Override
+	public void setDrawableSource(DrawableSource src) {
+		gfxModel = src;		
 	}
 }

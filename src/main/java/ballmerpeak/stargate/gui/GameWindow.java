@@ -11,18 +11,20 @@ import javax.swing.JPanel;
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.utils.MapLoader;
+import ballmerpeak.stargate.utils.SwingMapLoader;
 
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource {
 	private GameRenderer canvas;
 	private InputCommandHandler inputHandler;
 	private Game game;
 	private DrawableSource gfxModel;
+	private SwingInputCommandFactory ifc;
 
 	public GameWindow() throws FileNotFoundException, IOException {
 		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		String mapDirectory = dataDirectory + "/maps/";
 		String mapFile = mapDirectory + "map4.txt";
-		MapLoader loader = new MapLoader(mapFile);
+		MapLoader loader = new SwingMapLoader(mapFile);
 
 		game = loader.getGame();
 		
@@ -31,15 +33,18 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 
 		gfxModel = loader.getGraphicsModel();
 		canvas = new GameCanvas(gfxModel.getHeight(), gfxModel.getWidth());
+		canvas.setDrawableSource(gfxModel);
+
 		add((JPanel) canvas);
 
 		setInputCommandHandler(game);
+		ifc = new SwingInputCommandFactory();
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addKeyListener(this);
 		setSize(760, 760);
 		setVisible(true);
-		canvas.drawGame(gfxModel);
+		canvas.drawGame();
 	}
 
 	public static void main(String... args) throws IOException {
@@ -53,15 +58,16 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		InputCommand cmd = InputCommandFactory.inputCommandFromEvent(e);
+		ifc.setKeyEvent(e);
+		InputCommand cmd = ifc.nextCommand();
 		inputHandler.receiveInput(cmd);
-		canvas.drawGame(gfxModel);
 		if (!game.isPlayerAlive()) {
 			System.exit(0);
 		}
 		if (game.didPlayerWin()) {
 			System.exit(0);
 		}
+		canvas.drawGame();
 	}
 
 	@Override
@@ -74,6 +80,11 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public InputCommand getNextCommand() {
+		return null;
 	}
 
 }

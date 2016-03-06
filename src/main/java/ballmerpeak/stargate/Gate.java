@@ -2,7 +2,6 @@ package ballmerpeak.stargate;
 
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.SpecialWall;
-import ballmerpeak.stargate.tiles.Tile;
 
 public class Gate {
 
@@ -15,6 +14,14 @@ public class Gate {
 		yellowWall = blueWall = null;
 		blueActive = yellowActive = false;
 	}
+
+	public SpecialWall getBlueWall() {
+		return blueWall;
+	}
+	
+	public SpecialWall getYellowWall() {
+		return yellowWall;
+	}
 	
 	public boolean isActive() {
 		return blueActive && yellowActive;
@@ -22,13 +29,6 @@ public class Gate {
 	
 	public void wallShot(SpecialWall wall, ShotColor color) {
 		setWallForColor(color, wall);
-	}
-	
-	public void playerSteppedOnWall(Player player, SpecialWall wall) {
-		SpecialWall distantWall = (wall == blueWall) ? yellowWall : blueWall;
-		Tile nextTile = distantWall.getNextTile();
-		player.setDirection(distantWall.getDirection());
-		nextTile.stepOnTile(player);
 	}
 	
 	private void setYellowWall(SpecialWall wall) {

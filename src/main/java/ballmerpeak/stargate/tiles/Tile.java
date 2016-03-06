@@ -1,23 +1,29 @@
 package ballmerpeak.stargate.tiles;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.gui.Drawable;
 
 public abstract class Tile implements Drawable {
-	private Tile neighbors[];
+	private List<Tile> neighbors;
 	private boolean isDirty = true;
 	
 	public Tile() {
-		neighbors = new Tile[Direction.values().length];
+		neighbors = new ArrayList<Tile>(Direction.values().length);
+		for (int i = 0; i < Direction.values().length; i++) {
+			neighbors.add(null);
+		}
 	}
 	
 	public Tile getNeighborForDirection(Direction dir) {
-		return neighbors[dir.ordinal()];
+		return neighbors.get(dir.ordinal());
 	}
 	
 	public void setNeightborForDirection(Direction dir, Tile tile) {
-		neighbors[dir.ordinal()] = tile;
+		neighbors.set(dir.ordinal(), tile);
 	}
 
 	public boolean stepOnTile(Player player) {
