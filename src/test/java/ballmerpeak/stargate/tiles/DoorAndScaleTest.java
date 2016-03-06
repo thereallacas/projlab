@@ -29,7 +29,7 @@ public class DoorAndScaleTest {
 	public void testStepOn() {
 		scale.stepOnTile(player);
 		assertTrue(door.isOpen());
-		scale.leaveTile(null);
+		scale.leaveTile(player);
 		assertFalse(door.isOpen());
 	}
 	
@@ -50,7 +50,7 @@ public class DoorAndScaleTest {
 		floor.leaveTile(null);
 		scale.stepOnTile(player);
 		assertTrue(door.isOpen());
-		scale.leaveTile(null);
+		scale.leaveTile(player);
 		door.stepOnTile(player);
 		assertFalse(player.isAlive());
 		assertFalse(door.isOpen());
