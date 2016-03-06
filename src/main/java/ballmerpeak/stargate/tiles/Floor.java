@@ -5,7 +5,7 @@ import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Floor extends Tile {
 	
-	protected boolean hasCrate;
+	private boolean hasCrate;
 	private boolean ZPM;
 
 	public Floor() {
@@ -32,7 +32,6 @@ public class Floor extends Tile {
 	public boolean dropCrateHere(Player player) {
 		if (!hasCrate()) {
 			hasCrate = true;
-			player.setCarrying(false);
 			return true;
 		}
 		return false;
@@ -42,20 +41,19 @@ public class Floor extends Tile {
 	public boolean pickupCrate(Player player) {
 		if (hasCrate) {
 			hasCrate = false;
-			player.setCarrying(true);
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	public void stepOnTile(Player player) {
-		super.stepOnTile(player);
+	public boolean stepOnTile(Player player) {
 		if (ZPM) {
 			player.pickupZPM();
 			ZPM = false;
 		}
 		player.setTile(this);
+		return super.stepOnTile(player);
 	}
 
 	public DrawableIndex getDrawableIndex() {

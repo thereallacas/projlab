@@ -19,20 +19,20 @@ public class SpecialWall extends Wall {
 	}
 
 	@Override
-	public boolean canPlayerMoveHere() {
-		return (color != ShotColor.INACTIVE) && gate.isActive();
-	}
-
-	@Override
-	public void stepOnTile(Player player) {
-		gate.playerSteppedOnWall(player, this);
+	public boolean stepOnTile(Player player) {
+		if ((color != ShotColor.INACTIVE) && gate.isActive()) {
+			gate.playerSteppedOnWall(player, this);
+			return super.stepOnTile(player);
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public void shootIt(ShotColor color, Direction dir) {
 		gate.wallShot(this, color);
 	}
-	
+
 	public void setColor(ShotColor color) {
 		this.color = color;
 		setDirty(true);
@@ -40,9 +40,8 @@ public class SpecialWall extends Wall {
 
 	@Override
 	public DrawableIndex getDrawableIndex() {
-		return color == ShotColor.BLUE ? DrawableIndex.SPECIAL_WALL_BLUE :
-			   color == ShotColor.YELLOW ? DrawableIndex.SPECIAL_WALL_YELLOW : 
-				   DrawableIndex.SPECIAL_WALL_INACTIVE;
+		return color == ShotColor.BLUE ? DrawableIndex.SPECIAL_WALL_BLUE
+				: color == ShotColor.YELLOW ? DrawableIndex.SPECIAL_WALL_YELLOW : DrawableIndex.SPECIAL_WALL_INACTIVE;
 	}
 
 	public Tile getNextTile() {

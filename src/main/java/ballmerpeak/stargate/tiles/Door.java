@@ -9,21 +9,20 @@ public class Door extends Tile {
 	private boolean open = false;
 
 	@Override
-	public boolean canPlayerMoveHere() {
-		return isOpen();
-	}
-	
-	@Override
-	public void stepOnTile(Player player) {
-		super.stepOnTile(player);
-		player.setTile(this);
-		if (!isOpen())
-			player.kill();
+	public boolean stepOnTile(Player player) {
+		if (isOpen()) {
+			player.setTile(this);
+			if (!isOpen())
+				player.kill();
+			return super.stepOnTile(player);
+		}
+		return false;
 	}
 
 	@Override
 	public void shootIt(ShotColor color, Direction dir) {
-		if(isOpen()) super.shootIt(color, dir);
+		if (isOpen())
+			super.shootIt(color, dir);
 	}
 
 	public boolean isOpen() {

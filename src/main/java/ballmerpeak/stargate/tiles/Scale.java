@@ -30,16 +30,19 @@ public class Scale extends Floor {
 	}
 
 	@Override
-	public void stepOnTile(Player player) {
-		super.stepOnTile(player);
+	public boolean stepOnTile(Player player) {
 		door.open();
+		return super.stepOnTile(player);
 	}
 
 	@Override
-	public void leaveTile() {
-		super.leaveTile();
-		if (!hasCrate)
+	public void leaveTile(Player player) {
+		super.leaveTile(player);
+		if (!hasCrate())
 			door.close();
+		if (!hasCrate() && player.getTile() == door) {
+			player.kill();
+		}
 	}
 
 	public void setDoor(Door door) {
@@ -48,6 +51,6 @@ public class Scale extends Floor {
 
 	@Override
 	public DrawableIndex getDrawableIndex() {
-		return hasCrate ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE; 
+		return hasCrate() ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE; 
 	}
 }
