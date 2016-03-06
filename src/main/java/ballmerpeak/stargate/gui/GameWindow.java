@@ -6,90 +6,68 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import ballmerpeak.stargate.Game;
-import ballmerpeak.stargate.InputCommand;
-import ballmerpeak.stargate.Labyrinth;
+import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.utils.MapLoader;
+import ballmerpeak.stargate.utils.SwingMapLoader;
 
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource {
-	private GameCanvas canvas;
+	private GameRenderer canvas;
 	private InputCommandHandler inputHandler;
-	private DrawableSource drawableSource;
 	private Game game;
+	private DrawableSource gfxModel;
+	private SwingInputCommandFactory ifc;
 
 	public GameWindow() throws FileNotFoundException, IOException {
-		MapLoader loader = new MapLoader();
 		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		String mapDirectory = dataDirectory + "/maps/";
 		String mapFile = mapDirectory + "map4.txt";
-		Labyrinth labyrinth = loader.loadLabyrinth(mapFile);
-		game = new Game(labyrinth);
+		MapLoader loader = new SwingMapLoader(mapFile);
+
+		game = loader.getGame();
 		
 		dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		GameCanvas.loadAssets(dataDirectory + "/images/");
 
-		canvas = new GameCanvas();
-		canvas.setVisible(true);
-		add(canvas);
-		addKeyListener(this);
+		gfxModel = loader.getGraphicsModel();
+		canvas = new GameCanvas(gfxModel.getHeight(), gfxModel.getWidth());
+		canvas.setDrawableSource(gfxModel);
+
+		add((JPanel) canvas);
 
 		setInputCommandHandler(game);
-		setDrawableSource(game);
+		ifc = new SwingInputCommandFactory();
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		addKeyListener(this);
 		setSize(760, 760);
 		setVisible(true);
-		
-		drawGame();
+		canvas.drawGame();
 	}
 
 	public static void main(String... args) throws IOException {
 		new GameWindow();
 	}
+	
 
 	public void setInputCommandHandler(InputCommandHandler handler) {
 		this.inputHandler = handler;
 	}
 
-	private void drawGame() {
-		canvas.drawGame(drawableSource);
-	}
-
 	@Override
 	public void keyPressed(KeyEvent e) {
-		InputCommand cmd = InputCommand.UNKNOWN_COMMAND;
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_UP:
-			cmd = InputCommand.UP_COMMAND;
-			break;
-		case KeyEvent.VK_DOWN:
-			cmd = InputCommand.DOWN_COMMAND;
-			break;
-		case KeyEvent.VK_LEFT:
-			cmd = InputCommand.LEFT_COMMAND;
-			break;
-		case KeyEvent.VK_RIGHT:
-			cmd = InputCommand.RIGHT_COMMAND;
-			break;
-		case KeyEvent.VK_A:
-			cmd = InputCommand.SHOOT_BLUE_COMMAND;
-			break;
-		case KeyEvent.VK_S:
-			cmd = InputCommand.SHOOT_YELLOW_COMMAND;
-			break;
-		case KeyEvent.VK_D:
-			cmd = InputCommand.PICKUP_COMMAND;
-			break;
-		case KeyEvent.VK_Q:
-			cmd = InputCommand.QUIT_COMMAND;
-			break;
-		default:
-			break;
+		ifc.setKeyEvent(e);
+		InputCommand cmd = ifc.nextCommand();
+		inputHandler.receiveInput(cmd);
+		if (!game.isPlayerAlive()) {
+			System.exit(0);
 		}
-		if (inputHandler != null)
-			inputHandler.receiveInput(cmd);
-		this.drawGame();
+		if (game.didPlayerWin()) {
+			System.exit(0);
+		}
+		canvas.drawGame();
 	}
 
 	@Override
@@ -103,9 +81,10 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		// TODO Auto-generated method stub
 
 	}
-	
-	private void setDrawableSource(DrawableSource drawableSource) {
-		this.drawableSource = drawableSource;
+
+	@Override
+	public InputCommand getNextCommand() {
+		return null;
 	}
 
 }

@@ -1,20 +1,41 @@
 package ballmerpeak.stargate.tiles;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Player;
-import ballmerpeak.stargate.Position;
 import ballmerpeak.stargate.gui.Drawable;
 
 public abstract class Tile implements Drawable {
-	private final Position position;
+	private List<Tile> neighbors;
+	private boolean isDirty = true;
 	
-	public Tile(Position pos) {
-		position = pos;
+	public Tile() {
+		neighbors = new ArrayList<Tile>(Direction.values().length);
+		for (int i = 0; i < Direction.values().length; i++) {
+			neighbors.add(null);
+		}
 	}
 	
-	public abstract void stepOnTile(Player player);
+	public Tile getNeighborForDirection(Direction dir) {
+		return neighbors.get(dir.ordinal());
+	}
 	
-	public void leaveTile() {
-		
+	public void setNeightborForDirection(Direction dir, Tile tile) {
+		neighbors.set(dir.ordinal(), tile);
+	}
+
+	public boolean canPlayerMoveHere() {
+		return true;
+	}
+	
+	public void stepOnTile(Player player) {
+		setDirty(true);
+	}
+	
+	public void leaveTile(Player player) {
+		setDirty(true);
 	}
 	
 	public boolean dropCrateHere(Player player) {
@@ -25,17 +46,18 @@ public abstract class Tile implements Drawable {
 		return false;
 	}
 	
-	public boolean canPlayerMoveHere() {
-		return true;
+	public void shootIt(ShotColor color, Direction dir) {
+		Tile nextTile = getNeighborForDirection(dir);
+		nextTile.shootIt(color, dir);
 	}
 
-	public ShotResult shootIt(ShotColor color) {
-		return ShotResult.TILE_HIT;
+	@Override
+	public boolean isDirty() {
+		return isDirty;
 	}
 
-	public Position getPosition() {
-		return position;
+	@Override
+	public void setDirty(boolean isDirty) {
+		this.isDirty = isDirty;
 	}
-
-
 }

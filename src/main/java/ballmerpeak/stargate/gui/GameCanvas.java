@@ -2,9 +2,9 @@ package ballmerpeak.stargate.gui;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -14,33 +14,38 @@ public class GameCanvas extends JPanel implements GameRenderer {
 
 	private static final String imageFormat = "png";
 	private static final Image tileImages[] = new Image[DrawableIndex.values().length];
-	private DrawableSource lastRenderedGame = null;
 
-	private void paintGame(DrawableSource source, Graphics g) {
-		for (int y = 0; y < source.getHeight(); y++) {
-			for (int x = 0; x < source.getWidth(); x++) {
-				int scrX = TILE_WIDTH * x;
-				int scrY = TILE_HEIGHT * y;
-				DrawableIndex index = source.getDrawable(y, x);
-				Image tileImage = getAsset(index);
-				g.drawImage(tileImage, scrX, scrY, TILE_WIDTH, TILE_HEIGHT, null);
-
-			}
-		}
+	private DrawableSource gfxModel;
+	private Image backBuffer;
+	
+	public GameCanvas(int height, int width) {
+		this.backBuffer = new BufferedImage(width * TILE_WIDTH, height * TILE_HEIGHT, BufferedImage.TYPE_INT_RGB);
 	}
-
+	
 	@Override
 	protected void paintComponent(Graphics g) {
-		if (lastRenderedGame != null)
-			paintGame(lastRenderedGame, g);
+		synchronized (backBuffer) {
+			redraw(g);
+		}
 	}
-
+	
+	public void redraw(Graphics g) {
+		g.drawImage(backBuffer, 0, 0, super.getWidth(), super.getHeight(), null);
+	}
+	
+	@Override
+	public boolean isDoubleBuffered() {
+		return true;
+	}
+	
 	public static void loadAssets(String path) throws IOException {
 		for (DrawableIndex asset : DrawableIndex.values()) {
 			String assetFileName = path + asset.name() + "." + imageFormat;
 			File assetFile = new File(assetFileName);
-			if (!assetFile.exists())
+			if (!assetFile.exists()) {
+				System.err.println("[WARNING] Asset not found: " + assetFileName);
 				continue;
+			}
 			tileImages[asset.ordinal()] = ImageIO.read(assetFile);
 		}
 	}
@@ -50,7 +55,28 @@ public class GameCanvas extends JPanel implements GameRenderer {
 	}
 
 	@Override
-	public void drawGame(DrawableSource src) {
-		paintGame(src, getGraphics());
+	public void drawGame() {
+		synchronized(this.backBuffer) {
+			Drawable playerTile = gfxModel.getPlayerTile();
+			Graphics g = backBuffer.getGraphics();
+			for (int y = 0; y < gfxModel.getHeight(); y++) {
+				for (int x = 0; x < gfxModel.getWidth(); x++) {
+					Drawable tile = gfxModel.tileAt(y, x);
+					if(!tile.isDirty()) continue;
+					DrawableIndex drawableIndex = tile == playerTile ? gfxModel.getPlayerDrawableIndex() : tile.getDrawableIndex(); 
+					Image image = getAsset(drawableIndex);
+					int scrX = x * TILE_WIDTH;
+					int scrY = y * TILE_HEIGHT;
+					g.drawImage(image, scrX, scrY, TILE_WIDTH, TILE_HEIGHT, null);
+					tile.setDirty(false);
+				}
+			}
+			redraw(getGraphics());
+		}
+	}
+
+	@Override
+	public void setDrawableSource(DrawableSource src) {
+		gfxModel = src;		
 	}
 }

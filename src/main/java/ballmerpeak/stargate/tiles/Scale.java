@@ -1,23 +1,18 @@
 package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
-import ballmerpeak.stargate.Position;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Scale extends Floor {
 
 	private Door door;
 	
-	public Scale(Position pos) {
-		super(pos);
-	}
-
 	@Override
 	public boolean pickupCrate(Player player) {
 		boolean didPickUpCrate = super.pickupCrate(player);
 		if (didPickUpCrate) {
-			getDoor().close();
-			if (door.getPosition().equals(player.getPosition())) {
+			door.close();
+			if (player.getTile() == door) {
 				player.kill();
 			}
 			return true;
@@ -29,25 +24,25 @@ public class Scale extends Floor {
 	public boolean dropCrateHere(Player player) {
 		boolean didDropCrate = super.dropCrateHere(player);
 		if (didDropCrate) {
-			getDoor().open();
+			door.open();
 		}
 		return didDropCrate;
 	}
 
 	@Override
 	public void stepOnTile(Player player) {
-		getDoor().open();
+		door.open();
 		super.stepOnTile(player);
 	}
 
 	@Override
-	public void leaveTile() {
-		if (!occupied)
-			getDoor().close();
-	}
-
-	public Door getDoor() {
-		return door;
+	public void leaveTile(Player player) {
+		super.leaveTile(player);
+		if (!hasCrate())
+			door.close();
+		if (!hasCrate() && player.getTile() == door) {
+			player.kill();
+		}
 	}
 
 	public void setDoor(Door door) {
@@ -56,6 +51,6 @@ public class Scale extends Floor {
 
 	@Override
 	public DrawableIndex getDrawableIndex() {
-		return occupied ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE; 
+		return hasCrate() ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE; 
 	}
 }

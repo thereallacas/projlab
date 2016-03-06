@@ -7,31 +7,29 @@ import org.junit.Test;
 
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Player;
-import ballmerpeak.stargate.Position;
 
 public class DoorAndScaleTest {
 	
+	Floor floor;
 	Door door;
 	Scale scale;
 	Player player;
 	
 	@Before
 	public void setup() {
-		Position doorPos = new Position(20, 30);
-		Position scalePos = new Position(13, 23);
-		door = new Door(doorPos);
-		scale = new Scale(scalePos);
+		floor = new Floor();
+		door = new Door();
+		scale = new Scale();
 		scale.setDoor(door);
 		
 		player = new Player();
-		player.setPosition(new Position(0, 0));
 	}
 
 	@Test
 	public void testStepOn() {
 		scale.stepOnTile(player);
 		assertTrue(door.isOpen());
-		scale.leaveTile();
+		scale.leaveTile(null);
 		assertFalse(door.isOpen());
 	}
 	
@@ -39,24 +37,21 @@ public class DoorAndScaleTest {
 	public void dropCrateTest() {
 		scale.dropCrateHere(player);
 		assertTrue(door.isOpen());
-		assertTrue(scale.isOccupied());
+		assertTrue(scale.hasCrate());
 	}
 	
 	@Test
 	public void testDoorCanKillPlayer() {
-		door = new Door(new Position(20, 31));
-		scale = new Scale (new Position(20, 30));
+		door = new Door();
+		scale = new Scale();
 		scale.setDoor(door);
-		player.setPosition(new Position(20, 29));
+		player.setTile(floor);
 		player.setDirection(Direction.RIGHT);
-		player.stepForward();
+		floor.leaveTile(null);
 		scale.stepOnTile(player);
-		assertEquals(scale.getPosition(), player.getPosition());
 		assertTrue(door.isOpen());
-		scale.leaveTile();
-		player.stepForward();
+		scale.leaveTile(null);
 		door.stepOnTile(player);
-		assertEquals(door.getPosition(), player.getPosition());
 		assertFalse(player.isAlive());
 		assertFalse(door.isOpen());
 	}

@@ -1,75 +1,28 @@
 package ballmerpeak.stargate;
 
-import ballmerpeak.stargate.gui.DrawableIndex;
-import ballmerpeak.stargate.gui.DrawableSource;
+import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.gui.InputCommandHandler;
-import ballmerpeak.stargate.tiles.ShotColor;
 
-public class Game implements InputCommandHandler, DrawableSource {
+public class Game implements InputCommandHandler {
+
+	private Player player;
+	private int numberOfZPMs;
 	
-	private Labyrinth labyrinth;
-	
-	public Game(Labyrinth labyrinth) {
-		this.labyrinth = labyrinth;
+	public Game(Player player, int numberOfZPMs) {
+		this.player = player;
+		this.numberOfZPMs = numberOfZPMs;
 	}
-	
-	@Override
-	public int getHeight() {
-		return labyrinth.getHeight();
-	}
-	
-	@Override
-	public int getWidth() {
-		return labyrinth.getWidth();
-	}
-	
+
 	@Override
 	public void receiveInput(InputCommand command) {
-		switch (command) {
-		case UP_COMMAND:
-			labyrinth.movePlayer(Direction.UP);
-			break;
-		case DOWN_COMMAND:
-			labyrinth.movePlayer(Direction.DOWN);
-			break;
-		case LEFT_COMMAND:
-			labyrinth.movePlayer(Direction.LEFT);
-			break;
-		case RIGHT_COMMAND:
-			labyrinth.movePlayer(Direction.RIGHT);
-			break;
-		case SHOOT_BLUE_COMMAND:
-			labyrinth.shoot(ShotColor.BLUE);
-			break;
-		case SHOOT_YELLOW_COMMAND:
-			labyrinth.shoot(ShotColor.YELLOW);
-			break;
-		case PICKUP_COMMAND:
-			labyrinth.pickup();
-			break;
-		case QUIT_COMMAND:
-			System.exit(0);
-			break;
-		case UNKNOWN_COMMAND:
-		default:
-			break;
-		}
+		command.execute(player);
 	}
 
-	@Override
-	public DrawableIndex getDrawable(int y, int x) {
-		if (labyrinth.getPlayerPosition().equals(new Position(y, x))) {
-			return getPlayerDrawableIndex();
-		}
-		return labyrinth.getTile(y, x).getDrawableIndex();
-	}
-
-	private DrawableIndex getPlayerDrawableIndex() {
-		return labyrinth.getPlayer().getDrawableIndex();
+	public boolean didPlayerWin() {
+		return player.getZPMsCarried() == numberOfZPMs;
 	}
 	
 	public boolean isPlayerAlive() {
-		return labyrinth.getPlayer().isAlive();
+		return player.isAlive();
 	}
-
 }

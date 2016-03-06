@@ -1,14 +1,10 @@
 package ballmerpeak.stargate.tiles;
 
+import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Player;
-import ballmerpeak.stargate.Position;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
-public class Door extends Floor {
-
-	public Door(Position pos) {
-		super(pos);
-	}
+public class Door extends Tile {
 
 	private boolean open = false;
 
@@ -16,17 +12,19 @@ public class Door extends Floor {
 	public boolean canPlayerMoveHere() {
 		return isOpen();
 	}
-	
+
 	@Override
 	public void stepOnTile(Player player) {
-		super.stepOnTile(player);
+		player.setTile(this);
 		if (!isOpen())
 			player.kill();
+		super.stepOnTile(player);
 	}
 
 	@Override
-	public ShotResult shootIt(ShotColor color) {
-		return isOpen() ? ShotResult.TILE_HIT : ShotResult.REGULAR_WALL_HIT;
+	public void shootIt(ShotColor color, Direction dir) {
+		if (isOpen())
+			super.shootIt(color, dir);
 	}
 
 	public boolean isOpen() {
@@ -35,10 +33,12 @@ public class Door extends Floor {
 
 	public void close() {
 		open = false;
+		setDirty(true);
 	}
 
 	public void open() {
 		open = true;
+		setDirty(true);
 	}
 
 	@Override

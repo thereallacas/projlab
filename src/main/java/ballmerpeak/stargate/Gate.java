@@ -7,26 +7,28 @@ public class Gate {
 
 	private SpecialWall yellowWall;
 	private SpecialWall blueWall;
-	private boolean blueActive, yellowActive;
+	private boolean blueActive; 
+	private boolean yellowActive;
 	
 	public Gate() {
 		yellowWall = blueWall = null;
 		blueActive = yellowActive = false;
+	}
+
+	public SpecialWall getBlueWall() {
+		return blueWall;
 	}
 	
 	public SpecialWall getYellowWall() {
 		return yellowWall;
 	}
 	
-	public SpecialWall getBlueWall() {
-		return blueWall;
+	public boolean isActive() {
+		return blueActive && yellowActive;
 	}
 	
-	public void setWallForColor(ShotColor color, SpecialWall wall) {
-		if (color == ShotColor.BLUE)
-			setBlueWall(wall);
-		else if (color == ShotColor.YELLOW)
-			setYellowWall(wall);
+	public void wallShot(SpecialWall wall, ShotColor color) {
+		setWallForColor(color, wall);
 	}
 	
 	private void setYellowWall(SpecialWall wall) {
@@ -55,11 +57,10 @@ public class Gate {
 		blueActive = true;
 	}
 	
-	public boolean isActive() {
-		return blueActive && yellowActive;
-	}
-	
-	private SpecialWall getWallForColor(ShotColor color) {
-		return color == ShotColor.YELLOW ? getYellowWall() : getBlueWall();
+	private void setWallForColor(ShotColor color, SpecialWall wall) {
+		if (color == ShotColor.BLUE)
+			setBlueWall(wall);
+		else if (color == ShotColor.YELLOW)
+			setYellowWall(wall);
 	}
 }

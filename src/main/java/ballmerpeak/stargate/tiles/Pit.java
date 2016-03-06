@@ -1,24 +1,18 @@
 package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Player;
-import ballmerpeak.stargate.Position;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Pit extends Floor {
 
-	public Pit(Position pos) {
-		super(pos);
-	}
-
 	@Override
 	public void stepOnTile(Player player) {
-		super.stepOnTile(player);
 		player.kill();
+		super.stepOnTile(player);
 	}
 	
 	@Override
 	public boolean dropCrateHere(Player player) {
-		player.unsetCarrying();
 		return true;
 	}
 
