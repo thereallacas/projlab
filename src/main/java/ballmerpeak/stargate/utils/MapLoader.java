@@ -25,13 +25,13 @@ public class MapLoader {
 
 	Game game;
 	
-	Player player;
-	Gate gate;
+	protected Player player;
+	protected Gate gate;
 	
 	DrawableSource gfxModel;
 
-	Map<Character, Door> doors;
-	Map<Character, Scale> scales;
+	protected Map<Character, Door> doors;
+	protected Map<Character, Scale> scales;
 	
 	Tile tiles[][];
 	
