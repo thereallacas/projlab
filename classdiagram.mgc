@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ClassDiagram>
-    <Class name="ballmerpeak.stargate.tiles.Wall" x="489" y="49">
+    <Class name="ballmerpeak.stargate.tiles.Wall" x="482" y="49">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
@@ -87,7 +87,7 @@
         <MethodDisplayFilter public-accepted="true"
             private-accepted="false" protected-accepted="false"
             default-accepted="false" static-accepted="false"
-            accessors-accepted="false" constructors-accepted="false"/>
+            accessors-accepted="true" constructors-accepted="false"/>
         <Association
             destinationClassName="ballmerpeak.stargate.tiles.SpecialWall"
             endpointName="blueWall" kind="Simple"/>
@@ -195,7 +195,7 @@
         <Communication destinationClassName="ballmerpeak.stargate.Player"/>
         <Communication destinationClassName="ballmerpeak.stargate.tiles.Tile"/>
     </Class>
-    <Class name="ballmerpeak.stargate.tiles.Tile" x="457" y="-104">
+    <Class name="ballmerpeak.stargate.tiles.Tile" x="455" y="-114">
         <AttributesDisplayFilter public-accepted="true"
             private-accepted="true" protected-accepted="true"
             default-accepted="true" static-accepted="false"/>
