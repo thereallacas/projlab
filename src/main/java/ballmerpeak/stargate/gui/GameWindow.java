@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.utils.MapLoader;
-import ballmerpeak.stargate.utils.SwingMapLoader;
+import ballmerpeak.stargate.utils.MapLoader;
 
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource {
 	private GameRenderer canvas;
@@ -19,19 +19,22 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 	private Game game;
 	private DrawableSource gfxModel;
 	private SwingInputCommandFactory ifc;
+	private SwingMapLoaderHelper mlh;
 
 	public GameWindow() throws FileNotFoundException, IOException {
 		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		String mapDirectory = dataDirectory + "/maps/";
 		String mapFile = mapDirectory + "map4.txt";
-		MapLoader loader = new SwingMapLoader(mapFile);
+		mlh = new SwingMapLoaderHelper();
+		MapLoader loader = new MapLoader(mapFile);
+		loader.setHelper(mlh);
 
 		game = loader.getGame();
 		
 		dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		GameCanvas.loadAssets(dataDirectory + "/images/");
 
-		gfxModel = loader.getGraphicsModel();
+		gfxModel = mlh.getGraphicsModel();
 		canvas = new GameCanvas(gfxModel.getHeight(), gfxModel.getWidth());
 		canvas.setDrawableSource(gfxModel);
 

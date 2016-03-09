@@ -1,5 +1,8 @@
 package ballmerpeak.stargate.skeleton;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.gui.InputCommandFactory;
@@ -11,7 +14,7 @@ public class Main {
 	private Game game;
 	private MapLoader loader;
 	
-	public Main(MapLoader loader, InputCommandFactory ifc) {
+	public Main(MapLoader loader, InputCommandFactory ifc) throws FileNotFoundException, IOException {
 		game = loader.getGame();
 		this.loader = loader;
 		this.ifc = ifc;
@@ -25,7 +28,7 @@ public class Main {
 	}
 
 	public static void main(String args[]) {
-		Main main = new Main(new SkeletonMapLoader(), new SkeletonInputCommandFactory());
-		main.run();
+//		Main main = new Main(new MapLoader(), new SkeletonInputCommandFactory());
+//		main.run();
 	}
 }

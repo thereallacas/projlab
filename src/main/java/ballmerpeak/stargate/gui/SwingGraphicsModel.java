@@ -2,7 +2,7 @@ package ballmerpeak.stargate.gui;
 
 import ballmerpeak.stargate.Player;
 
-public class GameGraphicsModel implements DrawableSource {
+public class SwingGraphicsModel implements DrawableSource {
 	
 	private Drawable tiles[][];
 	private Player player;
@@ -10,7 +10,7 @@ public class GameGraphicsModel implements DrawableSource {
 	private int height;
 	private int width;
 	
-	public GameGraphicsModel(Drawable tiles[][], Player player) {
+	public SwingGraphicsModel(Drawable tiles[][], Player player) {
 		this.tiles = tiles;
 		this.player = player;
 		this.height = tiles.length;
