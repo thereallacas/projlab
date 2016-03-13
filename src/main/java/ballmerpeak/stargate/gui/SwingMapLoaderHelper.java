@@ -17,7 +17,7 @@ public class SwingMapLoaderHelper implements MapLoaderHelper {
 	}
 
 	@Override
-	public void setDimensions(int height, int width) {
+	public void dimensionsRead(int height, int width) {
 		this.height = height;
 		this.width = width;
 		tiles = new Tile[width][height];

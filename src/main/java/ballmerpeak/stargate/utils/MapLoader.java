@@ -44,7 +44,6 @@ public class MapLoader {
 
 	public MapLoader(String filename) throws FileNotFoundException, IOException {
 		this.filename = filename;
-		this.helper = helper;
 	}
 	
 	public void setHelper(MapLoaderHelper helper) {
@@ -70,7 +69,7 @@ public class MapLoader {
 			width = Integer.parseInt(lineTwo);
 			tiles = new Tile[height][width];
 			if (helper != null)
-				helper.setDimensions(height, width);
+				helper.dimensionsRead(height, width);
 
 			// get empty line between header and body
 			br.readLine();

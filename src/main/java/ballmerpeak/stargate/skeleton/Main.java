@@ -7,16 +7,15 @@ import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.gui.InputCommandFactory;
 import ballmerpeak.stargate.utils.MapLoader;
+import noop.NoopInputCommandFactory;
 
 public class Main {
 	
 	private InputCommandFactory ifc;
 	private Game game;
-	private MapLoader loader;
 	
 	public Main(MapLoader loader, InputCommandFactory ifc) throws FileNotFoundException, IOException {
 		game = loader.getGame();
-		this.loader = loader;
 		this.ifc = ifc;
 	}
 	
@@ -27,8 +26,8 @@ public class Main {
 		}
 	}
 
-	public static void main(String args[]) {
-//		Main main = new Main(new MapLoader(), new SkeletonInputCommandFactory());
-//		main.run();
+	public static void main(String args[]) throws FileNotFoundException, IOException {
+		Main main = new Main(new MapLoader("map4.txt"), new NoopInputCommandFactory());
+		main.run();
 	}
 }
