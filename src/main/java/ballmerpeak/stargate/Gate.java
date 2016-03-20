@@ -63,4 +63,8 @@ public class Gate {
 		else if (color == ShotColor.YELLOW)
 			setYellowWall(wall);
 	}
+
+	public SpecialWall getOtherWall(ShotColor color) {
+		return color == ShotColor.BLUE ? yellowWall : blueWall;
+	}
 }
