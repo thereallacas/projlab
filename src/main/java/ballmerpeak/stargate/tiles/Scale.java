@@ -40,9 +40,6 @@ public class Scale extends Floor {
 		super.leaveTile(player);
 		if (!hasCrate())
 			door.close();
-		if (!hasCrate() && player.getTile() == door) {
-			player.kill();
-		}
 	}
 
 	public void setDoor(Door door) {
