@@ -34,6 +34,7 @@ public class SwingInputCommandFactory implements InputCommandFactory {
 			return new ShootCommand(ShotColor.BLUE);
 		case KeyEvent.VK_S:
 			return new ShootCommand(ShotColor.YELLOW);
+		
 		case KeyEvent.VK_D:
 			return new PickupCommand();
 		case KeyEvent.VK_Q:

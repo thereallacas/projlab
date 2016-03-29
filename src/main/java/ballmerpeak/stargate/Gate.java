@@ -1,70 +1,48 @@
 package ballmerpeak.stargate;
 
+import java.util.List;
+
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.SpecialWall;
 
 public class Gate {
 
-	private SpecialWall yellowWall;
-	private SpecialWall blueWall;
-	private boolean blueActive; 
-	private boolean yellowActive;
-	
-	public Gate() {
-		yellowWall = blueWall = null;
-		blueActive = yellowActive = false;
+	List<SpecialWall> walls;
+
+	public boolean isActiveForColor(ShotColor color) {
+		ShotColor destinationColor = getOtherColor(color);
+		for (SpecialWall wall : walls) {
+			if (wall.getColor() == destinationColor)
+				return true;
+		}
+		return false;
 	}
 
-	public SpecialWall getBlueWall() {
-		return blueWall;
+	public void setSpecialWalls(List<SpecialWall> walls) {
+		this.walls = walls;
 	}
-	
-	public SpecialWall getYellowWall() {
-		return yellowWall;
-	}
-	
-	public boolean isActive() {
-		return blueActive && yellowActive;
-	}
-	
+
 	public void wallShot(SpecialWall wall, ShotColor color) {
-		setWallForColor(color, wall);
-	}
-	
-	private void setYellowWall(SpecialWall wall) {
-		if (yellowWall != null) {
-			yellowWall.setColor(ShotColor.INACTIVE);
+		for (SpecialWall w : walls) {
+			if (wall == w) {
+				w.setColor(color);
+			} else if (w.getColor() == color) {
+				w.setColor(ShotColor.INACTIVE);
+			}
 		}
-		if (wall == blueWall) {
-			blueWall = null;
-			blueActive = false;
-		}
-		yellowWall = wall;
-		yellowWall.setColor(ShotColor.YELLOW);
-		yellowActive = true;
-	}
-	
-	private void setBlueWall(SpecialWall wall) {
-		if (blueWall != null) {
-			blueWall.setColor(ShotColor.INACTIVE);
-		}
-		if (wall == yellowWall) {
-			yellowWall = null;
-			yellowActive = false;
-		}
-		blueWall= wall;
-		blueWall.setColor(ShotColor.BLUE);
-		blueActive = true;
-	}
-	
-	private void setWallForColor(ShotColor color, SpecialWall wall) {
-		if (color == ShotColor.BLUE)
-			setBlueWall(wall);
-		else if (color == ShotColor.YELLOW)
-			setYellowWall(wall);
 	}
 
-	public SpecialWall getOtherWall(ShotColor color) {
-		return color == ShotColor.BLUE ? yellowWall : blueWall;
+	public void teleport(Entity player, ShotColor originColor) {
+		ShotColor destinationColor = getOtherColor(originColor);
+		for (SpecialWall wall : walls) {
+			if (wall.getColor() == destinationColor)
+				wall.teleport(player);
+		}
+	}
+
+	private ShotColor getOtherColor(ShotColor color) {
+		return color == ShotColor.BLUE ? ShotColor.YELLOW
+				: color == ShotColor.YELLOW ? ShotColor.BLUE
+						: color == ShotColor.GREEN ? ShotColor.RED : ShotColor.GREEN;
 	}
 }

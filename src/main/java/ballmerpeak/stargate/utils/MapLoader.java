@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import ballmerpeak.stargate.Direction;
@@ -12,12 +14,11 @@ import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Gate;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Replicator;
-import ballmerpeak.stargate.gui.DrawableSource;
-import ballmerpeak.stargate.gui.SwingGraphicsModel;
 import ballmerpeak.stargate.tiles.Door;
 import ballmerpeak.stargate.tiles.Floor;
 import ballmerpeak.stargate.tiles.Pit;
 import ballmerpeak.stargate.tiles.Scale;
+import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.SpecialWall;
 import ballmerpeak.stargate.tiles.Tile;
 import ballmerpeak.stargate.tiles.Wall;
@@ -32,6 +33,8 @@ public class MapLoader {
 
 	protected Map<Character, Door> doors;
 	protected Map<Character, Scale> scales;
+	
+	protected List<SpecialWall> specialWalls;
 
 	Tile tiles[][];
 
@@ -59,9 +62,19 @@ public class MapLoader {
 		gate = new Gate();
 		doors = new HashMap<>();
 		scales = new HashMap<>();
+		specialWalls = new ArrayList<>();
 		zpms = 0;
+		gate.setSpecialWalls(specialWalls);
 		player1 = new Player();
-		player2 = new Player();
+		player2 = new Player() {
+
+			@Override
+			public void shoot(ShotColor color) {
+				color = color == ShotColor.BLUE ? ShotColor.GREEN : ShotColor.RED;
+				super.shoot(color);
+			}
+			
+		};
 		replicator = new Replicator();
 		if (helper != null) {
 			helper.player1Generated(player1);
@@ -154,15 +167,19 @@ public class MapLoader {
 
 		case '>':
 			SpecialWall rightWall = new SpecialWall(Direction.RIGHT, gate);
+			specialWalls.add(rightWall);
 			return rightWall;
 		case '<':
 			SpecialWall leftWall = new SpecialWall(Direction.LEFT, gate);
+			specialWalls.add(leftWall);
 			return leftWall;
 		case '^':
 			SpecialWall upWall = new SpecialWall(Direction.UP, gate);
+			specialWalls.add(upWall);
 			return upWall;
 		case '/':
 			SpecialWall downWall = new SpecialWall(Direction.DOWN, gate);
+			specialWalls.add(downWall);
 			return downWall;
 
 		}

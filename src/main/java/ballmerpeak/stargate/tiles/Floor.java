@@ -6,7 +6,6 @@ import java.util.List;
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Entity;
 import ballmerpeak.stargate.Player;
-import ballmerpeak.stargate.Replicator;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Floor extends Tile {
@@ -79,11 +78,11 @@ public class Floor extends Tile {
 
 	@Override
 	public void shootIt(ShotColor color, Direction dir) {
-		if (entities.isEmpty())
+		if (entities.isEmpty() || entities.stream().allMatch(e -> !e.isAlive()))
 			super.shootIt(color, dir);
 		else {
 			for (Entity entity : entities) {
-				entity.kill();
+				entity.shootIt();
 			}
 		}
 	}

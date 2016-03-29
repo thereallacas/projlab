@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ballmerpeak.stargate;
 
 import ballmerpeak.stargate.gui.Drawable;

@@ -3,7 +3,6 @@ package ballmerpeak.stargate.tiles;
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Entity;
 import ballmerpeak.stargate.Gate;
-import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class SpecialWall extends Wall {
@@ -21,14 +20,13 @@ public class SpecialWall extends Wall {
 
 	@Override
 	public boolean canPlayerMoveHere() {
-		return hasPortal() && gate.isActive();
+		return hasPortal() && gate.isActiveForColor(color);
 	}
 
 	@Override
 	public void stepOnTile(Entity player) {
 		setDirty(true);
-		SpecialWall distantWall = gate.getOtherWall(color);
-		distantWall.teleport(player);
+		gate.teleport(player, color);
 	}
 
 	@Override
@@ -44,20 +42,27 @@ public class SpecialWall extends Wall {
 	@Override
 	public DrawableIndex getDrawableIndex() {
 		return color == ShotColor.BLUE ? DrawableIndex.SPECIAL_WALL_BLUE
-				: color == ShotColor.YELLOW ? DrawableIndex.SPECIAL_WALL_YELLOW : DrawableIndex.SPECIAL_WALL_INACTIVE;
+				: color == ShotColor.YELLOW ? DrawableIndex.SPECIAL_WALL_YELLOW
+						: color == ShotColor.GREEN ? DrawableIndex.SPECIAL_WALL_GREEN
+								: color == ShotColor.RED ? DrawableIndex.SPECIAL_WALL_RED
+										: DrawableIndex.SPECIAL_WALL_INACTIVE;
 	}
 
 	private Tile getNextTile() {
 		return getNeighborForDirection(direction);
 	}
-	
-	private void teleport(Entity player) {
+
+	public void teleport(Entity player) {
 		player.setDirection(direction);
 		getNextTile().stepOnTile(player);
 	}
-	
+
 	private boolean hasPortal() {
 		return color != ShotColor.INACTIVE;
+	}
+
+	public ShotColor getColor() {
+		return color;
 	}
 
 }
