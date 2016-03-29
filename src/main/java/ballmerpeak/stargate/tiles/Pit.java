@@ -1,22 +1,42 @@
 package ballmerpeak.stargate.tiles;
 
+import ballmerpeak.stargate.Entity;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Pit extends Floor {
 
-	@Override
-	public void stepOnTile(Player player) {
-		player.kill();
-		super.stepOnTile(player);
+	private boolean filled;
+
+	public Pit() {
+		super();
+		filled = false;
+	}
+
+	public void setFilled() {
+		filled = true;
 	}
 	
 	@Override
+	public void stepOnTile(Entity entity) {
+		if (!filled) {
+			super.stepOnTile(entity);
+			entity.fallInPit(this);
+		} else {
+			super.stepOnTile(entity);
+		}
+	}
+
+	@Override
 	public boolean dropCrateHere(Player player) {
-		return true;
+		if (filled) {
+			return super.dropCrateHere(player);
+		} else {
+			return true;
+		}
 	}
 
 	public DrawableIndex getDrawableIndex() {
-		return DrawableIndex.PIT;
+		return !filled ? DrawableIndex.PIT : hasCrate() ? DrawableIndex.FLOOR_WITH_CRATE : DrawableIndex.FLOOR;
 	}
 }

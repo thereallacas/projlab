@@ -11,6 +11,7 @@ import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Gate;
 import ballmerpeak.stargate.Player;
+import ballmerpeak.stargate.Replicator;
 import ballmerpeak.stargate.gui.DrawableSource;
 import ballmerpeak.stargate.gui.SwingGraphicsModel;
 import ballmerpeak.stargate.tiles.Door;
@@ -25,7 +26,8 @@ public class MapLoader {
 
 	Game game;
 
-	protected Player player;
+	protected Player player1, player2;
+	protected Replicator replicator;
 	protected Gate gate;
 
 	protected Map<Character, Door> doors;
@@ -58,9 +60,13 @@ public class MapLoader {
 		doors = new HashMap<>();
 		scales = new HashMap<>();
 		zpms = 0;
-		player = new Player();
+		player1 = new Player();
+		player2 = new Player();
+		replicator = new Replicator();
 		if (helper != null) {
-			helper.playerGenerated(player);
+			helper.player1Generated(player1);
+			helper.player2Generated(player2);
+			helper.replicatorGenerated(replicator);
 		}
 		try (FileReader fr = new FileReader(filename); BufferedReader br = new BufferedReader(fr)) {
 			String lineOne = br.readLine();
@@ -91,7 +97,7 @@ public class MapLoader {
 		}
 		setupDoors();
 		setupNeighbors();
-		game = new Game(player, zpms);
+		game = new Game(player1, player2, replicator, zpms);
 		return game;
 	}
 
@@ -123,9 +129,17 @@ public class MapLoader {
 		switch (c) {
 
 		case '@':
-			Tile floorWithPlayer = new Floor();
-			player.setTile(floorWithPlayer);
-			return floorWithPlayer;
+			Tile floorWithPlayer1 = new Floor();
+			player1.setTile(floorWithPlayer1);
+			return floorWithPlayer1;
+		case '?':
+			Tile floorWithPlayer2 = new Floor();
+			player2.setTile(floorWithPlayer2);
+			return floorWithPlayer2;
+		case '*':
+			Tile floorWithReplicator = new Floor();
+			replicator.setTile(floorWithReplicator);
+			return floorWithReplicator;
 		case ' ':
 			return new Floor();
 		case '#':

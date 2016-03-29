@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ballmerpeak.stargate.Direction;
+import ballmerpeak.stargate.Entity;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.gui.Drawable;
 
@@ -30,11 +31,11 @@ public abstract class Tile implements Drawable {
 		return true;
 	}
 	
-	public void stepOnTile(Player player) {
+	public void stepOnTile(Entity player) {
 		setDirty(true);
 	}
 	
-	public void leaveTile(Player player) {
+	public void leaveTile(Entity player) {
 		setDirty(true);
 	}
 	

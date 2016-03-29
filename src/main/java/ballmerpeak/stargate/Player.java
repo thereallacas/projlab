@@ -1,35 +1,18 @@
 package ballmerpeak.stargate;
 
-import ballmerpeak.stargate.gui.Drawable;
 import ballmerpeak.stargate.gui.DrawableIndex;
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.Tile;
 
-public class Player implements Drawable {
+public class Player extends Entity {
 
-	private Direction direction = Direction.UP;
-	private boolean carrying;
-	private boolean alive;
 	private int ZPMsCarried;
-	private Tile tile;
-
+	private boolean carrying;
+	
 	public Player() {
-		alive = true;
+		super();
 		ZPMsCarried = 0;
 		carrying = false;
-	}
-
-	public boolean isAlive() {
-		return alive;
-	}
-
-	public void kill() {
-		alive = false;
-	}
-
-	public void setDirection(Direction direction) {
-		this.direction = direction;
-		setDirty(true);
 	}
 
 	public int getZPMsCarried() {
@@ -40,27 +23,6 @@ public class Player implements Drawable {
 		ZPMsCarried++;
 	}
 
-	public Tile getTile() {
-		return tile;
-	}
-
-	public void setTile(Tile tile) {
-		this.tile = tile;
-	}
-
-	public void move(Direction direction) {
-		if (this.direction != direction) {
-			this.direction = direction;
-		} else {
-			Tile currentTile = tile;
-			Tile nextTile = currentTile.getNeighborForDirection(direction);
-			if (nextTile.canPlayerMoveHere()) {
-				currentTile.leaveTile(this);
-				nextTile.stepOnTile(this);
-			}
-		}
-		setDirty(true);
-	}
 
 	public void pickupCrate() {
 		Tile nextTile = getTileFrontOfPlayer();
@@ -80,16 +42,11 @@ public class Player implements Drawable {
 		nextTile.shootIt(color, direction);
 	}
 
-	@Override
-	public boolean isDirty() {
-		return tile.isDirty();
-	}
 
-	@Override
-	public void setDirty(boolean b) {
-		tile.setDirty(b);
+	private Tile getTileFrontOfPlayer() {
+		return tile.getNeighborForDirection(direction);
 	}
-
+	
 	@Override
 	public DrawableIndex getDrawableIndex() {
 		switch (direction) {
@@ -104,9 +61,5 @@ public class Player implements Drawable {
 		default:
 			throw new RuntimeException("shouldn't be here...");
 		}
-	}
-
-	private Tile getTileFrontOfPlayer() {
-		return tile.getNeighborForDirection(direction);
 	}
 }

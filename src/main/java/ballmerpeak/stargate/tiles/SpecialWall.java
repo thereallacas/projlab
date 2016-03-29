@@ -1,6 +1,7 @@
 package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Direction;
+import ballmerpeak.stargate.Entity;
 import ballmerpeak.stargate.Gate;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.gui.DrawableIndex;
@@ -24,7 +25,7 @@ public class SpecialWall extends Wall {
 	}
 
 	@Override
-	public void stepOnTile(Player player) {
+	public void stepOnTile(Entity player) {
 		setDirty(true);
 		SpecialWall distantWall = gate.getOtherWall(color);
 		distantWall.teleport(player);
@@ -50,7 +51,7 @@ public class SpecialWall extends Wall {
 		return getNeighborForDirection(direction);
 	}
 	
-	private void teleport(Player player) {
+	private void teleport(Entity player) {
 		player.setDirection(direction);
 		getNextTile().stepOnTile(player);
 	}

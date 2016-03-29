@@ -1,23 +1,24 @@
 package ballmerpeak.stargate.tiles;
 
+import ballmerpeak.stargate.Entity;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Scale extends Floor {
 
 	private Door door;
-	
+
+	public Scale() {
+		super();
+	}
+
 	@Override
 	public boolean pickupCrate(Player player) {
-		boolean didPickUpCrate = super.pickupCrate(player);
-		if (didPickUpCrate) {
+		boolean didPickupCrate = super.pickupCrate(player);
+		if (didPickupCrate && entities.isEmpty()) {
 			door.close();
-			if (player.getTile() == door) {
-				player.kill();
-			}
-			return true;
 		}
-		return false;
+		return didPickupCrate;
 	}
 
 	@Override
@@ -30,15 +31,15 @@ public class Scale extends Floor {
 	}
 
 	@Override
-	public void stepOnTile(Player player) {
-		door.open();
+	public void stepOnTile(Entity player) {
 		super.stepOnTile(player);
+		door.open();
 	}
 
 	@Override
-	public void leaveTile(Player player) {
+	public void leaveTile(Entity player) {
 		super.leaveTile(player);
-		if (!hasCrate())
+		if (!hasCrate() && entities.isEmpty())
 			door.close();
 	}
 
@@ -48,6 +49,6 @@ public class Scale extends Floor {
 
 	@Override
 	public DrawableIndex getDrawableIndex() {
-		return hasCrate() ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE; 
+		return hasCrate() ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE;
 	}
 }

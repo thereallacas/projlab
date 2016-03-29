@@ -62,12 +62,16 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 	@Override
 	public void keyPressed(KeyEvent e) {
 		ifc.setKeyEvent(e);
+		if (e.getKeyCode() == KeyEvent.VK_W) {
+			game.switchPlayer();
+			return;
+		}
 		InputCommand cmd = ifc.nextCommand();
 		inputHandler.receiveInput(cmd);
-		if (!game.isPlayerAlive()) {
+		if (!game.isPlayer1Alive() && !game.isPlayer2Alive()) {
 			System.exit(0);
 		}
-		if (game.didPlayerWin()) {
+		if (game.didPlayersWin()) {
 			System.exit(0);
 		}
 		canvas.drawGame();

@@ -1,12 +1,17 @@
 package ballmerpeak.stargate.tiles;
 
 import ballmerpeak.stargate.Direction;
-import ballmerpeak.stargate.Player;
+import ballmerpeak.stargate.Entity;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
-public class Door extends Tile {
+public class Door extends Floor {
 
-	private boolean open = false;
+	private boolean open;
+	
+	public Door() {
+		super();
+		open = false;
+	}
 
 	@Override
 	public boolean canPlayerMoveHere() {
@@ -14,11 +19,10 @@ public class Door extends Tile {
 	}
 
 	@Override
-	public void stepOnTile(Player player) {
-		player.setTile(this);
-		if (!isOpen())
-			player.kill();
+	public void stepOnTile(Entity player) {
 		super.stepOnTile(player);
+		if (!isOpen())
+			killEntities();
 	}
 
 	@Override
@@ -33,6 +37,7 @@ public class Door extends Tile {
 
 	public void close() {
 		open = false;
+		killEntities();
 		setDirty(true);
 	}
 
@@ -44,5 +49,10 @@ public class Door extends Tile {
 	@Override
 	public DrawableIndex getDrawableIndex() {
 		return open ? DrawableIndex.DOOR_OPEN : DrawableIndex.DOOR_CLOSED;
+	}
+	
+	private void killEntities() {
+		for (Entity entity : entities)
+			entity.kill();
 	}
 }
