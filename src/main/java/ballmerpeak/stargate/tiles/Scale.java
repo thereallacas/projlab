@@ -49,6 +49,7 @@ public class Scale extends Floor {
 
 	@Override
 	public DrawableIndex getDrawableIndex() {
-		return hasCrate() ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE;
+		return !entities.isEmpty() ? super.getDrawableIndex()
+				: hasCrate() ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE;
 	}
 }

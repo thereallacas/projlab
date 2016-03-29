@@ -76,11 +76,6 @@ public class MapLoader {
 			
 		};
 		replicator = new Replicator();
-		if (helper != null) {
-			helper.player1Generated(player1);
-			helper.player2Generated(player2);
-			helper.replicatorGenerated(replicator);
-		}
 		try (FileReader fr = new FileReader(filename); BufferedReader br = new BufferedReader(fr)) {
 			String lineOne = br.readLine();
 			String lineTwo = br.readLine();
@@ -143,15 +138,15 @@ public class MapLoader {
 
 		case '@':
 			Tile floorWithPlayer1 = new Floor();
-			player1.setTile(floorWithPlayer1);
+			floorWithPlayer1.stepOnTile(player1);
 			return floorWithPlayer1;
 		case '?':
 			Tile floorWithPlayer2 = new Floor();
-			player2.setTile(floorWithPlayer2);
+			floorWithPlayer2.stepOnTile(player2);
 			return floorWithPlayer2;
 		case '*':
 			Tile floorWithReplicator = new Floor();
-			replicator.setTile(floorWithReplicator);
+			floorWithReplicator.stepOnTile(replicator);
 			return floorWithReplicator;
 		case ' ':
 			return new Floor();

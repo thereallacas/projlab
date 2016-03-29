@@ -7,7 +7,7 @@ import ballmerpeak.stargate.gui.DrawableIndex;
 public class Door extends Floor {
 
 	private boolean open;
-	
+
 	public Door() {
 		super();
 		open = false;
@@ -48,9 +48,10 @@ public class Door extends Floor {
 
 	@Override
 	public DrawableIndex getDrawableIndex() {
-		return open ? DrawableIndex.DOOR_OPEN : DrawableIndex.DOOR_CLOSED;
+		return !entities.isEmpty() ? super.getDrawableIndex()
+				: open ? DrawableIndex.DOOR_OPEN : DrawableIndex.DOOR_CLOSED;
 	}
-	
+
 	private void killEntities() {
 		for (Entity entity : entities)
 			entity.kill();

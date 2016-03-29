@@ -88,6 +88,8 @@ public class Floor extends Tile {
 	}
 
 	public DrawableIndex getDrawableIndex() {
-		return ZPM ? DrawableIndex.FLOOR_WITH_ZPM : hasCrate() ? DrawableIndex.FLOOR_WITH_CRATE : DrawableIndex.FLOOR;
+		return !entities.isEmpty() ? entities.get(0).getDrawableIndex()
+				: ZPM ? DrawableIndex.FLOOR_WITH_ZPM
+						: hasCrate() ? DrawableIndex.FLOOR_WITH_CRATE : DrawableIndex.FLOOR;
 	}
 }

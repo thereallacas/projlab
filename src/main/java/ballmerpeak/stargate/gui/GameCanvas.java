@@ -57,19 +57,13 @@ public class GameCanvas extends JPanel implements GameRenderer {
 	@Override
 	public void drawGame() {
 		synchronized (this.backBuffer) {
-			Drawable player1Tile = gfxModel.getPlayer1Tile();
-			Drawable player2Tile = gfxModel.getPlayer2Tile();
-			Drawable replicatorTile = gfxModel.getReplicatorTile();
 			Graphics g = backBuffer.getGraphics();
 			for (int y = 0; y < gfxModel.getHeight(); y++) {
 				for (int x = 0; x < gfxModel.getWidth(); x++) {
 					Drawable tile = gfxModel.tileAt(y, x);
 					if (!tile.isDirty())
 						continue;
-					DrawableIndex drawableIndex = tile == player1Tile ? gfxModel.getPlayer1DrawableIndex()
-							: tile == player2Tile ? gfxModel.getPlayer2DrawableIndex()
-									: tile == replicatorTile ? gfxModel.getReplicatorDrawableIndex()
-											: tile.getDrawableIndex();
+					DrawableIndex drawableIndex = tile.getDrawableIndex();
 					Image image = getAsset(drawableIndex);
 					int scrX = x * TILE_WIDTH;
 					int scrY = y * TILE_HEIGHT;
