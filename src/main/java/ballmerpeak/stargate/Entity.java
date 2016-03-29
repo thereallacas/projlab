@@ -1,6 +1,7 @@
 package ballmerpeak.stargate;
 
 import ballmerpeak.stargate.gui.Drawable;
+import ballmerpeak.stargate.tiles.Floor;
 import ballmerpeak.stargate.tiles.Pit;
 import ballmerpeak.stargate.tiles.Tile;
 
@@ -17,6 +18,10 @@ public abstract class Entity implements Drawable {
 	public Entity() {
 		alive = true;
 		direction = Direction.UP;
+	}
+	
+	public void steppedOnZPM(Floor floor) {
+		
 	}
 
 	@Override

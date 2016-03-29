@@ -11,23 +11,25 @@ public class Scale extends Floor {
 	public Scale() {
 		super();
 	}
-
+	
+	private boolean isPressed() {
+		return hasCrate() || hasEntity();
+	}
+	
 	@Override
-	public boolean pickupCrate(Player player) {
-		boolean didPickupCrate = super.pickupCrate(player);
-		if (didPickupCrate && entities.isEmpty()) {
+	public void pickupCrate(Player player) {
+		super.pickupCrate(player);
+		if (!isPressed()) {
 			door.close();
 		}
-		return didPickupCrate;
 	}
 
 	@Override
-	public boolean dropCrateHere(Player player) {
-		boolean didDropCrate = super.dropCrateHere(player);
-		if (didDropCrate) {
+	public void dropCrateHere(Player player) {
+		super.dropCrateHere(player);
+		if (isPressed()) {
 			door.open();
 		}
-		return didDropCrate;
 	}
 
 	@Override
@@ -39,7 +41,7 @@ public class Scale extends Floor {
 	@Override
 	public void leaveTile(Entity player) {
 		super.leaveTile(player);
-		if (!hasCrate() && entities.isEmpty())
+		if (!hasCrate() && !hasEntity())
 			door.close();
 	}
 

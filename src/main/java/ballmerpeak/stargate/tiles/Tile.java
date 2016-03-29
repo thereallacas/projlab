@@ -39,12 +39,12 @@ public abstract class Tile implements Drawable {
 		setDirty(true);
 	}
 	
-	public boolean dropCrateHere(Player player) {
-		return false;
+	public void dropCrateHere(Player player) {
+		
 	}
 	
-	public boolean pickupCrate(Player player) {
-		return false;
+	public void pickupCrate(Player player) {
+
 	}
 	
 	public void shootIt(ShotColor color, Direction dir) {

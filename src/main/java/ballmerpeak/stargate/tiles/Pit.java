@@ -28,11 +28,11 @@ public class Pit extends Floor {
 	}
 
 	@Override
-	public boolean dropCrateHere(Player player) {
+	public void dropCrateHere(Player player) {
 		if (filled) {
-			return super.dropCrateHere(player);
+			super.dropCrateHere(player);
 		} else {
-			return true;
+			player.setCarrying(false);
 		}
 	}
 

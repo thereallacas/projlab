@@ -39,35 +39,29 @@ public class Floor extends Tile {
 	}
 
 	@Override
-	public boolean dropCrateHere(Player player) {
+	public void dropCrateHere(Player player) {
 		if (!hasCrate()) {
 			numCrates++;
-			return true;
+			player.setCarrying(false);
 		}
-		return false;
 	}
 
 	@Override
-	public boolean pickupCrate(Player player) {
+	public void pickupCrate(Player player) {
 		if (hasCrate()) {
 			numCrates--;
-			return true;
+			player.setCarrying(true);
 		}
-		return false;
 	}
 
 	@Override
-	public void stepOnTile(Entity player) {
-		entities.add(player);
+	public void stepOnTile(Entity entity) {
+		entities.add(entity);
 		if (ZPM) {
-			if (player instanceof Player) {
-				Player p = (Player) player;
-				p.pickupZPM();
-				ZPM = false;
-			}
+			entity.steppedOnZPM(this);
 		}
-		player.setTile(this);
-		super.stepOnTile(player);
+		entity.setTile(this);
+		super.stepOnTile(entity);
 	}
 
 	@Override
@@ -78,12 +72,13 @@ public class Floor extends Tile {
 
 	@Override
 	public void shootIt(ShotColor color, Direction dir) {
-		if (entities.isEmpty() || entities.stream().allMatch(e -> !e.isAlive()))
+		if (!hasEntity() || allEntitiesOnFloorAreDead())
 			super.shootIt(color, dir);
 		else {
 			for (Entity entity : entities) {
 				entity.shootIt();
 			}
+			cleanupDeadEntities();
 		}
 	}
 
@@ -91,5 +86,22 @@ public class Floor extends Tile {
 		return !entities.isEmpty() ? entities.get(0).getDrawableIndex()
 				: ZPM ? DrawableIndex.FLOOR_WITH_ZPM
 						: hasCrate() ? DrawableIndex.FLOOR_WITH_CRATE : DrawableIndex.FLOOR;
+	}
+	
+	protected boolean hasEntity() {
+		return !entities.isEmpty();
+	}
+	
+	protected boolean allEntitiesOnFloorAreDead() {
+		return entities.stream().allMatch(e -> !e.isAlive());
+	}
+	
+	protected void cleanupDeadEntities() {
+		entities.removeIf(e -> !e.isAlive());
+	}
+	
+	public void setZPM(boolean b) {
+		this.ZPM = b;
+		setDirty(true);
 	}
 }

@@ -1,6 +1,7 @@
 package ballmerpeak.stargate;
 
 import ballmerpeak.stargate.gui.DrawableIndex;
+import ballmerpeak.stargate.tiles.Floor;
 import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.Tile;
 
@@ -23,15 +24,18 @@ public class Player extends Entity {
 		ZPMsCarried++;
 	}
 
+	@Override
+	public void steppedOnZPM(Floor floor) {
+		pickupZPM();
+		floor.setZPM(false);
+	}
 
 	public void pickupCrate() {
 		Tile nextTile = getTileFrontOfPlayer();
 		if (carrying) {
-			if (nextTile.dropCrateHere(this))
-				carrying = false;
+			nextTile.dropCrateHere(this);
 		} else {
-			if (nextTile.pickupCrate(this))
-				carrying = true;
+			nextTile.pickupCrate(this);
 		}
 		nextTile.setDirty(true);
 		setDirty(true);
@@ -61,5 +65,9 @@ public class Player extends Entity {
 		default:
 			throw new RuntimeException("shouldn't be here...");
 		}
+	}
+	
+	public void setCarrying(boolean c) {
+		this.carrying = c;
 	}
 }
