@@ -14,6 +14,7 @@ import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Gate;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Replicator;
+import ballmerpeak.stargate.gui.DrawableIndex;
 import ballmerpeak.stargate.tiles.Door;
 import ballmerpeak.stargate.tiles.Floor;
 import ballmerpeak.stargate.tiles.Pit;
@@ -73,6 +74,24 @@ public class MapLoader {
 				color = color == ShotColor.BLUE ? ShotColor.GREEN : ShotColor.RED;
 				super.shoot(color);
 			}
+
+			@Override
+			public DrawableIndex getDrawableIndex() {
+				switch (direction) {
+				case UP:
+					return DrawableIndex.JAFFA_FACING_UP;
+				case DOWN:
+					return DrawableIndex.JAFFA_FACING_DOWN;
+				case LEFT:
+					return DrawableIndex.JAFFA_FACING_LEFT;
+				case RIGHT:
+					return DrawableIndex.JAFFA_FACING_RIGHT;
+				default:
+					throw new RuntimeException("shouldn't be here...");
+				}
+			}
+			
+			
 			
 		};
 		replicator = new Replicator();
