@@ -11,7 +11,9 @@
 
 - '#' wall
 - ' ' floor
-- '@' player start position
+- '@' player1 start position
+- '?' player2 start position
+- '\*' replicator start position
 - '0' pit
 - '$' zpm
 - '%' crate

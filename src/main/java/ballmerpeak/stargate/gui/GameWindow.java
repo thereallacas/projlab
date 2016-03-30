@@ -2,102 +2,95 @@ package ballmerpeak.stargate.gui;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import ballmerpeak.stargate.Game;
-import ballmerpeak.stargate.InputCommand;
-import ballmerpeak.stargate.Labyrinth;
+import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.utils.MapLoader;
 
-public class GameWindow extends JFrame implements KeyListener, InputCommandSource, GameRenderer {
-	private static Game game;
-	private GameCanvas canvas;
+public class GameWindow extends JFrame implements KeyListener, InputCommandSource {
+	private GameRenderer canvas;
 	private InputCommandHandler inputHandler;
-	
-	public GameWindow() {
-		this.canvas = new GameCanvas();
-		this.canvas.setVisible(true);
-		this.add(canvas);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.inputHandler = null;
-		this.addKeyListener(this);
-	}
-	
-	public static void main(String... args) throws IOException {
-		MapLoader loader = new MapLoader();
-		Labyrinth labyrinth = null;
-		
-		// TODO use Path API
+	private Game game;
+	private DrawableSource gfxModel;
+	private SwingInputCommandFactory ifc;
+	private SwingMapLoaderHelper mlh;
+
+	public GameWindow() throws FileNotFoundException, IOException {
 		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
-		String mapDirectory = dataDirectory + "/maps";
-		String mapFile = mapDirectory + "/map2.txt";
-		labyrinth = loader.loadLabyrinth(mapFile);
+		String mapDirectory = dataDirectory + "/maps/";
+		String mapFile = mapDirectory + "map4.txt";
+		mlh = new SwingMapLoaderHelper();
+		MapLoader loader = new MapLoader(mapFile);
+		loader.setHelper(mlh);
+
+		game = loader.getGame();
+		
+		dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		GameCanvas.loadAssets(dataDirectory + "/images/");
 
-		game = new Game(labyrinth);
-		GameWindow window = new GameWindow();
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setSize(760, 760);
-		window.setVisible(true);
-		window.setInputCommandHandler(game);
-		window.drawGame(game);
+		gfxModel = mlh.getGraphicsModel();
+		canvas = new GameCanvas(gfxModel.getHeight(), gfxModel.getWidth());
+		canvas.setDrawableSource(gfxModel);
+
+		add((JPanel) canvas);
+
+		setInputCommandHandler(game);
+		ifc = new SwingInputCommandFactory();
+		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		addKeyListener(this);
+		setSize(760, 760);
+		setVisible(true);
+		canvas.drawGame();
+	}
+
+	public static void main(String... args) throws IOException {
+		new GameWindow();
 	}
 	
+
 	public void setInputCommandHandler(InputCommandHandler handler) {
 		this.inputHandler = handler;
 	}
 
-	public void drawGame(Game game) {
-		canvas.paintGame(game, canvas.getGraphics());
-	}
-
 	@Override
 	public void keyPressed(KeyEvent e) {
-		InputCommand cmd = InputCommand.UNKNOWN_KEY;
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_UP:
-			cmd = InputCommand.UP_KEY;
-			break;
-		case KeyEvent.VK_DOWN:
-			cmd = InputCommand.DOWN_KEY;
-			break;
-		case KeyEvent.VK_LEFT:
-			cmd = InputCommand.LEFT_KEY;
-			break;
-		case KeyEvent.VK_RIGHT:
-			cmd = InputCommand.RIGHT_KEY;
-			break;
-		case KeyEvent.VK_A:
-			cmd = InputCommand.SHOOT_BLUE_KEY;
-			break;
-		case KeyEvent.VK_S:
-			cmd = InputCommand.SHOOT_YELLOW_KEY;
-			break;
-		case KeyEvent.VK_D:
-			cmd = InputCommand.PICKUP_KEY;
-			break;
-		case KeyEvent.VK_Q:
-			cmd = InputCommand.QUIT_KEY;
-			break;
-		default:
-			break;
+		ifc.setKeyEvent(e);
+		if (e.getKeyCode() == KeyEvent.VK_W) {
+			game.switchPlayer();
+			return;
 		}
-		if(inputHandler != null) inputHandler.receiveInput(cmd);
-		this.drawGame(game);
+		InputCommand cmd = ifc.nextCommand();
+		inputHandler.receiveInput(cmd);
+		if (!game.isPlayer1Alive() && !game.isPlayer2Alive()) {
+			System.exit(0);
+		}
+		if (game.didPlayersWin()) {
+			System.exit(0);
+		}
+		canvas.drawGame();
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public InputCommand getNextCommand() {
+		return null;
 	}
 
 }

@@ -1,5 +1,5 @@
 package ballmerpeak.stargate.tiles;
 
 public enum ShotColor {
-	YELLOW, BLUE, INACTIVE
+	GREEN, RED, YELLOW, BLUE, INACTIVE
 }

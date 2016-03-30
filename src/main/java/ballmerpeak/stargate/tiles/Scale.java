@@ -1,50 +1,48 @@
 package ballmerpeak.stargate.tiles;
 
+import ballmerpeak.stargate.Entity;
 import ballmerpeak.stargate.Player;
-import ballmerpeak.stargate.Position;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Scale extends Floor {
 
 	private Door door;
+
+	public Scale() {
+		super();
+	}
 	
-	public Scale(Position pos) {
-		super(pos);
+	private boolean isPressed() {
+		return hasCrate() || hasEntity();
 	}
-
+	
 	@Override
-	public boolean pickupCrate() {
-		boolean didPickUpCrate = super.pickupCrate();
-		if (didPickUpCrate) {
-			getDoor().close();
-			return true;
+	public void pickupCrate(Player player) {
+		super.pickupCrate(player);
+		if (!isPressed()) {
+			door.close();
 		}
-		return false;
 	}
 
 	@Override
-	public boolean dropCrateHere() {
-		boolean didDropCrate = super.dropCrateHere();
-		if (didDropCrate) {
-			getDoor().open();
+	public void dropCrateHere(Player player) {
+		super.dropCrateHere(player);
+		if (isPressed()) {
+			door.open();
 		}
-		return didDropCrate;
 	}
 
 	@Override
-	public void stepOnTile(Player player) {
-		getDoor().open();
+	public void stepOnTile(Entity player) {
 		super.stepOnTile(player);
+		door.open();
 	}
 
 	@Override
-	public void leaveTile() {
-		if (!occupied)
-			getDoor().close();
-	}
-
-	public Door getDoor() {
-		return door;
+	public void leaveTile(Entity player) {
+		super.leaveTile(player);
+		if (!hasCrate() && !hasEntity())
+			door.close();
 	}
 
 	public void setDoor(Door door) {
@@ -53,6 +51,7 @@ public class Scale extends Floor {
 
 	@Override
 	public DrawableIndex getDrawableIndex() {
-		return occupied ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE; 
+		return !entities.isEmpty() ? super.getDrawableIndex()
+				: hasCrate() ? DrawableIndex.SCALE_WITH_CRATE : DrawableIndex.SCALE;
 	}
 }
