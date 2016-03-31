@@ -2,6 +2,7 @@ package ballmerpeak.stargate.tiles;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Entity;
@@ -9,6 +10,9 @@ import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Floor extends Tile {
+
+	private static Random random = new Random();
+	public static List<Floor> floors = new ArrayList<>();
 
 	protected List<Entity> entities;
 
@@ -83,25 +87,42 @@ public class Floor extends Tile {
 	}
 
 	public DrawableIndex getDrawableIndex() {
-		return !entities.isEmpty() ? entities.get(0).getDrawableIndex()
-				: ZPM ? DrawableIndex.FLOOR_WITH_ZPM
+		return hasEntity() ? entities.get(0).getDrawableIndex()
+				: hasZPM() ? DrawableIndex.FLOOR_WITH_ZPM
 						: hasCrate() ? DrawableIndex.FLOOR_WITH_CRATE : DrawableIndex.FLOOR;
 	}
-	
-	protected boolean hasEntity() {
+
+	public boolean hasEntity() {
 		return !entities.isEmpty();
 	}
-	
+
 	protected boolean allEntitiesOnFloorAreDead() {
 		return entities.stream().allMatch(e -> !e.isAlive());
 	}
-	
+
 	protected void cleanupDeadEntities() {
 		entities.removeIf(e -> !e.isAlive());
 	}
-	
+
 	public void setZPM(boolean b) {
 		this.ZPM = b;
 		setDirty(true);
+	}
+
+	public boolean hasZPM() {
+		return ZPM;
+	}
+
+	public static void generateNewZPM() {
+		Floor floor = null;
+		do {
+			floor = floors.get(random.nextInt(floors.size()));
+			assert (floors.contains(floor));
+		} while (floor.hasEntity() || floor.hasZPM());
+		floor.setZPM(true);
+	}
+
+	public static void addFloor(Floor floor) {
+		floors.add(floor);
 	}
 }
