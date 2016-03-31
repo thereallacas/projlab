@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class GameCanvas extends JPanel implements GameRenderer {
-	private static final int TILE_WIDTH = 16;
-	private static final int TILE_HEIGHT = 16;
+	private static final int TILE_WIDTH = 32;
+	private static final int TILE_HEIGHT = 32;
 
 	private static final String imageFormat = "png";
 	private static final Image tileImages[] = new Image[DrawableIndex.values().length];

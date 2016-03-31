@@ -26,9 +26,6 @@ public class Replicator extends Entity {
 
 	@Override
 	public DrawableIndex getDrawableIndex() {
-		if (!isAlive()) {
-			return DrawableIndex.FLOOR;
-		}
 		switch (direction) {
 		case UP:
 			return DrawableIndex.PLAYER_FACING_UP;
