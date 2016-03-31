@@ -34,12 +34,10 @@ public class MapLoader {
 
 	protected Map<Character, Door> doors;
 	protected Map<Character, Scale> scales;
-	
+
 	protected List<SpecialWall> specialWalls;
 
 	Tile tiles[][];
-
-	int zpms;
 
 	private int height;
 	private int width;
@@ -51,7 +49,7 @@ public class MapLoader {
 	public MapLoader(String filename) throws FileNotFoundException, IOException {
 		this.filename = filename;
 	}
-	
+
 	public void setHelper(MapLoaderHelper helper) {
 		this.helper = helper;
 	}
@@ -59,14 +57,23 @@ public class MapLoader {
 	public Game getGame() throws FileNotFoundException, IOException {
 		if (game != null)
 			return game;
-		
+
 		gate = new Gate();
 		doors = new HashMap<>();
 		scales = new HashMap<>();
 		specialWalls = new ArrayList<>();
-		zpms = 0;
 		gate.setSpecialWalls(specialWalls);
-		player1 = new Player();
+
+		player1 = new Player() {
+
+			@Override
+			public void pickupZPM() {
+				super.pickupZPM();
+				if (getZPMsCarried() % 2 == 0)
+					Floor.generateNewZPM();
+			}
+		};
+
 		player2 = new Player() {
 
 			@Override
@@ -90,9 +97,7 @@ public class MapLoader {
 					throw new RuntimeException("shouldn't be here...");
 				}
 			}
-			
-			
-			
+
 		};
 		replicator = new Replicator();
 		try (FileReader fr = new FileReader(filename); BufferedReader br = new BufferedReader(fr)) {
@@ -124,7 +129,7 @@ public class MapLoader {
 		}
 		setupDoors();
 		setupNeighbors();
-		game = new Game(player1, player2, replicator, zpms);
+		game = new Game(player1, player2, replicator);
 		return game;
 	}
 
@@ -158,26 +163,34 @@ public class MapLoader {
 		case '@':
 			Tile floorWithPlayer1 = new Floor();
 			floorWithPlayer1.stepOnTile(player1);
+			Floor.addFloor((Floor) floorWithPlayer1);
 			return floorWithPlayer1;
 		case '?':
 			Tile floorWithPlayer2 = new Floor();
 			floorWithPlayer2.stepOnTile(player2);
+			Floor.addFloor((Floor) floorWithPlayer2);
 			return floorWithPlayer2;
 		case '*':
 			Tile floorWithReplicator = new Floor();
 			floorWithReplicator.stepOnTile(replicator);
+			Floor.addFloor((Floor) floorWithReplicator);
 			return floorWithReplicator;
 		case ' ':
-			return new Floor();
+			Tile floor = new Floor();
+			Floor.addFloor((Floor) floor);
+			return floor;
 		case '#':
 			return new Wall();
 		case '0':
 			return new Pit();
 		case '$':
-			zpms++;
-			return Floor.floorWithZPM();
+			Tile floorWithZPM = Floor.floorWithZPM();
+			Floor.addFloor((Floor) floorWithZPM);
+			return floorWithZPM;
 		case '%':
-			return Floor.floorWithCrate();
+			Tile floorWithCrate = Floor.floorWithCrate();
+			Floor.addFloor((Floor) floorWithCrate);
+			return floorWithCrate;
 
 		case '>':
 			SpecialWall rightWall = new SpecialWall(Direction.RIGHT, gate);
