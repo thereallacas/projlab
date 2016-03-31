@@ -18,7 +18,7 @@ public class SwingMapLoaderHelper implements MapLoaderHelper {
 	public void dimensionsRead(int height, int width) {
 		this.height = height;
 		this.width = width;
-		tiles = new Tile[width][height];
+		tiles = new Tile[height][width];
 	}
 	
 	public DrawableSource getGraphicsModel() {
