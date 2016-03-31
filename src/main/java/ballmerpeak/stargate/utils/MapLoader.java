@@ -12,6 +12,8 @@ import java.util.Map;
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Gate;
+import ballmerpeak.stargate.Oneill;
+import ballmerpeak.stargate.Jaffa;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Replicator;
 import ballmerpeak.stargate.gui.DrawableIndex;
@@ -63,7 +65,6 @@ public class MapLoader {
 		scales = new HashMap<>();
 		specialWalls = new ArrayList<>();
 		gate.setSpecialWalls(specialWalls);
-
 		player1 = new Player() {
 
 			@Override
@@ -73,32 +74,7 @@ public class MapLoader {
 					Floor.generateNewZPM();
 			}
 		};
-
-		player2 = new Player() {
-
-			@Override
-			public void shoot(ShotColor color) {
-				color = color == ShotColor.BLUE ? ShotColor.GREEN : ShotColor.RED;
-				super.shoot(color);
-			}
-
-			@Override
-			public DrawableIndex getDrawableIndex() {
-				switch (direction) {
-				case UP:
-					return DrawableIndex.JAFFA_FACING_UP;
-				case DOWN:
-					return DrawableIndex.JAFFA_FACING_DOWN;
-				case LEFT:
-					return DrawableIndex.JAFFA_FACING_LEFT;
-				case RIGHT:
-					return DrawableIndex.JAFFA_FACING_RIGHT;
-				default:
-					throw new RuntimeException("shouldn't be here...");
-				}
-			}
-
-		};
+		player2 = new Jaffa();
 		replicator = new Replicator();
 		try (FileReader fr = new FileReader(filename); BufferedReader br = new BufferedReader(fr)) {
 			String lineOne = br.readLine();

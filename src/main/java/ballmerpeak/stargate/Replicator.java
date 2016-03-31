@@ -28,13 +28,13 @@ public class Replicator extends Entity {
 	public DrawableIndex getDrawableIndex() {
 		switch (direction) {
 		case UP:
-			return DrawableIndex.PLAYER_FACING_UP;
+			return DrawableIndex.REPLICATOR_FACING_UP;
 		case DOWN:
-			return DrawableIndex.PLAYER_FACING_DOWN;
+			return DrawableIndex.REPLICATOR_FACING_DOWN;
 		case LEFT:
-			return DrawableIndex.PLAYER_FACING_LEFT;
+			return DrawableIndex.REPLICATOR_FACING_LEFT;
 		case RIGHT:
-			return DrawableIndex.PLAYER_FACING_RIGHT;
+			return DrawableIndex.REPLICATOR_FACING_RIGHT;
 		default:
 			throw new RuntimeException("shouldn't be here...");
 		}
