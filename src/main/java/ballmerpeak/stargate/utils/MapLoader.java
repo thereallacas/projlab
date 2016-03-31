@@ -65,15 +65,7 @@ public class MapLoader {
 		scales = new HashMap<>();
 		specialWalls = new ArrayList<>();
 		gate.setSpecialWalls(specialWalls);
-		player1 = new Player() {
-
-			@Override
-			public void pickupZPM() {
-				super.pickupZPM();
-				if (getZPMsCarried() % 2 == 0)
-					Floor.generateNewZPM();
-			}
-		};
+		player1 = new Oneill();
 		player2 = new Jaffa();
 		replicator = new Replicator();
 		try (FileReader fr = new FileReader(filename); BufferedReader br = new BufferedReader(fr)) {

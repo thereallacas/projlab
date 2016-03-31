@@ -65,38 +65,29 @@ public class SwingInputCommandFactory implements InputCommandFactory {
 		}
 		
 		switch (event.getKeyCode()) {
+		case KeyEvent.VK_W:
 		case KeyEvent.VK_UP:
 			return moveUp;
+		case KeyEvent.VK_S:
 		case KeyEvent.VK_DOWN:
 			return moveDown;
+		case KeyEvent.VK_A:
 		case KeyEvent.VK_LEFT:
 			return moveLeft;
+		case KeyEvent.VK_D:
 		case KeyEvent.VK_RIGHT:
 			return moveRight;
+		case KeyEvent.VK_T:
 		case KeyEvent.VK_COMMA:
 			return shootYellow;
+		case KeyEvent.VK_Y:
 		case KeyEvent.VK_PERIOD:
 			return shootBlue;
+		case KeyEvent.VK_U:
 		case KeyEvent.VK_SLASH:
 			return pickup;
-		case KeyEvent.VK_M:
-			return quit;
-
-		case KeyEvent.VK_W:
-			return moveUp;
-		case KeyEvent.VK_S:
-			return moveDown;
-		case KeyEvent.VK_A:
-			return moveLeft;
-		case KeyEvent.VK_D:
-			return moveRight;
-		case KeyEvent.VK_T:
-			return shootYellow;
-		case KeyEvent.VK_Y:
-			return shootBlue;
-		case KeyEvent.VK_U:
-			return pickup;
 		case KeyEvent.VK_Q:
+		case KeyEvent.VK_M:
 			return quit;
 
 		default:

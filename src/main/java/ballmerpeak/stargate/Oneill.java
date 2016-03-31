@@ -1,8 +1,16 @@
 package ballmerpeak.stargate;
 
 import ballmerpeak.stargate.gui.DrawableIndex;
+import ballmerpeak.stargate.tiles.Floor;
 
 public class Oneill extends Player {
+	@Override
+	public void pickupZPM() {
+		super.pickupZPM();
+		if (getZPMsCarried() % 2 == 0)
+			Floor.generateNewZPM();
+	}
+	
 	@Override
 	public DrawableIndex getDrawableIndex() {
 		switch (direction) {
