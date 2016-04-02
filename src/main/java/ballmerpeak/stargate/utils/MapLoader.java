@@ -17,6 +17,7 @@ import ballmerpeak.stargate.Jaffa;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.RandomReplicatorMovement;
 import ballmerpeak.stargate.Replicator;
+import ballmerpeak.stargate.proto.FixedReplicatorMovementStrategy;
 import ballmerpeak.stargate.tiles.Door;
 import ballmerpeak.stargate.tiles.Floor;
 import ballmerpeak.stargate.tiles.Pit;
@@ -55,7 +56,7 @@ public class MapLoader {
 		this.helper = helper;
 	}
 
-	public Game getGame() throws FileNotFoundException, IOException {
+	public Game getGame() throws Exception {
 		if (game != null)
 			return game;
 
@@ -98,6 +99,7 @@ public class MapLoader {
 		setupNeighbors();
 		game = new Game(player1, player2, replicator);
 		game.setReplicatorMovementStrategy(new RandomReplicatorMovement());
+		
 		Floor.setZPMGeneratingStrategy(new RandomZPM());
 		return game;
 	}
