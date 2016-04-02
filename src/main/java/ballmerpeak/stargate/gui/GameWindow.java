@@ -2,8 +2,6 @@ package ballmerpeak.stargate.gui;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,7 +10,6 @@ import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.commands.InputCommandHandler;
 import ballmerpeak.stargate.commands.InputCommandSource;
-import ballmerpeak.stargate.proto.FixedReplicatorMovementStrategy;
 import ballmerpeak.stargate.utils.MapLoader;
 
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource {
@@ -32,10 +29,6 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		loader.setHelper(mlh);
 
 		game = loader.getGame();
-
-//		String replicatorFile = dataDirectory + "/random/replicator";
-//		game.setReplicatorMovementStrategy(new FixedReplicatorMovementStrategy(replicatorFile ));
-		
 		dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		GameCanvas.loadAssets(dataDirectory + "/images/");
 
