@@ -19,12 +19,11 @@ public class Pit extends Floor {
 	
 	@Override
 	public void stepOnTile(Entity entity) {
+		super.stepOnTile(entity);
 		if (!filled) {
-			super.stepOnTile(entity);
 			entity.fallInPit(this);
-		} else {
-			super.stepOnTile(entity);
 		}
+		cleanupDeadEntities();
 	}
 
 	@Override
@@ -37,6 +36,6 @@ public class Pit extends Floor {
 	}
 
 	public DrawableIndex getDrawableIndex() {
-		return !filled ? DrawableIndex.PIT : hasCrate() ? DrawableIndex.FLOOR_WITH_CRATE : DrawableIndex.FLOOR;
+		return !filled ? DrawableIndex.PIT : super.getDrawableIndex();
 	}
 }

@@ -12,14 +12,14 @@ import java.util.Map;
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Gate;
+import ballmerpeak.stargate.Oneill;
+import ballmerpeak.stargate.Jaffa;
 import ballmerpeak.stargate.Player;
 import ballmerpeak.stargate.Replicator;
-import ballmerpeak.stargate.gui.DrawableIndex;
 import ballmerpeak.stargate.tiles.Door;
 import ballmerpeak.stargate.tiles.Floor;
 import ballmerpeak.stargate.tiles.Pit;
 import ballmerpeak.stargate.tiles.Scale;
-import ballmerpeak.stargate.tiles.ShotColor;
 import ballmerpeak.stargate.tiles.SpecialWall;
 import ballmerpeak.stargate.tiles.Tile;
 import ballmerpeak.stargate.tiles.Wall;
@@ -63,42 +63,8 @@ public class MapLoader {
 		scales = new HashMap<>();
 		specialWalls = new ArrayList<>();
 		gate.setSpecialWalls(specialWalls);
-
-		player1 = new Player() {
-
-			@Override
-			public void pickupZPM() {
-				super.pickupZPM();
-				if (getZPMsCarried() % 2 == 0)
-					Floor.generateNewZPM();
-			}
-		};
-
-		player2 = new Player() {
-
-			@Override
-			public void shoot(ShotColor color) {
-				color = color == ShotColor.BLUE ? ShotColor.GREEN : ShotColor.RED;
-				super.shoot(color);
-			}
-
-			@Override
-			public DrawableIndex getDrawableIndex() {
-				switch (direction) {
-				case UP:
-					return DrawableIndex.JAFFA_FACING_UP;
-				case DOWN:
-					return DrawableIndex.JAFFA_FACING_DOWN;
-				case LEFT:
-					return DrawableIndex.JAFFA_FACING_LEFT;
-				case RIGHT:
-					return DrawableIndex.JAFFA_FACING_RIGHT;
-				default:
-					throw new RuntimeException("shouldn't be here...");
-				}
-			}
-
-		};
+		player1 = new Oneill();
+		player2 = new Jaffa();
 		replicator = new Replicator();
 		try (FileReader fr = new FileReader(filename); BufferedReader br = new BufferedReader(fr)) {
 			String lineOne = br.readLine();

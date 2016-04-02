@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class GameCanvas extends JPanel implements GameRenderer {
-	private static final int TILE_WIDTH = 16;
-	private static final int TILE_HEIGHT = 16;
+	private static final int TILE_WIDTH = 32;
+	private static final int TILE_HEIGHT = 32;
 
 	private static final String imageFormat = "png";
 	private static final Image tileImages[] = new Image[DrawableIndex.values().length];
@@ -30,7 +30,25 @@ public class GameCanvas extends JPanel implements GameRenderer {
 	}
 
 	public void redraw(Graphics g) {
-		g.drawImage(backBuffer, 0, 0, super.getWidth(), super.getHeight(), null);
+		int imgW = this.backBuffer.getWidth(null);
+		int imgH = this.backBuffer.getHeight(null);
+		int winW = super.getWidth();
+		int winH = super.getHeight();
+		float imageRatio = (float)imgW/imgH;
+		float windowRatio = (float)winW/winH;
+		int offX = 0;
+		int offY = 0;
+		if(windowRatio > 1.0) {
+			imgH = winH;
+			imgW = (int)(imgH * imageRatio);
+			offX = (winW - imgW)/2;
+		} else if(windowRatio < 1.0) {
+			imgW = winW;
+			imgH = (int)(imgW / imageRatio);
+			offY = (winH - imgH)/2;
+		}
+		
+		g.drawImage(backBuffer, offX, offY, imgW, imgH, null);
 	}
 
 	@Override
