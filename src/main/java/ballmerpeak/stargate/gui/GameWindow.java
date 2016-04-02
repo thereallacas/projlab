@@ -2,8 +2,6 @@ package ballmerpeak.stargate.gui;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,7 +20,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 	private SwingInputCommandFactory ifc;
 	private SwingMapLoaderHelper mlh;
 
-	public GameWindow() throws FileNotFoundException, IOException {
+	public GameWindow() throws Exception {
 		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		String mapDirectory = dataDirectory + "/maps/";
 		String mapFile = mapDirectory + "map4.txt";
@@ -31,7 +29,6 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		loader.setHelper(mlh);
 
 		game = loader.getGame();
-		
 		dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		GameCanvas.loadAssets(dataDirectory + "/images/");
 
@@ -50,7 +47,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		canvas.drawGame();
 	}
 
-	public static void main(String... args) throws IOException {
+	public static void main(String... args) throws Exception {
 		new GameWindow();
 	}
 	
