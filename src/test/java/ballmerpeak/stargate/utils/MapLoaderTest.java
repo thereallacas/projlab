@@ -1,7 +1,5 @@
 package ballmerpeak.stargate.utils;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.URL;
 
 import org.junit.Before;
@@ -14,7 +12,7 @@ public class MapLoaderTest {
 	Game game;
 	
 	@Before
-	public void setup() throws FileNotFoundException, IOException {
+	public void setup() throws Exception {
 		URL map1Path = this.getClass().getResource("/maps/map1.txt");
 		MapLoader loader = new MapLoader(map1Path.getPath());
 		game = loader.getGame();

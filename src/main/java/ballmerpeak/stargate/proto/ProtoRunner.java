@@ -5,10 +5,13 @@ package ballmerpeak.stargate.proto;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import ballmerpeak.stargate.Game;
+import ballmerpeak.stargate.RandomReplicatorMovement;
+import ballmerpeak.stargate.ReplicatorMovementStrategy;
 import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.utils.MapLoader;
 
@@ -17,41 +20,57 @@ import ballmerpeak.stargate.utils.MapLoader;
  *
  */
 public class ProtoRunner {
-	
+
 	MapLoader loader;
 	Game game;
 	ProtoInputCommandFactory icf;
 	ProtoIO io;
+
+	String replicatorFile, zpmFile;
 	
-	private void reset() throws FileNotFoundException, IOException {
-		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
+	String dataDirectory;
+	
+	ReplicatorMovementStrategy fixedReplicatorMovementStrategy;
+
+	private void reset() throws Exception {
 		String mapDirectory = dataDirectory + "/maps/";
 		String mapFile = mapDirectory + "map4.txt";
 		loader = new MapLoader(mapFile);
 		game = loader.getGame();
 		icf = new ProtoInputCommandFactory();
 		io = new ProtoIO(game);
-	}
-	
-	private void setRandom(boolean b) {
+		fixedReplicatorMovementStrategy = new FixedReplicatorMovementStrategy(replicatorFile);
 		
 	}
-	
-	public ProtoRunner() throws FileNotFoundException, IOException {
+
+	private void setRandom(boolean b) {
+		if (b) {
+			game.setReplicatorMovementStrategy(new RandomReplicatorMovement());
+			prompt();
+		} else {
+			game.setReplicatorMovementStrategy(fixedReplicatorMovementStrategy);
+			prompt();
+		}
+	}
+
+	public ProtoRunner(String zpmFile, String replicatorFile) throws Exception {
+		dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
+		this.zpmFile = dataDirectory + "/random/" + zpmFile;
+		this.replicatorFile = dataDirectory + "/random/" + replicatorFile;
 		reset();
 	}
-	
-	public void run() throws IOException {
+
+	public void run() throws Exception {
 		String line;
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 		io.printInfo();
-		System.out.print("> ");
+		prompt();
 		while ((line = reader.readLine()) != null) {
 			if (line.equals("reset")) {
 				reset();
 				continue;
 			}
-			
+
 			if (line.startsWith("random")) {
 				String words[] = line.split(" ");
 				if (words.length != 2)
@@ -64,11 +83,21 @@ public class ProtoRunner {
 			game.setPlayerSelectionStrategy(icf.getPlayerSelectionStrategy());
 			game.receiveInput(command);
 			io.printInfo();
-			System.out.print("> ");
+			
+			prompt();
 		}
 	}
-	
-	public static void main(String... args ) throws FileNotFoundException, IOException {
-		new ProtoRunner().run();
+
+	/**
+	 * 	
+	 */
+	private void prompt() {
+		// TODO Auto-generated method stub
+		System.out.print("> ");
+	}
+
+	public static void main(String... args) throws Exception {
+		
+		new ProtoRunner("zpm", "replicator").run();
 	}
 }

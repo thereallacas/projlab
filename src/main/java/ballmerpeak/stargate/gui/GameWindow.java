@@ -12,6 +12,7 @@ import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.commands.InputCommandHandler;
 import ballmerpeak.stargate.commands.InputCommandSource;
+import ballmerpeak.stargate.proto.FixedReplicatorMovementStrategy;
 import ballmerpeak.stargate.utils.MapLoader;
 
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource {
@@ -22,7 +23,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 	private SwingInputCommandFactory ifc;
 	private SwingMapLoaderHelper mlh;
 
-	public GameWindow() throws FileNotFoundException, IOException {
+	public GameWindow() throws Exception {
 		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		String mapDirectory = dataDirectory + "/maps/";
 		String mapFile = mapDirectory + "map4.txt";
@@ -31,6 +32,9 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		loader.setHelper(mlh);
 
 		game = loader.getGame();
+
+//		String replicatorFile = dataDirectory + "/random/replicator";
+//		game.setReplicatorMovementStrategy(new FixedReplicatorMovementStrategy(replicatorFile ));
 		
 		dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		GameCanvas.loadAssets(dataDirectory + "/images/");
@@ -50,7 +54,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		canvas.drawGame();
 	}
 
-	public static void main(String... args) throws IOException {
+	public static void main(String... args) throws Exception {
 		new GameWindow();
 	}
 	

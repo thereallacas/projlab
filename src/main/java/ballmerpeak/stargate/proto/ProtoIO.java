@@ -48,6 +48,11 @@ public class ProtoIO {
 		tileInfo.put(DrawableIndex.JAFFA_FACING_LEFT, "Jaffa <left>");
 		tileInfo.put(DrawableIndex.JAFFA_FACING_RIGHT, "Jaffa <right>");
 		tileInfo.put(DrawableIndex.JAFFA_FACING_UP, "Jaffa <up>");
+
+		tileInfo.put(DrawableIndex.REPLICATOR_FACING_DOWN, "REPLICATOR <down>");
+		tileInfo.put(DrawableIndex.REPLICATOR_FACING_LEFT, "REPLICATOR <left>");
+		tileInfo.put(DrawableIndex.REPLICATOR_FACING_RIGHT, "REPLICATOR <right>");
+		tileInfo.put(DrawableIndex.REPLICATOR_FACING_UP, "REPLICATOR <up>");	
 		
 		this.game = game;
 	}
