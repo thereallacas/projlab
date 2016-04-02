@@ -98,6 +98,7 @@ public class MapLoader {
 		setupNeighbors();
 		game = new Game(player1, player2, replicator);
 		game.setReplicatorMovementStrategy(new RandomReplicatorMovement());
+		Floor.setZPMGeneratingStrategy(new RandomZPM());
 		return game;
 	}
 
