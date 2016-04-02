@@ -20,6 +20,10 @@ public abstract class Entity implements Drawable {
 		direction = Direction.UP;
 	}
 	
+	public Direction getDirection() {
+		return direction;
+	}
+	
 	public void steppedOnZPM(Floor floor) {
 		
 	}

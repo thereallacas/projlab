@@ -8,6 +8,7 @@ import java.util.List;
 
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.commands.InputCommand;
+import ballmerpeak.stargate.commands.InputCommandFactory;
 import ballmerpeak.stargate.commands.MoveCommand;
 import ballmerpeak.stargate.commands.PickupCommand;
 import ballmerpeak.stargate.commands.PlayerSelectionStrategy;
@@ -18,28 +19,11 @@ import ballmerpeak.stargate.commands.ShootCommand;
 import ballmerpeak.stargate.commands.UnknownCommand;
 import ballmerpeak.stargate.tiles.ShotColor;
 
-public class SwingInputCommandFactory implements InputCommandFactory {
+public class SwingInputCommandFactory extends InputCommandFactory {
 
 	private KeyEvent event;
 
-	private PlayerSelectionStrategy jaffaChooser = new SelectJaffaStrategy();
-	private PlayerSelectionStrategy kebabChooser = new SelectKebabStrategy();
 	
-	private PlayerSelectionStrategy pss = kebabChooser;
-	
-	private InputCommand moveUp = new MoveCommand(Direction.UP);
-	private InputCommand moveDown = new MoveCommand(Direction.DOWN);
-	private InputCommand moveLeft = new MoveCommand(Direction.LEFT);
-	private InputCommand moveRight = new MoveCommand(Direction.RIGHT);
-
-	private InputCommand shootBlue = new ShootCommand(ShotColor.BLUE);
-	private InputCommand shootYellow = new ShootCommand(ShotColor.YELLOW);
-
-	private InputCommand pickup = new PickupCommand();
-
-	private InputCommand quit = new QuitCommand();
-
-	private InputCommand unknown = new UnknownCommand();
 
 	public void setKeyEvent(KeyEvent e) {
 		event = e;
@@ -102,10 +86,5 @@ public class SwingInputCommandFactory implements InputCommandFactory {
 		default:
 			return unknown;
 		}
-	}
-
-	@Override
-	public PlayerSelectionStrategy getPlayerSelectionStrategy() {
-		return pss;
 	}
 }
