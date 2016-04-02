@@ -1,6 +1,4 @@
-package ballmerpeak.stargate.gui;
-
-import ballmerpeak.stargate.commands.InputCommand;
+package ballmerpeak.stargate.commands;
 
 public interface InputCommandHandler {
 	public void receiveInput(InputCommand command);

@@ -15,6 +15,10 @@ public abstract class Player extends Entity {
 		carrying = false;
 	}
 
+	public boolean isCarrying() {
+		return carrying;
+	}
+	
 	public int getZPMsCarried() {
 		return ZPMsCarried;
 	}
