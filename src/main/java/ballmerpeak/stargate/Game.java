@@ -1,8 +1,8 @@
 package ballmerpeak.stargate;
 
 import ballmerpeak.stargate.commands.InputCommand;
+import ballmerpeak.stargate.commands.InputCommandHandler;
 import ballmerpeak.stargate.commands.PlayerSelectionStrategy;
-import ballmerpeak.stargate.gui.InputCommandHandler;
 import ballmerpeak.stargate.tiles.Floor;
 
 public class Game implements InputCommandHandler {

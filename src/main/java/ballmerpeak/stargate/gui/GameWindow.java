@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.commands.InputCommand;
+import ballmerpeak.stargate.commands.InputCommandHandler;
+import ballmerpeak.stargate.commands.InputCommandSource;
 import ballmerpeak.stargate.utils.MapLoader;
 
 public class GameWindow extends JFrame implements KeyListener, InputCommandSource {
