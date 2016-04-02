@@ -11,7 +11,7 @@ import ballmerpeak.stargate.gui.DrawableIndex;
 
 public class Floor extends Tile {
 
-	private static Random random = new Random();
+	private static ZPMGeneratingStrategy zpmgs;
 	public static List<Floor> floors = new ArrayList<>();
 
 	protected List<Entity> entities;
@@ -19,6 +19,10 @@ public class Floor extends Tile {
 	private boolean ZPM;
 
 	private int numCrates;
+	
+	public static void setZPMGeneratingStrategy(ZPMGeneratingStrategy zpmgs_) {
+		zpmgs = zpmgs_;
+	}
 
 	public Floor() {
 		entities = new ArrayList<Entity>();
@@ -114,11 +118,7 @@ public class Floor extends Tile {
 	}
 
 	public static void generateNewZPM() {
-		Floor floor = null;
-		do {
-			floor = floors.get(random.nextInt(floors.size()));
-			assert (floors.contains(floor));
-		} while (floor.hasEntity() || floor.hasZPM());
+		Floor floor = zpmgs.getFloorForNewZPM();
 		floor.setZPM(true);
 	}
 
