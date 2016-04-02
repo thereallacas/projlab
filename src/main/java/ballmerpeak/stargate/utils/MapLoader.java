@@ -15,6 +15,7 @@ import ballmerpeak.stargate.Gate;
 import ballmerpeak.stargate.Oneill;
 import ballmerpeak.stargate.Jaffa;
 import ballmerpeak.stargate.Player;
+import ballmerpeak.stargate.RandomReplicatorMovement;
 import ballmerpeak.stargate.Replicator;
 import ballmerpeak.stargate.tiles.Door;
 import ballmerpeak.stargate.tiles.Floor;
@@ -96,6 +97,7 @@ public class MapLoader {
 		setupDoors();
 		setupNeighbors();
 		game = new Game(player1, player2, replicator);
+		game.setReplicatorMovementStrategy(new RandomReplicatorMovement());
 		return game;
 	}
 
