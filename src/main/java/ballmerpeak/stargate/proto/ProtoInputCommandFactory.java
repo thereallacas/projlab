@@ -13,6 +13,8 @@ import ballmerpeak.stargate.commands.InputCommandFactory;
 public class ProtoInputCommandFactory extends InputCommandFactory {
 
 	private String string;
+	
+	public boolean oneil = true;
 
 	public void setInputString(String string) {
 		this.string = string;
@@ -29,13 +31,18 @@ public class ProtoInputCommandFactory extends InputCommandFactory {
 			return quit;
 
 		if (words[0].startsWith("j")) {
+			oneil = false;
 			pss = jaffaChooser;
-		} else if (words[0].startsWith("p")) {
+			return unknown;
+		} else if (words[0].startsWith("o")) {
+			oneil = true;
 			pss = kebabChooser;
+			return unknown;
 		}
 
-		switch (words[1]) {
+		switch (words[0]) {
 		case "pickup":
+		case "p":
 			return pickup;
 		case "up":
 		case "u":
@@ -50,9 +57,9 @@ public class ProtoInputCommandFactory extends InputCommandFactory {
 		case "r":
 			return moveRight;
 		case "shoot":
-			if (words.length != 3)
+			if (words.length != 2)
 				return unknown;
-			switch (words[2]) {
+			switch (words[1]) {
 			case "yellow":
 			case "y":
 				return shootYellow;

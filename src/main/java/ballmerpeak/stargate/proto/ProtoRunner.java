@@ -93,7 +93,7 @@ public class ProtoRunner {
 	 */
 	private void prompt() {
 		// TODO Auto-generated method stub
-		System.out.print("> ");
+		System.out.format("%s> ", icf.oneil ? "oneil" : "jaffa");
 	}
 
 	public static void main(String... args) throws Exception {

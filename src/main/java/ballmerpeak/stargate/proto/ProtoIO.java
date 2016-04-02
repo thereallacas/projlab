@@ -77,7 +77,7 @@ public class ProtoIO {
 			break;
 		}
 		
-		System.out.format("player: <%s, %s, %d ZPM(s), %s crate>\n",
+		System.out.format("oneil: <%s, %s, %d ZPM(s), %s crate>\n",
 				player.isAlive() ? "alive" : "dead", playerFacing, player.getZPMsCarried(), player.isCarrying() ? "" : "no");
 		
 		Tile playerTile = player.getTile();
