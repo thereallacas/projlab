@@ -39,10 +39,10 @@ public class ProtoIO {
 		
 		tileInfo.put(DrawableIndex.PIT, "Pit");
 		
-		tileInfo.put(DrawableIndex.PLAYER_FACING_DOWN, "Player <down>");
-		tileInfo.put(DrawableIndex.PLAYER_FACING_LEFT, "Player <left>");
-		tileInfo.put(DrawableIndex.PLAYER_FACING_RIGHT, "Player <right>");
-		tileInfo.put(DrawableIndex.PLAYER_FACING_UP, "Player <up>");
+		tileInfo.put(DrawableIndex.ONEILL_FACING_DOWN, "Oneil <down>");
+		tileInfo.put(DrawableIndex.ONEILL_FACING_LEFT, "Oneil <left>");
+		tileInfo.put(DrawableIndex.ONEILL_FACING_RIGHT, "Oneil <right>");
+		tileInfo.put(DrawableIndex.ONEILL_FACING_UP, "Oneil <up>");
 
 		tileInfo.put(DrawableIndex.JAFFA_FACING_DOWN, "Jaffa <down>");
 		tileInfo.put(DrawableIndex.JAFFA_FACING_LEFT, "Jaffa <left>");

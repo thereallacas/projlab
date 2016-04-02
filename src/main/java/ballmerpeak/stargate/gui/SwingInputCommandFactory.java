@@ -6,18 +6,8 @@ import java.awt.event.KeyEvent;
 import java.util.Arrays;
 import java.util.List;
 
-import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.commands.InputCommandFactory;
-import ballmerpeak.stargate.commands.MoveCommand;
-import ballmerpeak.stargate.commands.PickupCommand;
-import ballmerpeak.stargate.commands.PlayerSelectionStrategy;
-import ballmerpeak.stargate.commands.QuitCommand;
-import ballmerpeak.stargate.commands.SelectJaffaStrategy;
-import ballmerpeak.stargate.commands.SelectKebabStrategy;
-import ballmerpeak.stargate.commands.ShootCommand;
-import ballmerpeak.stargate.commands.UnknownCommand;
-import ballmerpeak.stargate.tiles.ShotColor;
 
 public class SwingInputCommandFactory extends InputCommandFactory {
 

@@ -5,7 +5,6 @@ package ballmerpeak.stargate.proto;
 
 import ballmerpeak.stargate.commands.InputCommand;
 import ballmerpeak.stargate.commands.InputCommandFactory;
-import ballmerpeak.stargate.commands.PlayerSelectionStrategy;
 
 /**
  * @author ballmerpeak
