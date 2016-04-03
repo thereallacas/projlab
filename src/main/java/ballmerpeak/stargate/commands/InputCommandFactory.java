@@ -6,9 +6,9 @@ import ballmerpeak.stargate.tiles.ShotColor;
 public abstract class InputCommandFactory {
 	
 	protected PlayerSelectionStrategy jaffaChooser = new SelectJaffaStrategy();
-	protected PlayerSelectionStrategy kebabChooser = new SelectKebabStrategy();
+	protected PlayerSelectionStrategy oneilChooser = new SelectOneilStrategy();
 	
-	protected PlayerSelectionStrategy pss = kebabChooser;
+	protected PlayerSelectionStrategy pss = oneilChooser;
 	
 	protected InputCommand moveUp = new MoveCommand(Direction.UP);
 	protected InputCommand moveDown = new MoveCommand(Direction.DOWN);
