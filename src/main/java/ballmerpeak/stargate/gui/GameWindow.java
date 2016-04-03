@@ -25,7 +25,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 	public GameWindow() throws Exception {
 		String dataDirectory = System.getProperty("user.dir") + "/src/test/resources";
 		String mapDirectory = dataDirectory + "/maps/";
-		String mapFile = mapDirectory + "map4.txt";
+		String mapFile = mapDirectory + "map5.txt";
 		mlh = new SwingMapLoaderHelper();
 		MapLoader loader = new MapLoader(mapFile);
 		loader.setHelper(mlh);

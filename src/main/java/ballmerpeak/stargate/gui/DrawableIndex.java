@@ -1,7 +1,7 @@
 package ballmerpeak.stargate.gui;
 
 public enum DrawableIndex {
-	FLOOR, FLOOR_WITH_ZPM, FLOOR_WITH_CRATE,
+	FLOOR, FLOOR_WITH_ZPM, FLOOR_WITH_ZPM2, FLOOR_WITH_CRATE,
 	
 	SCALE, SCALE_WITH_CRATE, DOOR_CLOSED, DOOR_OPEN,
 	

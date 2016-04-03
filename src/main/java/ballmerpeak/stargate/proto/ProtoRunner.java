@@ -34,7 +34,7 @@ public class ProtoRunner {
 
 	private void reset() throws Exception {
 		String mapDirectory = dataDirectory + "/maps/";
-		String mapFile = mapDirectory + "map4.txt";
+		String mapFile = mapDirectory + "map5.txt";
 		loader = new MapLoader(mapFile);
 		game = loader.getGame();
 		icf = new ProtoInputCommandFactory();
