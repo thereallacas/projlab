@@ -2,6 +2,7 @@ package ballmerpeak.stargate.tiles;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Entity;
@@ -90,8 +91,10 @@ public class Floor extends Tile {
 	}
 
 	public DrawableIndex getDrawableIndex() {
+		Random random = new Random();
+		DrawableIndex d = (random.nextInt()%2 == 0)? DrawableIndex.FLOOR_WITH_ZPM : DrawableIndex.FLOOR_WITH_ZPM2;
 		return hasEntity() ? entities.get(0).getDrawableIndex()
-				: hasZPM() ? DrawableIndex.FLOOR_WITH_ZPM
+				: hasZPM() ? d
 						: hasCrate() ? DrawableIndex.FLOOR_WITH_CRATE : DrawableIndex.FLOOR;
 	}
 
