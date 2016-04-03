@@ -1,8 +1,8 @@
 package ballmerpeak.stargate;
 
 import ballmerpeak.stargate.commands.InputCommand;
+import ballmerpeak.stargate.commands.InputCommandHandler;
 import ballmerpeak.stargate.commands.PlayerSelectionStrategy;
-import ballmerpeak.stargate.gui.InputCommandHandler;
 import ballmerpeak.stargate.tiles.Floor;
 
 public class Game implements InputCommandHandler {
@@ -13,6 +13,8 @@ public class Game implements InputCommandHandler {
 	private PlayerSelectionStrategy pss;
 	
 	private Replicator replicator;
+	
+	private ReplicatorMovementStrategy rms;
 	
 	public Game(Player player1, Player player2, Replicator replicator) {
 		this.player1 = player1;
@@ -53,13 +55,17 @@ public class Game implements InputCommandHandler {
 		this.pss = pss;
 	}
 	
+	public void setReplicatorMovementStrategy(ReplicatorMovementStrategy rms) {
+		this.rms = rms;
+	}
+	
 	@Override
 	public void receiveInput(InputCommand command) {
 		Player player = pss.getPlayer(this);
 		if (player.isAlive()) {
 			command.execute(player);
 			if (replicator.isAlive())
-				replicator.move(Direction.randomDirection());
+				replicator.move(rms.getDirection());
 		}
 	}
 	

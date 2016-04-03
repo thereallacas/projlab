@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ballmerpeak.stargate.Direction;
+import ballmerpeak.stargate.Oneill;
 import ballmerpeak.stargate.Player;
 
 public class DoorAndScaleTest {
@@ -22,7 +23,7 @@ public class DoorAndScaleTest {
 		scale = new Scale();
 		scale.setDoor(door);
 		
-		player = new Player();
+		player = new Oneill();
 	}
 
 	@Test
