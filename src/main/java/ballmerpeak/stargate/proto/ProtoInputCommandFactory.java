@@ -36,7 +36,7 @@ public class ProtoInputCommandFactory extends InputCommandFactory {
 			return unknown;
 		} else if (words[0].startsWith("o")) {
 			oneil = true;
-			pss = kebabChooser;
+			pss = oneilChooser;
 			return unknown;
 		}
 

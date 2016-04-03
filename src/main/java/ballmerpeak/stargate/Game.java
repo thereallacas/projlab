@@ -7,8 +7,8 @@ import ballmerpeak.stargate.tiles.Floor;
 
 public class Game implements InputCommandHandler {
 
-	private Player player1;
-	private Player player2;
+	private Player oneil;
+	private Player jaffa;
 	
 	private PlayerSelectionStrategy pss;
 	
@@ -17,8 +17,8 @@ public class Game implements InputCommandHandler {
 	private ReplicatorMovementStrategy rms;
 	
 	public Game(Player player1, Player player2, Replicator replicator) {
-		this.player1 = player1;
-		this.player2 = player2;
+		this.oneil = player1;
+		this.jaffa = player2;
 		this.replicator = replicator;
 	}
 	
@@ -28,11 +28,11 @@ public class Game implements InputCommandHandler {
 	}
 
 	public boolean isPlayer1Alive() {
-		return player1.isAlive();
+		return oneil.isAlive();
 	}
 
 	public boolean isPlayer2Alive() {
-		return player2.isAlive();
+		return jaffa.isAlive();
 	}
 
 	public boolean bothPlayersAlive() {
@@ -40,11 +40,11 @@ public class Game implements InputCommandHandler {
 	}
 
 	public Player getJaffa() {
-		return player2;
+		return jaffa;
 	}
 
-	public Player getKebab() {
-		return player1;
+	public Player getOneil() {
+		return oneil;
 	}
 	
 	public Replicator getReplicator() {

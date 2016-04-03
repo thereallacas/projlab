@@ -58,7 +58,7 @@ public class ProtoIO {
 	}
 
 	public void printInfo() {
-		Player player = game.getKebab();
+		Player player = game.getOneil();
 		Player jaffa = game.getJaffa();
 		
 		String playerFacing = "";

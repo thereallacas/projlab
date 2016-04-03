@@ -33,7 +33,7 @@ public class SwingInputCommandFactory extends InputCommandFactory {
 	public InputCommand nextCommand() {
 		
 		if (kebabEvents.contains(event.getKeyCode())) {
-			pss = kebabChooser;
+			pss = oneilChooser;
 		} else {
 			pss = jaffaChooser; 
 		}
