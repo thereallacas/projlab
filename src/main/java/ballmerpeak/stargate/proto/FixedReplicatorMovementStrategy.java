@@ -49,7 +49,7 @@ public class FixedReplicatorMovementStrategy implements ReplicatorMovementStrate
 
 	@Override
 	public Direction getDirection() {
-		return directions.get(index < directions.size() - 1 ? index++ : index);
+		return directions.get(index < directions.size() - 1 ? index++ : 0);
 	}
 
 }
