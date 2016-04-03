@@ -2,7 +2,6 @@ package ballmerpeak.stargate.tiles;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Entity;
