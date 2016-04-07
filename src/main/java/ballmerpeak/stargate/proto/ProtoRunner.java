@@ -66,6 +66,9 @@ public class ProtoRunner {
 		io.printInfo();
 		prompt();
 		while ((line = reader.readLine()) != null) {
+			if (line.startsWith("q")) {
+				System.exit(0);
+			}
 			if (line.equals("reset")) {
 				reset();
 				continue;
