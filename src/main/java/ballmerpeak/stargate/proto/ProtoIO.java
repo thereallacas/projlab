@@ -116,6 +116,9 @@ public class ProtoIO {
 		System.out.format("\tright: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.RIGHT).getDrawableIndex()));
 		System.out.println();
 		
-		System.out.format("replicator: %s\n", replicator.isAlive() ? "alive" : "dead");
+	}
+	
+	public void printReplicatorInfo() {
+		System.out.println(game.getReplicator().isAlive() ? "alive" : "dead");
 	}
 }
