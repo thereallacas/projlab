@@ -9,6 +9,7 @@ import java.util.Map;
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Player;
+import ballmerpeak.stargate.Replicator;
 import ballmerpeak.stargate.gui.DrawableIndex;
 import ballmerpeak.stargate.tiles.Tile;
 
@@ -61,6 +62,7 @@ public class ProtoIO {
 	public void printInfo() {
 		Player player = game.getOneil();
 		Player jaffa = game.getJaffa();
+		Replicator replicator = game.getReplicator();
 		
 		String playerFacing = "";
 		switch (player.getDirection()) {
@@ -113,5 +115,10 @@ public class ProtoIO {
 		System.out.format("\tdown: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.DOWN).getDrawableIndex()));
 		System.out.format("\tright: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.RIGHT).getDrawableIndex()));
 		System.out.println();
+		
+	}
+	
+	public void printReplicatorInfo() {
+		System.out.println(game.getReplicator().isAlive() ? "alive" : "dead");
 	}
 }

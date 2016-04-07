@@ -27,9 +27,6 @@ public class ProtoInputCommandFactory extends InputCommandFactory {
 		if (words.length == 0)
 			return unknown;
 
-		if (words[0].startsWith("q"))
-			return quit;
-
 		if (words[0].startsWith("j")) {
 			oneil = false;
 			pss = jaffaChooser;
