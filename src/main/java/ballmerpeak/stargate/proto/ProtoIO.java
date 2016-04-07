@@ -23,6 +23,7 @@ public class ProtoIO {
 	
 	public ProtoIO(Game game) {
 		tileInfo.put(DrawableIndex.FLOOR_WITH_ZPM, "Floor <ZPM>");
+		tileInfo.put(DrawableIndex.FLOOR_WITH_ZPM2, "Floor <ZPM>");
 		tileInfo.put(DrawableIndex.FLOOR, "Floor");
 		tileInfo.put(DrawableIndex.FLOOR_WITH_CRATE, "Floor <crate)>");
 		tileInfo.put(DrawableIndex.SCALE, "Scale");
