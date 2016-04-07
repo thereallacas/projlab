@@ -81,10 +81,10 @@ public class ProtoIO {
 				player.isAlive() ? "alive" : "dead", playerFacing, player.getZPMsCarried(), player.isCarrying() ? "" : "no");
 		
 		Tile playerTile = player.getTile();
-		System.out.println("\tup: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.UP).getDrawableIndex()));
-		System.out.println("\tleft: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.LEFT).getDrawableIndex()));
-		System.out.println("\tdown: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.DOWN).getDrawableIndex()));
-		System.out.println("\tright: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.RIGHT).getDrawableIndex()));
+		System.out.format("\tup: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.UP).getDrawableIndex()));
+		System.out.format("\tleft: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.LEFT).getDrawableIndex()));
+		System.out.format("\tdown: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.DOWN).getDrawableIndex()));
+		System.out.format("\tright: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.RIGHT).getDrawableIndex()));
 		System.out.println();
 		
 		playerFacing = "";
@@ -107,10 +107,10 @@ public class ProtoIO {
 				jaffa.isAlive() ? "alive" : "dead", playerFacing, jaffa.getZPMsCarried(), jaffa.isCarrying() ? "" : "no");
 		
 		playerTile = jaffa.getTile();
-		System.out.println("\tup: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.UP).getDrawableIndex()));
-		System.out.println("\tleft: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.LEFT).getDrawableIndex()));
-		System.out.println("\tdown: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.DOWN).getDrawableIndex()));
-		System.out.println("\tright: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.RIGHT).getDrawableIndex()));
+		System.out.format("\tup: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.UP).getDrawableIndex()));
+		System.out.format("\tleft: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.LEFT).getDrawableIndex()));
+		System.out.format("\tdown: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.DOWN).getDrawableIndex()));
+		System.out.format("\tright: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.RIGHT).getDrawableIndex()));
 		System.out.println();
 	}
 }
