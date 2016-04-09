@@ -27,16 +27,16 @@ public class Game implements InputCommandHandler {
 		return !anyZPMsLeft();
 	}
 
-	public boolean isPlayer1Alive() {
+	public boolean isOnilAlive() {
 		return oneil.isAlive();
 	}
 
-	public boolean isPlayer2Alive() {
+	public boolean isJaffaAlive() {
 		return jaffa.isAlive();
 	}
 
 	public boolean bothPlayersAlive() {
-		return isPlayer1Alive() && isPlayer2Alive();
+		return isOnilAlive() && isJaffaAlive();
 	}
 
 	public Player getJaffa() {
