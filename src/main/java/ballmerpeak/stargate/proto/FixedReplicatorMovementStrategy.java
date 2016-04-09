@@ -17,8 +17,8 @@ import ballmerpeak.stargate.ReplicatorMovementStrategy;
  */
 public class FixedReplicatorMovementStrategy implements ReplicatorMovementStrategy {
 
-	List<Direction> directions;
-	int index;
+	private List<Direction> directions;
+	private int index;
 
 	public FixedReplicatorMovementStrategy(String filename) throws Exception {
 		directions = new ArrayList<>();
@@ -49,7 +49,10 @@ public class FixedReplicatorMovementStrategy implements ReplicatorMovementStrate
 
 	@Override
 	public Direction getDirection() {
-		return directions.get(index < directions.size() - 1 ? index++ : 0);
+		Direction dir = directions.get(index);
+		index++;
+		index %= directions.size();
+		return dir;
 	}
 
 }

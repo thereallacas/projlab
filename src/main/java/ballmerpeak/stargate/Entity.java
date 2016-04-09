@@ -61,6 +61,7 @@ public abstract class Entity implements Drawable {
 	}
 
 	public void move(Direction direction) {
+		setDirty(true);
 		if (this.direction != direction) {
 			this.direction = direction;
 		} else {
@@ -71,7 +72,6 @@ public abstract class Entity implements Drawable {
 				nextTile.stepOnTile(this);
 			}
 		}
-		setDirty(true);
 	}
 	
 	public void shootIt() {

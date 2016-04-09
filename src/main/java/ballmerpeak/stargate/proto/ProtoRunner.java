@@ -31,26 +31,29 @@ public class ProtoRunner {
 	String dataDirectory;
 	
 	ReplicatorMovementStrategy fixedReplicatorMovementStrategy;
+	private boolean prompt;
 
 	private void reset() throws Exception {
 		String mapDirectory = dataDirectory + "/maps/";
-		String mapFile = mapDirectory + "map4.txt";
+		String mapFile = mapDirectory + "map5.txt";
 		loader = new MapLoader(mapFile);
 		game = loader.getGame();
 		icf = new ProtoInputCommandFactory();
 		io = new ProtoIO(game);
 		fixedReplicatorMovementStrategy = new FixedReplicatorMovementStrategy(replicatorFile);
-		
+		prompt = true;
 	}
 
 	private void setRandom(boolean b) {
 		if (b) {
 			game.setReplicatorMovementStrategy(new RandomReplicatorMovement());
-			prompt();
 		} else {
 			game.setReplicatorMovementStrategy(fixedReplicatorMovementStrategy);
-			prompt();
 		}
+	}
+	
+	private void setPrompt(boolean b) {
+		prompt = b;
 	}
 
 	public ProtoRunner(String zpmFile, String replicatorFile) throws Exception {
@@ -66,38 +69,55 @@ public class ProtoRunner {
 		io.printInfo();
 		prompt();
 		while ((line = reader.readLine()) != null) {
-			if (line.equals("reset")) {
+		
+			if (line.startsWith("q")) {
+				System.exit(0);
+			}
+			
+			else if (line.equals("reset")) {
 				reset();
 				continue;
 			}
+			
+			else if (line.startsWith("prompt")) {
+				String words[] = line.split(" ");
+				if (words.length != 2)
+					continue;
+				setPrompt(words[1].equals("on"));
 
-			if (line.startsWith("random")) {
+			}
+
+			else if (line.startsWith("random")) {
 				String words[] = line.split(" ");
 				if (words.length != 2)
 					continue;
 				setRandom(words[1].equals("on"));
 				continue;
 			}
-			icf.setInputString(line);
-			InputCommand command = icf.nextCommand();
-			game.setPlayerSelectionStrategy(icf.getPlayerSelectionStrategy());
-			game.receiveInput(command);
-			io.printInfo();
 			
-			prompt();
+			else if (line.startsWith("rep")) {
+				io.printReplicatorInfo();
+			}
+			
+			else {
+				icf.setInputString(line);
+				InputCommand command = icf.nextCommand();
+				game.setPlayerSelectionStrategy(icf.getPlayerSelectionStrategy());
+				game.receiveInput(command);
+				icf.setInputString(line);
+			}
+			
+			io.printInfo();
+			if (prompt)
+				prompt();
 		}
 	}
 
-	/**
-	 * 	
-	 */
 	private void prompt() {
-		// TODO Auto-generated method stub
 		System.out.format("%s> ", icf.oneil ? "oneil" : "jaffa");
 	}
 
 	public static void main(String... args) throws Exception {
-		
 		new ProtoRunner("zpm", "replicator").run();
 	}
 }

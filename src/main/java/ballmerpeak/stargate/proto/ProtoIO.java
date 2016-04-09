@@ -9,6 +9,7 @@ import java.util.Map;
 import ballmerpeak.stargate.Direction;
 import ballmerpeak.stargate.Game;
 import ballmerpeak.stargate.Player;
+import ballmerpeak.stargate.Replicator;
 import ballmerpeak.stargate.gui.DrawableIndex;
 import ballmerpeak.stargate.tiles.Tile;
 
@@ -23,6 +24,7 @@ public class ProtoIO {
 	
 	public ProtoIO(Game game) {
 		tileInfo.put(DrawableIndex.FLOOR_WITH_ZPM, "Floor <ZPM>");
+		tileInfo.put(DrawableIndex.FLOOR_WITH_ZPM2, "Floor <ZPM>");
 		tileInfo.put(DrawableIndex.FLOOR, "Floor");
 		tileInfo.put(DrawableIndex.FLOOR_WITH_CRATE, "Floor <crate)>");
 		tileInfo.put(DrawableIndex.SCALE, "Scale");
@@ -60,6 +62,7 @@ public class ProtoIO {
 	public void printInfo() {
 		Player player = game.getOneil();
 		Player jaffa = game.getJaffa();
+		Replicator replicator = game.getReplicator();
 		
 		String playerFacing = "";
 		switch (player.getDirection()) {
@@ -81,10 +84,10 @@ public class ProtoIO {
 				player.isAlive() ? "alive" : "dead", playerFacing, player.getZPMsCarried(), player.isCarrying() ? "" : "no");
 		
 		Tile playerTile = player.getTile();
-		System.out.println("\tup: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.UP).getDrawableIndex()));
-		System.out.println("\tleft: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.LEFT).getDrawableIndex()));
-		System.out.println("\tdown: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.DOWN).getDrawableIndex()));
-		System.out.println("\tright: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.RIGHT).getDrawableIndex()));
+		System.out.format("\tup: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.UP).getDrawableIndex()));
+		System.out.format("\tleft: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.LEFT).getDrawableIndex()));
+		System.out.format("\tdown: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.DOWN).getDrawableIndex()));
+		System.out.format("\tright: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.RIGHT).getDrawableIndex()));
 		System.out.println();
 		
 		playerFacing = "";
@@ -107,10 +110,15 @@ public class ProtoIO {
 				jaffa.isAlive() ? "alive" : "dead", playerFacing, jaffa.getZPMsCarried(), jaffa.isCarrying() ? "" : "no");
 		
 		playerTile = jaffa.getTile();
-		System.out.println("\tup: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.UP).getDrawableIndex()));
-		System.out.println("\tleft: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.LEFT).getDrawableIndex()));
-		System.out.println("\tdown: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.DOWN).getDrawableIndex()));
-		System.out.println("\tright: " + tileInfo.get(playerTile.getNeighborForDirection(Direction.RIGHT).getDrawableIndex()));
+		System.out.format("\tup: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.UP).getDrawableIndex()));
+		System.out.format("\tleft: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.LEFT).getDrawableIndex()));
+		System.out.format("\tdown: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.DOWN).getDrawableIndex()));
+		System.out.format("\tright: %s", tileInfo.get(playerTile.getNeighborForDirection(Direction.RIGHT).getDrawableIndex()));
 		System.out.println();
+		
+	}
+	
+	public void printReplicatorInfo() {
+		System.out.println(game.getReplicator().isAlive() ? "alive" : "dead");
 	}
 }

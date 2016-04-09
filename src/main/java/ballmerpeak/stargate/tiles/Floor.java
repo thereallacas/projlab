@@ -19,7 +19,7 @@ public class Floor extends Tile {
 	private boolean ZPM;
 
 	private int numCrates;
-	
+
 	public static void setZPMGeneratingStrategy(ZPMGeneratingStrategy zpmgs_) {
 		zpmgs = zpmgs_;
 	}
@@ -48,10 +48,8 @@ public class Floor extends Tile {
 
 	@Override
 	public void dropCrateHere(Player player) {
-		if (!hasCrate()) {
-			numCrates++;
-			player.setCarrying(false);
-		}
+		numCrates++;
+		player.setCarrying(false);
 	}
 
 	@Override
@@ -91,9 +89,10 @@ public class Floor extends Tile {
 	}
 
 	public DrawableIndex getDrawableIndex() {
+		Random random = new Random();
+		DrawableIndex d = (random.nextInt() % 2 == 0) ? DrawableIndex.FLOOR_WITH_ZPM : DrawableIndex.FLOOR_WITH_ZPM2;
 		return hasEntity() ? entities.get(0).getDrawableIndex()
-				: hasZPM() ? DrawableIndex.FLOOR_WITH_ZPM
-						: hasCrate() ? DrawableIndex.FLOOR_WITH_CRATE : DrawableIndex.FLOOR;
+				: hasZPM() ? d : hasCrate() ? DrawableIndex.FLOOR_WITH_CRATE : DrawableIndex.FLOOR;
 	}
 
 	public boolean hasEntity() {
