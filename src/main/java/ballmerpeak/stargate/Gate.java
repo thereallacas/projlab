@@ -32,11 +32,11 @@ public class Gate {
 		}
 	}
 
-	public void teleport(Entity player, ShotColor originColor) {
+	public void teleport(Entity entity, ShotColor originColor) {
 		ShotColor destinationColor = getOtherColor(originColor);
 		for (SpecialWall wall : walls) {
 			if (wall.getColor() == destinationColor)
-				wall.teleport(player);
+				wall.teleport(entity);
 		}
 	}
 
