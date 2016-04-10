@@ -66,7 +66,7 @@ public class GameWindow extends JFrame implements KeyListener, InputCommandSourc
 		InputCommand cmd = ifc.nextCommand();
 		game.setPlayerSelectionStrategy(ifc.getPlayerSelectionStrategy());
 		game.receiveInput(cmd);
-		if (!game.isPlayer1Alive() || !game.isPlayer2Alive()) {
+		if (!game.isOnilAlive() || !game.isJaffaAlive()) {
 			System.exit(0);
 		}
 		if (game.didPlayersWin()) {
