@@ -13,7 +13,8 @@ public class ShootCommand implements InputCommand {
 
 	@Override
 	public void execute(Player player) {
-		player.shoot(color);
+		if (player.isAlive())
+			player.shoot(color);
 	}
 
 }

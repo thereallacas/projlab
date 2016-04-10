@@ -13,7 +13,8 @@ public class MoveCommand implements InputCommand {
 	
 	@Override
 	public void execute(Player player) {
-		player.move(dir);
+		if (player.isAlive())
+			player.move(dir);
 	}
 
 }

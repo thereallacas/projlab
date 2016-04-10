@@ -6,7 +6,8 @@ public class PickupCommand implements InputCommand {
 
 	@Override
 	public void execute(Player player) {
-		player.pickupCrate();
+		if (player.isAlive())
+			player.pickupCrate();
 	}
 
 }
