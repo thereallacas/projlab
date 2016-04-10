@@ -28,18 +28,19 @@ import ballmerpeak.stargate.tiles.Wall;
 
 public class MapLoader {
 
-	Game game;
+	private Game game;
 
-	protected Player player1, player2;
-	protected Replicator replicator;
-	protected Gate gate;
+	private Player oneil;
+	private Player jaffa;
+	private Replicator replicator;
+	private Gate gate;
 
-	protected Map<Character, Door> doors;
-	protected Map<Character, Scale> scales;
+	private Map<Character, Door> doors;
+	private Map<Character, Scale> scales;
 
-	protected List<SpecialWall> specialWalls;
+	private List<SpecialWall> specialWalls;
 
-	Tile tiles[][];
+	private Tile tiles[][];
 
 	private int height;
 	private int width;
@@ -48,7 +49,7 @@ public class MapLoader {
 
 	private String filename;
 
-	public MapLoader(String filename) throws FileNotFoundException, IOException {
+	public MapLoader(String filename) {
 		this.filename = filename;
 	}
 
@@ -65,8 +66,8 @@ public class MapLoader {
 		scales = new HashMap<>();
 		specialWalls = new ArrayList<>();
 		gate.setSpecialWalls(specialWalls);
-		player1 = new Oneill();
-		player2 = new Jaffa();
+		oneil = new Oneill();
+		jaffa = new Jaffa();
 		replicator = new Replicator();
 		try (FileReader fr = new FileReader(filename); BufferedReader br = new BufferedReader(fr)) {
 			String lineOne = br.readLine();
@@ -97,7 +98,7 @@ public class MapLoader {
 		}
 		setupDoors();
 		setupNeighbors();
-		game = new Game(player1, player2, replicator);
+		game = new Game(oneil, jaffa, replicator);
 		game.setReplicatorMovementStrategy(new RandomReplicatorMovement());
 		
 		Floor.setZPMGeneratingStrategy(new RandomZPM());
@@ -133,12 +134,12 @@ public class MapLoader {
 
 		case '@':
 			Tile floorWithPlayer1 = new Floor();
-			floorWithPlayer1.stepOnTile(player1);
+			floorWithPlayer1.stepOnTile(oneil);
 			Floor.addFloor((Floor) floorWithPlayer1);
 			return floorWithPlayer1;
 		case '?':
 			Tile floorWithPlayer2 = new Floor();
-			floorWithPlayer2.stepOnTile(player2);
+			floorWithPlayer2.stepOnTile(jaffa);
 			Floor.addFloor((Floor) floorWithPlayer2);
 			return floorWithPlayer2;
 		case '*':

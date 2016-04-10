@@ -70,11 +70,7 @@ public class ProtoRunner {
 		prompt();
 		while ((line = reader.readLine()) != null) {
 		
-			if (line.startsWith("q")) {
-				System.exit(0);
-			}
-			
-			else if (line.equals("reset")) {
+			if (line.equals("reset")) {
 				reset();
 				continue;
 			}

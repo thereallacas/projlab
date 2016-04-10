@@ -22,6 +22,11 @@ public class ProtoInputCommandFactory extends InputCommandFactory {
 
 	@Override
 	public InputCommand nextCommand() {
+
+		if (string.startsWith("q")) {
+			return quit;
+		}
+		
 		String words[] = string.split(" ");
 
 		if (words.length == 0)
